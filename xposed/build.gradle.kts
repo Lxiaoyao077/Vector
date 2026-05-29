@@ -21,7 +21,7 @@ android {
         buildConfigField("long", "VERSION_CODE", versionCodeProvider.get())
     }
 
-    sourceSets { named("main") { java.srcDirs("src/main/kotlin", "libxposed/api/src/main/java", "../shared/libxposed-annotation/src/main/java") } }
+    sourceSets { named("main") { java.srcDirs("src/main/kotlin", "libxposed/api/src/main/java") } }
 }
 
 dependencies {
@@ -29,5 +29,6 @@ dependencies {
     implementation(projects.hiddenapi.bridge)
     implementation(projects.services.daemonService)
     compileOnly(libs.androidx.annotation)
+    compileOnly(projects.shared.libxposedAnnotation)
     compileOnly(projects.hiddenapi.stubs)
 }

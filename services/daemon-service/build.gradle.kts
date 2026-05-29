@@ -7,7 +7,7 @@ android {
 
     sourceSets {
         named("main") {
-            java.srcDirs("src/main/java", "../libxposed/service/src/main", "../../shared/libxposed-annotation/src/main/java")
+            java.srcDirs("src/main/java", "../libxposed/service/src/main")
             aidl.srcDirs("src/main/aidl", "../libxposed/interface/src/main/aidl")
         }
     }
@@ -18,5 +18,6 @@ android {
 
 dependencies {
     compileOnly(libs.androidx.annotation)
+    compileOnly(projects.shared.libxposedAnnotation)
     compileOnly(projects.hiddenapi.stubs)
 }
