@@ -74,13 +74,18 @@ object VectorModuleManager {
             val entries = instantiateEntries(module, moduleClassLoader, vectorContext)
             entries.forEach { moduleInstance ->
                 VectorLifecycleManager.activeModules.add(moduleInstance)
-                moduleInstance.onModuleLoaded(
-                    object : ModuleLoadedParam {
-                        override fun isSystemServer(): Boolean = isSystemServer
+                runCatching {
+                        moduleInstance.onModuleLoaded(
+                            object : ModuleLoadedParam {
+                                override fun isSystemServer(): Boolean = isSystemServer
 
-                        override fun getProcessName(): String = processName
+                                override fun getProcessName(): String = processName
+                            }
+                        )
                     }
-                )
+                    .onFailure {
+                        Log.e(TAG, "Error in onModuleLoaded for ${module.packageName}", it)
+                    }
             }
             moduleStates[module.packageName] = ModuleState(module, processName, isSystemServer, entries)
             if (module.file.moduleClassNames.size == 1) {
@@ -139,7 +144,7 @@ object VectorModuleManager {
             throw IllegalStateException("Module ${module.packageName} rejected hot reload")
         }
 
-        freezeHooks(module.packageName)
+        freezeHooks(module.packageName, oldState.entries.mapNotNull { it.javaClass.classLoader })
         val oldHandles = getActiveHookHandles(module.packageName)
         try {
             oldState.entries.forEach(VectorLifecycleManager::detach)
