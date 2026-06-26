@@ -1,5 +1,5 @@
 id=zygisk_vector
-name=Vector
+name=Vector-Fork
 version=${versionName} (${versionCode})
 versionCode=${versionCode}
 author=JingMatrix
