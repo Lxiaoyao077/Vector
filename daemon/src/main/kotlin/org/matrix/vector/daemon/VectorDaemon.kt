@@ -100,7 +100,12 @@ object VectorDaemon {
     // Setup IPC channel for applications by injecting DaemonService binder
     sendToBridge(VectorService.asBinder(), false, systemServerMaxRetry)
 
-    if (!ManagerService.isVerboseLog()) {
+    try {
+      if (!ManagerService.isVerboseLog()) {
+        LogcatMonitor.stopVerbose()
+      }
+    } catch (e: Exception) {
+      Log.w(TAG, "Failed to check verbose log config, falling back to stop", e)
       LogcatMonitor.stopVerbose()
     }
 
