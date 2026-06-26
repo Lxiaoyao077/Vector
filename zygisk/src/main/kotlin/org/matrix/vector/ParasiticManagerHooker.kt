@@ -20,6 +20,7 @@ import de.robv.android.xposed.XposedHelpers
 import hidden.HiddenApiBridge
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.lang.ref.WeakReference
 import java.lang.reflect.Method
 import java.util.concurrent.ConcurrentHashMap
 import org.lsposed.lspd.ILSPManagerService
@@ -33,6 +34,7 @@ object ParasiticManagerHooker {
 
     private var managerPkgInfo: PackageInfo? = null
     private var managerFd: Int = -1
+    private var dexInjected = false
 
     // Manually track Activity states since the system is unaware of our spoofed activities
     private val states = ConcurrentHashMap<String, Bundle>()
@@ -144,8 +146,31 @@ object ParasiticManagerHooker {
             .onFailure { Utils.logW("Could not send binder to LSPosed Manager", it) }
     }
 
+    /** Injects the manager APK's DEX path into the given ClassLoader. */
+    private fun injectDexPath(classLoader: ClassLoader, dexPath: String): Boolean {
+        return runCatching {
+            val pathList = XposedHelpers.getObjectField(classLoader, "pathList")
+            val dexPaths = XposedHelpers.callMethod(pathList, "getDexPaths") as List<*>
+            if (!dexPaths.contains(dexPath)) {
+                Utils.logW("Manager APK not found in ClassLoader, adding manually: $dexPath")
+                XposedHelpers.callMethod(classLoader, "addDexPath", dexPath)
+                logD("DEX added successfully via addDexPath")
+            } else {
+                logD("DEX already present in ClassLoader")
+            }
+            true
+        }.onFailure {
+            logE("Failed to inject DEX path: $dexPath", it)
+        }.getOrDefault(false)
+    }
+
     private fun hookForManager(managerService: ILSPManagerService) {
-        // Hook 1: Swap ApplicationInfo during host binding
+        // Hook 1: Swap ApplicationInfo during host binding, and evict any cached
+        // LoadedApk so the system creates a fresh one with our parasitic info.
+        // Without the cache eviction, devices that pre-warm the shell process
+        // (e.g. EMUI/HarmonyOS) would reuse a stale LoadedApk whose
+        // mApplicationInfo still points to the stock shell APK, causing
+        // makeApplication() to fall back to android.app.Application.
         XposedHelpers.findAndHookMethod(
             ActivityThread::class.java,
             "handleBindApplication",
@@ -157,36 +182,49 @@ object ParasiticManagerHooker {
                     val hostAppInfo =
                         XposedHelpers.getObjectField(bindData, "appInfo") as ApplicationInfo
                     val parasiticInfo = getManagerPkgInfo(hostAppInfo)?.applicationInfo
+
+                    // Evict any pre-cached LoadedApk for the host package so the
+                    // fresh LoadedApk is constructed with our parasitic ApplicationInfo.
+                    val at = ActivityThread.currentActivityThread()
+                    for (fieldName in arrayOf("mPackages", "mResourcePackages")) {
+                        runCatching {
+                            @Suppress("UNCHECKED_CAST")
+                            val map = XposedHelpers.getObjectField(at, fieldName)
+                                as? ArrayMap<String, WeakReference<*>> ?: return@runCatching
+                            map.remove(hostAppInfo.packageName)
+                        }
+                    }
+
                     XposedHelpers.setObjectField(bindData, "appInfo", parasiticInfo)
                 }
             },
         )
 
-        // Hook 2: Inject APK path into the ClassLoader
+        // Hook 2: Inject APK path into the ClassLoader.
+        // We check by package name rather than object reference identity, because on some
+        // devices (e.g. Huawei EMUI/HarmonyOS) the LoadedApk can be pre-cached by the
+        // system before our handleBindApplication hook runs, so mApplicationInfo won't be
+        // the same object as our parasitic ApplicationInfo.
         var classLoaderUnhook: XC_MethodHook.Unhook? = null
         val classLoaderHook =
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam<*>) {
+                    if (dexInjected) return
                     val pkgInfo = getManagerPkgInfo(null) ?: return
                     val mAppInfo =
                         XposedHelpers.getObjectField(param.thisObject, "mApplicationInfo")
+                            as? ApplicationInfo ?: return
 
-                    val managerAppInfo = pkgInfo.applicationInfo!!
+                    if (mAppInfo.packageName != BuildConfig.InjectedPackageName) return
 
-                    if (mAppInfo == managerAppInfo) {
-                        val dexPath = managerAppInfo.sourceDir
-                        val pathClassLoader = param.result as ClassLoader
+                    val dexPath = pkgInfo.applicationInfo!!.sourceDir
+                    val pathClassLoader = param.result as ClassLoader
 
-                        logD("Injecting DEX into LoadedApk ClassLoader: $pathClassLoader")
-                        val pathList = XposedHelpers.getObjectField(pathClassLoader, "pathList")
-                        val dexPaths = XposedHelpers.callMethod(pathList, "getDexPaths") as List<*>
-
-                        if (!dexPaths.contains(dexPath)) {
-                            Utils.logW("Manager APK not found in ClassLoader, adding manually...")
-                            XposedHelpers.callMethod(pathClassLoader, "addDexPath", dexPath)
-                        }
+                    logD("Injecting DEX into LoadedApk ClassLoader: $pathClassLoader")
+                    if (injectDexPath(pathClassLoader, dexPath)) {
                         sendBinderToManager(pathClassLoader, managerService.asBinder())
-                        classLoaderUnhook!!.unhook() // Only need to inject once
+                        dexInjected = true
+                        classLoaderUnhook!!.unhook()
                     }
                 }
             }
