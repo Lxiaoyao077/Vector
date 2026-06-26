@@ -133,6 +133,11 @@
             android:summary="@string/settings_backup_summery"
             android:title="@string/settings_backup" />
         <Preference
+            android:icon="@drawable/ic_round_update_24"
+            android:key="ignored_updates"
+            android:summary="@string/settings_ignored_updates_summary_empty"
+            android:title="@string/settings_ignored_updates_title" />
+        <Preference
             android:icon="@drawable/ic_outline_restore_24"
             android:key="restore"
             android:summary="@string/settings_restore_summery"
