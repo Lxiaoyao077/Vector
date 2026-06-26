@@ -94,7 +94,21 @@ import rikka.core.util.ResourceUtils;
 import rikka.material.app.LocaleDelegate;
 import rikka.recyclerview.RecyclerViewKt;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+
 public class ModulesFragment extends BaseFragment implements ModuleUtil.ModuleListener, RepoLoader.RepoListener, MenuProvider {
+    private final BroadcastReceiver packageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getData() != null) {
+                forEachAdaptor(ModuleAdapter::refresh);
+            }
+        }
+    };
+
     private static final PackageManager pm = App.getInstance().getPackageManager();
     private static final ModuleUtil moduleUtil = ModuleUtil.getInstance();
     private static final RepoLoader repoLoader = RepoLoader.getInstance();
@@ -224,6 +238,12 @@ public class ModulesFragment extends BaseFragment implements ModuleUtil.ModuleLi
     public void onResume() {
         super.onResume();
         forEachAdaptor(ModuleAdapter::refresh);
+        var filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        filter.addDataScheme("package");
+        requireContext().registerReceiver(packageReceiver, filter);
     }
 
     @Override
@@ -448,7 +468,8 @@ public class ModulesFragment extends BaseFragment implements ModuleUtil.ModuleLi
         public void onPause() {
             super.onPause();
             detachListeners();
-        }
+                requireContext().unregisterReceiver(packageReceiver);
+}
 
         @Override
         public void onStop() {
