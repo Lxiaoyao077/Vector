@@ -247,11 +247,11 @@ public class App extends Application {
         var builder = new OkHttpClient.Builder()
             .cache(getOkHttpCache())
             .dns(new CloudflareDNS());
-        if (BuildConfig.DEBUG) {
-            var log = new HttpLoggingInterceptor();
-            log.setLevel(HttpLoggingInterceptor.Level.HEADERS);
-            builder.addInterceptor(log);
-        }
+        // Verbose HTTP logging disabled: if (BuildConfig.DEBUG) {
+        //     var log = new HttpLoggingInterceptor();
+        //     log.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        //     builder.addInterceptor(log);
+        // }
         okHttpClient = builder.build();
         return okHttpClient;
     }

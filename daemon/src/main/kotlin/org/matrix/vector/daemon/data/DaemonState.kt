@@ -12,7 +12,7 @@ data class ProcessScope(val processName: String, val uid: Int)
  */
 data class DaemonState(
     // State non configurable for users
-    val isDexObfuscateEnabled: Boolean = !BuildConfig.DEBUG,
+    val isDexObfuscateEnabled: Boolean = false,
     // States initialized after system services are ready
     val isCacheReady: Boolean = false,
     val managerUid: Int = -1,

@@ -57,10 +57,18 @@ public final class CloudflareDNS implements Dns {
     @NonNull
     @Override
     public List<InetAddress> lookup(@NonNull String hostname) throws UnknownHostException {
-        if (DoH && noProxy) {
-            return cloudflare.lookup(hostname);
-        } else {
-            return SYSTEM.lookup(hostname);
+        try {
+            if (DoH && noProxy) {
+                return cloudflare.lookup(hostname);
+            } else {
+                return SYSTEM.lookup(hostname);
+            }
+        } catch (SecurityException e) {
+            var message = e.getMessage();
+            var unknownHost = new UnknownHostException(
+                    message == null ? hostname : hostname + ": " + message);
+            unknownHost.initCause(e);
+            throw unknownHost;
         }
     }
 }
