@@ -114,6 +114,11 @@ object ConfigCache {
     cacheUpdateChannel.trySend(Unit)
   }
 
+  fun setDexObfuscateEnabled(enabled: Boolean) {
+    state = state.copy(isDexObfuscateEnabled = enabled)
+    requestCacheUpdate()
+  }
+
   /** Builds a completely new Immutable State and atomically swaps it. */
   private fun performCacheUpdate() {
     if (packageManager == null) return
