@@ -63,8 +63,6 @@
     <string name="info_device">Device</string>
     <string name="info_system_abi">System ABI</string>
     <string name="info_dex2oat_wrapper">Dex Optimizer Wrapper</string>
-    <string name="enabled">Enabled</string>
-    <string name="not_enabled">Not enabled</string>
     <string name="supported">Supported</string>
     <string name="unsupported">Unsupported</string>
     <string name="android_version_unsatisfied">Android version unsatisfied</string>
