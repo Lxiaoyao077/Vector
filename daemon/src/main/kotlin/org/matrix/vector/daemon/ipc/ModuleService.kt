@@ -112,9 +112,6 @@ class ModuleService(private val loadedModule: Module) : IXposedService.Stub() {
   override fun getFrameworkProperties(): Long {
     ensureModule()
     var prop = IXposedService.PROP_CAP_SYSTEM or IXposedService.PROP_CAP_REMOTE
-    if (loadedModule.file.moduleClassNames.size == 1) {
-      prop = prop or IXposedService.PROP_RT_HOT_RELOAD
-    }
     if (ConfigCache.state.isDexObfuscateEnabled)
         prop = prop or IXposedService.PROP_RT_API_PROTECTION
     return prop
@@ -158,18 +155,26 @@ class ModuleService(private val loadedModule: Module) : IXposedService.Stub() {
     ensureModule()
     runCatching {
           if (loadedModule.file.moduleClassNames.size != 1) {
-            throw SecurityException("Hot reload requires exactly one Java entry class")
+            throw HotReloadUnsupportedException("Hot reload requires exactly one Java entry class")
           }
           val latest =
               ConfigCache.getModuleByPackage(loadedModule.packageName)
-                  ?: throw SecurityException("Module ${loadedModule.packageName} is not enabled")
+                  ?: throw HotReloadUnsupportedException(
+                      "Module ${loadedModule.packageName} is not enabled")
+          if (latest.file.moduleClassNames.size != 1) {
+            throw HotReloadUnsupportedException(
+                "Hot reload requires exactly one Java entry class")
+          }
           ApplicationService.hotReloadTarget(targetId, latest, data)
-          callback?.onHotReloadResult(IXposedService.HOT_RELOAD_SUCCESS, null)
+          callback?.onHotReloadResult(IXposedService.HOT_RELOAD_SUCCEEDED, null)
         }
         .onFailure { throwable ->
+          if (throwable is SecurityException) throw throwable
           val status =
               when (throwable) {
-                is IllegalStateException -> IXposedService.HOT_RELOAD_IN_PROGRESS
+                is HotReloadInProgressException -> IXposedService.HOT_RELOAD_IN_PROGRESS
+                is HotReloadProcessDiedException -> IXposedService.HOT_RELOAD_PROCESS_DIED
+                is HotReloadUnsupportedException -> IXposedService.HOT_RELOAD_UNSUPPORTED
                 else -> IXposedService.HOT_RELOAD_FAILED
               }
           callback?.onHotReloadResult(status, throwable.message)

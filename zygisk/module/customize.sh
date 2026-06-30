@@ -89,9 +89,13 @@ done
 ui_print "- Extracting Zygisk libraries"
 mkdir -p "$MODPATH/zygisk"
 
-# Extract 32-bit lib
-extract "$ZIPFILE" "lib/$ABI32/libzygisk.so" "$MODPATH/zygisk" true
-mv "$MODPATH/zygisk/libzygisk.so" "$MODPATH/zygisk/${ABI32}.so"
+# Extract 32-bit lib (may not exist in ABI-filtered builds)
+if unzip -oj "$ZIPFILE" "lib/$ABI32/libzygisk.so" -d "$MODPATH/zygisk" >/dev/null 2>&1; then
+    mv "$MODPATH/zygisk/libzygisk.so" "$MODPATH/zygisk/${ABI32}.so"
+    ui_print "- Extracted 32-bit Zygisk library"
+else
+    ui_print "- Skipping 32-bit Zygisk library (not included)"
+fi
 
 # Extract 64-bit lib if supported
 if [ "$IS64BIT" = true ]; then

@@ -35,7 +35,7 @@ class VectorHookBuilder(private val modulePackageName: String, private val origi
 
     override fun intercept(hooker: Hooker): HookHandle {
         validateHookTarget()
-        if (HookRegistry.isFrozen(modulePackageName)) {
+        if (HookRegistry.isFrozen(modulePackageName, hooker)) {
             throw IllegalStateException("Module $modulePackageName is frozen for hot reload")
         }
 
@@ -93,22 +93,26 @@ private data class HookKey(
 
 private object HookRegistry {
     val records = ConcurrentHashMap<HookKey, VectorHookRecord>()
-    private val frozenModules = ConcurrentHashMap.newKeySet<String>()
+    val allRecords = ConcurrentHashMap.newKeySet<VectorHookRecord>()
+    private val frozenLoaders = ConcurrentHashMap<String, MutableSet<ClassLoader>>()
 
-    fun freeze(modulePackageName: String) {
-        frozenModules.add(modulePackageName)
+    fun freeze(modulePackageName: String, classLoaders: Collection<ClassLoader>) {
+        frozenLoaders[modulePackageName] = ConcurrentHashMap.newKeySet<ClassLoader>().apply {
+            addAll(classLoaders)
+        }
     }
 
     fun unfreeze(modulePackageName: String) {
-        frozenModules.remove(modulePackageName)
+        frozenLoaders.remove(modulePackageName)
     }
 
-    fun isFrozen(modulePackageName: String): Boolean {
-        return frozenModules.contains(modulePackageName)
+    fun isFrozen(modulePackageName: String, hooker: Hooker): Boolean {
+        val classLoader = hooker.javaClass.classLoader ?: return false
+        return frozenLoaders[modulePackageName]?.contains(classLoader) == true
     }
 
     fun handlesForModule(modulePackageName: String): List<HookHandle> {
-        return records.values
+        return allRecords
             .filter { it.modulePackageName == modulePackageName && it.isActive() }
             .map { VectorHookHandle(it, it.id?.let { id -> HookKey(modulePackageName, it.executable, id) }) }
     }
@@ -118,16 +122,26 @@ internal fun getActiveHookHandles(modulePackageName: String): List<HookHandle> {
     return HookRegistry.handlesForModule(modulePackageName)
 }
 
-internal fun freezeHooks(modulePackageName: String) {
-    HookRegistry.freeze(modulePackageName)
+internal fun freezeHooks(modulePackageName: String, classLoaders: Collection<ClassLoader>) {
+    HookRegistry.freeze(modulePackageName, classLoaders)
 }
 
 internal fun unfreezeHooks(modulePackageName: String) {
     HookRegistry.unfreeze(modulePackageName)
 }
 
+internal fun unhookAllModuleHooks(
+    modulePackageName: String,
+    except: Set<HookHandle> = emptySet(),
+) {
+    val excludedRecords = except.mapNotNull { (it as? VectorHookHandle)?.record }.toSet()
+    HookRegistry.allRecords
+        .filter { it.modulePackageName == modulePackageName && it !in excludedRecords }
+        .forEach(::uninstallRecord)
+}
+
 private class VectorHookHandle(
-    private val record: VectorHookRecord,
+    val record: VectorHookRecord,
     private val hookKey: HookKey?,
 ) : HookHandle {
     override fun getExecutable(): Executable = record.executable
@@ -178,11 +192,16 @@ private fun installRecord(record: VectorHookRecord) {
     ) {
         throw HookFailedError("Cannot hook ${record.executable}")
     }
+    HookRegistry.allRecords.add(record)
 }
 
 private fun uninstallRecord(record: VectorHookRecord): Boolean {
     if (!record.deactivate()) return false
     HookBridge.unhookMethod(true, record.executable, record)
+    record.id?.let { id ->
+        HookRegistry.records.remove(HookKey(record.modulePackageName, record.executable, id), record)
+    }
+    HookRegistry.allRecords.remove(record)
     return true
 }
 

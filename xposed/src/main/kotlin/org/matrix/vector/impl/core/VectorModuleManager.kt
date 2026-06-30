@@ -9,12 +9,16 @@ import io.github.libxposed.api.XposedModuleInterface.HotReloadedParam
 import io.github.libxposed.api.XposedModuleInterface.HotReloadingParam
 import io.github.libxposed.api.XposedModuleInterface.ModuleLoadedParam
 import java.io.File
+import java.lang.reflect.Array
+import java.util.Collections
+import java.util.IdentityHashMap
 import org.lsposed.lspd.models.Module
 import org.lsposed.lspd.util.Utils.Log
 import org.matrix.vector.impl.VectorContext
 import org.matrix.vector.impl.VectorLifecycleManager
 import org.matrix.vector.impl.hooks.freezeHooks
 import org.matrix.vector.impl.hooks.getActiveHookHandles
+import org.matrix.vector.impl.hooks.unhookAllModuleHooks
 import org.matrix.vector.impl.hooks.unfreezeHooks
 import org.matrix.vector.impl.utils.VectorModuleClassLoader
 import org.matrix.vector.nativebridge.NativeAPI
@@ -74,13 +78,18 @@ object VectorModuleManager {
             val entries = instantiateEntries(module, moduleClassLoader, vectorContext)
             entries.forEach { moduleInstance ->
                 VectorLifecycleManager.activeModules.add(moduleInstance)
-                moduleInstance.onModuleLoaded(
-                    object : ModuleLoadedParam {
-                        override fun isSystemServer(): Boolean = isSystemServer
+                runCatching {
+                        moduleInstance.onModuleLoaded(
+                            object : ModuleLoadedParam {
+                                override fun isSystemServer(): Boolean = isSystemServer
 
-                        override fun getProcessName(): String = processName
+                                override fun getProcessName(): String = processName
+                            }
+                        )
                     }
-                )
+                    .onFailure {
+                        Log.e(TAG, "Error in onModuleLoaded for ${module.packageName}", it)
+                    }
             }
             moduleStates[module.packageName] = ModuleState(module, processName, isSystemServer, entries)
             if (module.file.moduleClassNames.size == 1) {
@@ -113,14 +122,15 @@ object VectorModuleManager {
             throw IllegalArgumentException("Hot reload requires exactly one Java entry class")
         }
 
+        val oldClassLoaders =
+            oldState.entries.mapNotNullTo(mutableSetOf<ClassLoader>()) { it.javaClass.classLoader }
         var savedInstanceState: Any? = null
         val reloadingParam =
             object : HotReloadingParam {
                 override fun getExtras(): Bundle? = extras
 
                 override fun setSavedInstanceState(outState: Any?) {
-                    val loader = outState?.javaClass?.classLoader
-                    if (loader != null && oldState.entries.any { it.javaClass.classLoader == loader }) {
+                    if (containsOldClassLoaderObject(outState, oldClassLoaders)) {
                         throw IllegalArgumentException(
                             "Saved state must not be created by the old module classloader"
                         )
@@ -129,21 +139,24 @@ object VectorModuleManager {
                 }
             }
 
-        val allowReload =
-            oldState.entries.fold(true) { allowed, entry ->
-                allowed && runCatching { entry.onHotReloading(reloadingParam) }
+        var allowReload = true
+        oldState.entries.forEach { entry ->
+            if (!allowReload) return@forEach
+            allowReload =
+                runCatching { entry.onHotReloading(reloadingParam) }
                     .onFailure { Log.e(TAG, "Error in onHotReloading for ${module.packageName}", it) }
-                    .getOrDefault(false)
-            }
+                    .getOrThrow()
+        }
         if (!allowReload) {
-            throw IllegalStateException("Module ${module.packageName} rejected hot reload")
+            Log.d(TAG, "Module ${module.packageName} rejected hot reload")
+            throw IllegalStateException()
         }
 
-        freezeHooks(module.packageName)
+        freezeHooks(module.packageName, oldClassLoaders)
         val oldHandles = getActiveHookHandles(module.packageName)
+        var newStateCommitted = false
+        var newEntries: List<XposedModule> = emptyList()
         try {
-            oldState.entries.forEach(VectorLifecycleManager::detach)
-
             val librarySearchPath = buildLibrarySearchPath(module)
             val moduleClassLoader =
                 VectorModuleClassLoader.loadApk(
@@ -158,7 +171,11 @@ object VectorModuleManager {
                     applicationInfo = module.applicationInfo,
                     service = module.service,
                 )
-            val newEntries = instantiateEntries(module, moduleClassLoader, vectorContext)
+            newEntries = instantiateEntries(module, moduleClassLoader, vectorContext)
+            if (newEntries.size != module.file.moduleClassNames.size) {
+                throw IllegalStateException("Failed to instantiate hot reload entry")
+            }
+
             val param =
                 object : HotReloadedParam {
                     override fun isSystemServer(): Boolean = oldState.isSystemServer
@@ -171,13 +188,24 @@ object VectorModuleManager {
 
                     override fun getOldHookHandles(): List<XposedInterface.HookHandle> = oldHandles
                 }
-            newEntries.forEach { entry ->
-                VectorLifecycleManager.activeModules.add(entry)
-                entry.onHotReloaded(param)
-            }
             moduleStates[module.packageName] =
                 ModuleState(module, oldState.processName, oldState.isSystemServer, newEntries)
+            newStateCommitted = true
+            // Keep oldState strongly reachable until callbacks finish, but stop lifecycle dispatch.
+            oldState.entries.forEach(VectorLifecycleManager::detach)
+            newEntries.forEach { entry ->
+                VectorLifecycleManager.activeModules.add(entry)
+                runCatching { entry.onHotReloaded(param) }
+                    .onFailure { Log.e(TAG, "Error in onHotReloaded for ${module.packageName}", it) }
+                    .getOrThrow()
+            }
         } finally {
+            if (newStateCommitted) {
+                oldState.entries.forEach(VectorLifecycleManager::detach)
+            } else {
+                newEntries.forEach(VectorLifecycleManager::detach)
+                unhookAllModuleHooks(module.packageName, oldHandles.toSet())
+            }
             unfreezeHooks(module.packageName)
         }
     }
@@ -218,6 +246,41 @@ object VectorModuleManager {
                 .onFailure { e -> Log.e(TAG, "Failed to instantiate class $className", e) }
         }
         return entries
+    }
+
+    @Suppress("DEPRECATION")
+    private fun containsOldClassLoaderObject(
+        value: Any?,
+        oldClassLoaders: Set<ClassLoader>,
+        seen: MutableSet<Any> = Collections.newSetFromMap(IdentityHashMap<Any, Boolean>()),
+    ): Boolean {
+        if (value == null || !seen.add(value)) return false
+        if (value is ClassLoader && value in oldClassLoaders) return true
+        if (value is Class<*> && value.classLoader in oldClassLoaders) return true
+        if (value.javaClass.classLoader in oldClassLoaders) return true
+        if (value is Bundle) {
+            return value.keySet().any { key ->
+                runCatching { containsOldClassLoaderObject(value.get(key), oldClassLoaders, seen) }
+                    .getOrDefault(true)
+            }
+        }
+        if (value is Map<*, *>) {
+            return value.entries.any {
+                containsOldClassLoaderObject(it.key, oldClassLoaders, seen) ||
+                    containsOldClassLoaderObject(it.value, oldClassLoaders, seen)
+            }
+        }
+        if (value is Iterable<*>) {
+            return value.any { containsOldClassLoaderObject(it, oldClassLoaders, seen) }
+        }
+        if (value.javaClass.isArray) {
+            for (index in 0 until Array.getLength(value)) {
+                if (containsOldClassLoaderObject(Array.get(value, index), oldClassLoaders, seen)) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 }

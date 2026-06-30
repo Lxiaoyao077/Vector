@@ -27,6 +27,12 @@ const val DEX_TRANSACTION_CODE =
 const val OBFUSCATION_MAP_TRANSACTION_CODE =
     ('_'.code shl 24) or ('O'.code shl 16) or ('B'.code shl 8) or 'F'.code
 
+internal class HotReloadInProgressException(message: String) : IllegalStateException(message)
+
+internal class HotReloadProcessDiedException(message: String) : IllegalStateException(message)
+
+internal class HotReloadUnsupportedException(message: String) : IllegalStateException(message)
+
 object ApplicationService : ILSPApplicationService.Stub() {
 
   data class ProcessKey(val uid: Int, val pid: Int)
@@ -217,7 +223,7 @@ object ApplicationService : ILSPApplicationService.Stub() {
       throw SecurityException("Target $targetId does not belong to ${module.packageName}")
     }
     if (target.state == HookedProcess.TARGET_STATE_RELOADING) {
-      throw IllegalStateException("Target $targetId is already reloading")
+      throw HotReloadInProgressException("Target $targetId is already reloading")
     }
 
     target.state = HookedProcess.TARGET_STATE_RELOADING
@@ -227,9 +233,11 @@ object ApplicationService : ILSPApplicationService.Stub() {
           target.state = HookedProcess.TARGET_STATE_UP_TO_DATE
         }
         .onFailure {
-          target.state =
-              if (target.target.asBinder().isBinderAlive) HookedProcess.TARGET_STATE_FAILED
-              else HookedProcess.TARGET_STATE_FAILED
+          if (!target.target.asBinder().isBinderAlive) {
+            hotReloadTargets.remove(target.id, target)
+            throw HotReloadProcessDiedException("Target process died before hot reload completed")
+          }
+          target.state = HookedProcess.TARGET_STATE_FAILED
           throw it
         }
   }
