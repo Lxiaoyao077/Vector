@@ -437,8 +437,7 @@ object ManagerService : ILSPManagerService.Stub() {
 
   override fun setDexObfuscate(enabled: Boolean) {
     PreferenceStore.setDexObfuscate(enabled)
-    ConfigCache.state = ConfigCache.state.copy(isDexObfuscateEnabled = enabled)
-    ConfigCache.requestCacheUpdate()
+    ConfigCache.setDexObfuscateEnabled(enabled)
   }
 
   override fun performDexOptMode(packageName: String) =
