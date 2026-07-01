@@ -1,4 +1,4 @@
-id=zygisk_vector_fork
+id=zygisk_vector
 name=Vector-Fork
 version=${versionName} (${versionCode})
 versionCode=${versionCode}
