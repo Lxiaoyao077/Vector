@@ -55,8 +55,8 @@ abstract class Injected @Inject constructor(val moduleDir: String) {
 dependencies {
     implementation(projects.hiddenapi.bridge)
     implementation(projects.legacy)
-    implementation(projects.services.managerService)
-    implementation(projects.services.daemonService)
+    implementation(projects.services)
+    implementation(projects.services)
     compileOnly(libs.androidx.annotation)
     compileOnly(projects.hiddenapi.stubs)
 }
