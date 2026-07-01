@@ -94,7 +94,7 @@ private data class HookKey(
 private object HookRegistry {
     val records = ConcurrentHashMap<HookKey, VectorHookRecord>()
     val allRecords = ConcurrentHashMap.newKeySet<VectorHookRecord>()
-    private val moduleRecords = ConcurrentHashMap<String, MutableSet<VectorHookRecord>>()
+    val moduleRecords = ConcurrentHashMap<String, MutableSet<VectorHookRecord>>()
     private val frozenLoaders = ConcurrentHashMap<String, MutableSet<ClassLoader>>()
 
     fun freeze(modulePackageName: String, classLoaders: Collection<ClassLoader>) {
