@@ -162,7 +162,7 @@ object Dex2OatServer {
           continue
         }
         val apex = Os.stat("/proc/1/root$bin")
-        val wrapper = Os.stat(wrapperPath)
+        val wrapper = Os.stat(WRAPPER64)
         if (apex.st_dev != wrapper.st_dev || apex.st_ino != wrapper.st_ino) {
           return true
         }
