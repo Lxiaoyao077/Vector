@@ -54,8 +54,9 @@ object LogcatMonitor {
     loadNativeLibrary()
     FileSystem.moveLogDir() // Defined in FileSystem
 
-    // Meizu log_reject_level workaround
-    if (SystemProperties.getInt("persist.sys.log_reject_level", 0) > 0) {
+    // Meizu log_reject_level workaround (Meizu only)
+    if ("Meizu".equals(SystemProperties.get("ro.product.manufacturer", ""), ignoreCase = true) &&
+        SystemProperties.getInt("persist.sys.log_reject_level", 0) > 0) {
       SystemProperties.set("persist.sys.log_reject_level", "0")
     }
 
