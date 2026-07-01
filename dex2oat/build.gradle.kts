@@ -5,5 +5,7 @@ android {
 
     androidResources { enable = false }
 
+    buildFeatures { buildConfig = false }
+
     externalNativeBuild { cmake { path("src/main/cpp/CMakeLists.txt") } }
 }
