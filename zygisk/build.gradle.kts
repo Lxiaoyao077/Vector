@@ -56,7 +56,6 @@ dependencies {
     implementation(projects.hiddenapi.bridge)
     implementation(projects.legacy)
     implementation(projects.services)
-    implementation(projects.services)
     compileOnly(libs.androidx.annotation)
     compileOnly(projects.hiddenapi.stubs)
 }
