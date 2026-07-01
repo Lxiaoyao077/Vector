@@ -229,11 +229,22 @@ class VectorNativeHooker<T : Executable>(private val method: T) {
         val snapshots = HookBridge.callbackSnapshot(VectorHookRecord::class.java, method)
 
         @Suppress("UNCHECKED_CAST")
-        val modernHooks =
-            (snapshots[0] as Array<VectorHookRecord>).filter { it.isActive() }.toTypedArray()
+        val rawHooks = snapshots[0] as Array<VectorHookRecord>
         val legacyHooks = snapshots[1]
 
-        // Fast path: No hooks active
+        // Fast path: No hooks at all
+        if (rawHooks.isEmpty() && legacyHooks.isEmpty()) {
+            return invokeOriginalSafely(thisObject, actualArgs)
+        }
+
+        // Only filter out inactive hooks when necessary (hot-reload in progress)
+        val modernHooks = if (rawHooks.any { !it.isActive() }) {
+            rawHooks.filter { it.isActive() }.toTypedArray()
+        } else {
+            rawHooks
+        }
+
+        // Re-check after filtering (all hooks may have been deactivated)
         if (modernHooks.isEmpty() && legacyHooks.isEmpty()) {
             return invokeOriginalSafely(thisObject, actualArgs)
         }
