@@ -238,89 +238,101 @@ object VectorService : IDaemonService.Stub() {
     val uid = intent.getIntExtra(Intent.EXTRA_UID, -1)
     val userId = intent.getIntExtra(EXTRA_USER_HANDLE, uid / PER_USER_RANGE)
     val isRemovedForAllUsers = intent.getBooleanExtra(EXTRA_REMOVED_FOR_ALL_USERS, false)
-
-    val uri = intent.data
-    val moduleName = uri?.schemeSpecificPart ?: ConfigCache.getModuleByUid(uid)?.packageName
+    val moduleName = intent.data?.schemeSpecificPart ?: ConfigCache.getModuleByUid(uid)?.packageName
 
     Log.d(TAG, "dispatchPackageChanged $action $moduleName [$uid]")
 
-    val appInfo =
-        moduleName?.let {
-          packageManager
-              ?.getPackageInfoCompat(it, MATCH_ALL_FLAGS or PackageManager.GET_META_DATA, 0)
-              ?.applicationInfo
-        }
-    var isXposedModule =
-        appInfo != null &&
-            (appInfo.metaData?.containsKey("xposedminversion") == true ||
-                ConfigCache.getModuleApkPath(appInfo) != null)
+    val isXposedModule = isXposedModule(moduleName)
 
+    // Delegate action-specific work
     when (action) {
-      Intent.ACTION_PACKAGE_FULLY_REMOVED -> {
-        if (moduleName != null) {
-          // When a package is gone, we can't check metadata.
-          // If it's gone for everyone, wipe the package from all users in the DB.
-          // Otherwise, only wipe it for the user that just uninstalled it.
-          val targetUser = if (isRemovedForAllUsers) null else userId
-          PreferenceStore.deleteModulePrefs(moduleName, userId, group = null)
-          if (isRemovedForAllUsers && ModuleDatabase.removeModule(moduleName)) {
-            // If it was in our DB and we successfully removed it, we treat it as an Xposed module.
-            isXposedModule = true
-          }
-        }
-      }
-      Intent.ACTION_PACKAGE_ADDED,
-      Intent.ACTION_PACKAGE_CHANGED -> {
-        if (isXposedModule && moduleName != null && appInfo != null) {
-          // Update the database with the new APK path if it's an Xposed module
-          isXposedModule =
-              ModuleDatabase.updateModuleApkPath(
-                  moduleName, ConfigCache.getModuleApkPath(appInfo), false)
-        } else {
-          if (ConfigCache.state.scopes.keys.any { it.uid == uid }) {
-            // If not a module, but it's an app that was previously a "scope" (target)
-            // for a module, we need to refresh the cache.
-            ConfigCache.requestCacheUpdate()
-          }
-
-          if (action == Intent.ACTION_PACKAGE_ADDED &&
-              !intent.getBooleanExtra(Intent.EXTRA_REPLACING, false) &&
-              moduleName != null) {
-
-            ConfigCache.getAutoIncludeModules().forEach { xposedModule ->
-              val scopeList = ConfigCache.getModuleScope(xposedModule) ?: mutableListOf()
-
-              val newScope =
-                  Application().apply {
-                    this.packageName = moduleName
-                    this.userId = userId
-                  }
-
-              scopeList.add(newScope)
-              if (!ModuleDatabase.setModuleScope(xposedModule, scopeList)) {
-                Log.e(TAG, "Failed to auto-include $moduleName for $xposedModule")
-              }
-            }
-          }
-        }
-      }
-      Intent.ACTION_UID_REMOVED -> {
-        // If the UID being removed was a module or a scoped app, refresh the cache.
-        if (isXposedModule || ConfigCache.state.scopes.keys.any { it.uid == uid }) {
-          ConfigCache.requestCacheUpdate()
-        }
-      }
+      Intent.ACTION_PACKAGE_FULLY_REMOVED ->
+          handleFullyRemoved(moduleName, userId, isRemovedForAllUsers)
+      Intent.ACTION_PACKAGE_ADDED, Intent.ACTION_PACKAGE_CHANGED ->
+          handleAddedOrChanged(moduleName, uid, userId, action, intent, isXposedModule)
+      Intent.ACTION_UID_REMOVED ->
+          if (isXposedModule || ConfigCache.state.scopes.keys.any { it.uid == uid })
+              ConfigCache.requestCacheUpdate()
     }
 
-    // Special handling if the app being changed is the Vector Manager itself.
+    handlePostPackageChange(intent, moduleName, userId, isXposedModule, action, isRemovedForAllUsers)
+  }
+
+  private fun isXposedModule(moduleName: String?): Boolean {
+    val appInfo = moduleName?.let {
+      packageManager
+          ?.getPackageInfoCompat(it, MATCH_ALL_FLAGS or PackageManager.GET_META_DATA, 0)
+          ?.applicationInfo
+    }
+    return appInfo != null &&
+        (appInfo.metaData?.containsKey("xposedminversion") == true ||
+            ConfigCache.getModuleApkPath(appInfo) != null)
+  }
+
+  private fun handleFullyRemoved(moduleName: String?, userId: Int, isRemovedForAllUsers: Boolean) {
+    if (moduleName == null) return
+    PreferenceStore.deleteModulePrefs(moduleName, userId, group = null)
+    if (isRemovedForAllUsers) ModuleDatabase.removeModule(moduleName)
+  }
+
+  private fun handleAddedOrChanged(
+      moduleName: String?,
+      uid: Int,
+      userId: Int,
+      action: String,
+      intent: Intent,
+      isXposedModule: Boolean,
+  ) {
+    val appInfo = moduleName?.let {
+      packageManager?.getPackageInfoCompat(it, MATCH_ALL_FLAGS or PackageManager.GET_META_DATA, 0)
+          ?.applicationInfo
+    }
+
+    if (isXposedModule && moduleName != null && appInfo != null) {
+      ModuleDatabase.updateModuleApkPath(moduleName, ConfigCache.getModuleApkPath(appInfo), false)
+      return
+    }
+
+    // Non-module package changed — refresh scoped apps and auto-include
+    if (ConfigCache.state.scopes.keys.any { it.uid == uid })
+        ConfigCache.requestCacheUpdate()
+
+    if (action == Intent.ACTION_PACKAGE_ADDED &&
+        !intent.getBooleanExtra(Intent.EXTRA_REPLACING, false) &&
+        moduleName != null) {
+      autoIncludeModule(moduleName, userId)
+    }
+  }
+
+  private fun autoIncludeModule(moduleName: String, userId: Int) {
+    ConfigCache.getAutoIncludeModules().forEach { xposedModule ->
+      val scopeList = ConfigCache.getModuleScope(xposedModule) ?: mutableListOf()
+      scopeList.add(Application().apply {
+        this.packageName = moduleName
+        this.userId = userId
+      })
+      if (!ModuleDatabase.setModuleScope(xposedModule, scopeList))
+          Log.e(TAG, "Failed to auto-include $moduleName for $xposedModule")
+    }
+  }
+
+  private fun handlePostPackageChange(
+      intent: Intent,
+      moduleName: String?,
+      userId: Int,
+      isXposedModule: Boolean,
+      action: String,
+      isRemovedForAllUsers: Boolean,
+  ) {
     val isRemovedAction =
         action == Intent.ACTION_PACKAGE_FULLY_REMOVED || action == Intent.ACTION_UID_REMOVED
+
     if (moduleName == BuildConfig.DEFAULT_MANAGER_PACKAGE_NAME && userId == 0) {
       Log.d(TAG, "Manager updated")
       ConfigCache.updateManager(isRemovedAction)
     }
 
-    // Notify the manager (foreground) that a package state changed so it can refresh its view.
+    // Broadcast to manager(s)
     if (moduleName != null) {
       val notifyIntent =
           Intent(ACTION_MANAGER_NOTIFICATION).apply {
@@ -330,20 +342,17 @@ object VectorService : IDaemonService.Stub() {
             putExtra("isXposedModule", isXposedModule)
             addFlags(FLAG_RECEIVER_INCLUDE_BACKGROUND or FLAG_RECEIVER_FROM_SHELL)
           }
-
-      // Send to both the parasitic manager and the standalone manager
       listOf(BuildConfig.MANAGER_INJECTED_PKG_NAME, BuildConfig.DEFAULT_MANAGER_PACKAGE_NAME)
           .forEach { pkg ->
             activityManager?.broadcastIntentCompat(Intent(notifyIntent).setPackage(pkg))
           }
     }
 
-    // If an actual Xposed module was updated (not removed), show a system notification.
+    // Notify if Xposed module was updated (not removed)
     if (moduleName != null && isXposedModule && !isRemovedAction && !isRemovedForAllUsers) {
       val scopes = ConfigCache.getModuleScope(moduleName) ?: emptyList()
       val isSystemModule = scopes.any { it.packageName == "system" }
       val isEnabled = ManagerService.enabledModules().contains(moduleName)
-
       NotificationManager.notifyModuleUpdated(moduleName, userId, isEnabled, isSystemModule)
     }
   }
