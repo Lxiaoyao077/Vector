@@ -74,7 +74,7 @@ class ParasiticManagerSystemHooker : HandleSystemServerProcessHooker.Callback {
             result as? ActivityInfo
                 ?: run {
                     Utils.logD(
-                        "Redirection: result is not ActivityInfo (was ${result?.java?.name})")
+                        "Redirection: result is not ActivityInfo (was ${result?.javaClass?.name})")
                     return result
                 }
 
