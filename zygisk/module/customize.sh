@@ -107,11 +107,19 @@ if [ "$API" -ge 29 ]; then
     ui_print "- Extracting dex2oat binaries"
     mkdir -p "$MODPATH/bin"
 
-    # Extract 32-bit binaries
-    extract "$ZIPFILE" "bin/$ABI32/dex2oat" "$MODPATH/bin" true
-    extract "$ZIPFILE" "bin/$ABI32/liboat_hook.so" "$MODPATH/bin" true
-    mv "$MODPATH/bin/dex2oat" "$MODPATH/bin/dex2oat32"
-    mv "$MODPATH/bin/liboat_hook.so" "$MODPATH/bin/liboat_hook32.so"
+    # Extract 32-bit binaries (may not exist in ABI-filtered builds)
+    if unzip -oj "$ZIPFILE" "bin/$ABI32/dex2oat" -d "$MODPATH/bin" >/dev/null 2>&1; then
+        mv "$MODPATH/bin/dex2oat" "$MODPATH/bin/dex2oat32"
+        ui_print "- Extracted 32-bit dex2oat"
+    else
+        ui_print "- Skipping 32-bit dex2oat (not included)"
+    fi
+    if unzip -oj "$ZIPFILE" "bin/$ABI32/liboat_hook.so" -d "$MODPATH/bin" >/dev/null 2>&1; then
+        mv "$MODPATH/bin/liboat_hook.so" "$MODPATH/bin/liboat_hook32.so"
+        ui_print "- Extracted 32-bit liboat_hook"
+    else
+        ui_print "- Skipping 32-bit liboat_hook (not included)"
+    fi
 
     # Extract 64-bit binaries
     if [ "$IS64BIT" = true ]; then
