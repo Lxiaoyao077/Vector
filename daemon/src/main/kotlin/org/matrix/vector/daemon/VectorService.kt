@@ -119,6 +119,12 @@ object VectorService : IDaemonService.Stub() {
       }
 
   private fun registerReceivers() {
+    registerBroadcastReceivers()
+    registerUidObserver()
+    Log.d(TAG, "Registered all OS Receivers and UID Observers")
+  }
+
+  private fun registerBroadcastReceivers() {
     val configFilter = IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED)
 
     val packageFilter =
@@ -153,10 +159,9 @@ object VectorService : IDaemonService.Stub() {
           addDataAuthority("5776733", null)
         }
 
-    // Define strict Android 14+ flags and the system-only BRICK permission
     val notExported = Context.RECEIVER_NOT_EXPORTED
     val exported = Context.RECEIVER_EXPORTED
-    val brickPerm = "android.permission.BRICK" // Restrict senders to Android system only
+    val brickPerm = "android.permission.BRICK"
 
     // userId = 0 => USER_SYSTEM
     activityManager?.registerReceiverCompat(
@@ -181,8 +186,9 @@ object VectorService : IDaemonService.Stub() {
         "android.permission.CONTROL_INCALL_EXPERIENCE",
         0,
         exported)
+  }
 
-    // UID Observer
+  private fun registerUidObserver() {
     val uidObserver =
         object : android.app.IUidObserver.Stub() {
           override fun onUidActive(uid: Int) = ModuleService.uidStarts(uid)
@@ -204,7 +210,6 @@ object VectorService : IDaemonService.Stub() {
 
     activityManager?.registerUidObserver(
         uidObserver, which, HiddenApiBridge.ActivityManager_PROCESS_STATE_UNKNOWN(), "android")
-    Log.d(TAG, "Registered all OS Receivers and UID Observers")
   }
 
   private fun dispatchBootCompleted() {
