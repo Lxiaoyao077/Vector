@@ -166,8 +166,13 @@ object Dex2OatServer {
     for (i in 0 until 4) {
       val bin = dex2oatArray[i] ?: continue
       try {
+        val wrapperPath = if (i < 2) WRAPPER32 else WRAPPER64
+        if (!File(wrapperPath).exists()) {
+          dex2oatArray[i] = null
+          continue
+        }
         val apex = Os.stat("/proc/1/root$bin")
-        val wrapper = Os.stat(if (i < 2) WRAPPER32 else WRAPPER64)
+        val wrapper = Os.stat(wrapperPath)
         if (apex.st_dev != wrapper.st_dev || apex.st_ino != wrapper.st_ino) {
           return true
         }
