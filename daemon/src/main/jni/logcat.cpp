@@ -85,7 +85,7 @@ private:
     size_t verbose_part_ = 0;
 
     pid_t my_pid_ = getpid();
-    bool verbose_enabled_ = true;
+    bool verbose_enabled_ = false;
 };
 
 // 'Scatter-Gather' I/O (writev)
