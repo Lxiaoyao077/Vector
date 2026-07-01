@@ -188,31 +188,29 @@ object VectorDaemon {
     Os.seteuid(1000)
   }
 
+  // Cached reflection fields for system_server restart recovery
+  private val sServiceManagerField by lazy {
+    ServiceManager::class.java.getDeclaredField("sServiceManager").apply { isAccessible = true }
+  }
+  private val sCacheField by lazy {
+    ServiceManager::class.java.getDeclaredField("sCache").apply { isAccessible = true }
+  }
+  private val iamSingletonField by lazy {
+    ActivityManager::class.java.getDeclaredField("IActivityManagerSingleton").apply { isAccessible = true }
+  }
+  private val singletonInstanceField by lazy {
+    Class.forName("android.util.Singleton").getDeclaredField("mInstance").apply { isAccessible = true }
+  }
+
   private fun clearSystemCaches() {
     Log.i(TAG, "Clearing ServiceManager and ActivityManager caches...")
     runCatching {
-          // Clear ServiceManager.sServiceManager
-          var field = ServiceManager::class.java.getDeclaredField("sServiceManager")
-          field.isAccessible = true
-          field.set(null, null)
-
-          // Clear ServiceManager.sCache
-          field = ServiceManager::class.java.getDeclaredField("sCache")
-          field.isAccessible = true
-          val sCache = field.get(null)
-          if (sCache is MutableMap<*, *>) {
-            sCache.clear()
-          }
-
-          // Clear ActivityManager.IActivityManagerSingleton
-          field = ActivityManager::class.java.getDeclaredField("IActivityManagerSingleton")
-          field.isAccessible = true
-          val singleton = field.get(null)
+          sServiceManagerField.set(null, null)
+          val sCache = sCacheField.get(null)
+          if (sCache is MutableMap<*, *>) sCache.clear()
+          val singleton = iamSingletonField.get(null)
           if (singleton != null) {
-            val mInstanceField =
-                Class.forName("android.util.Singleton").getDeclaredField("mInstance")
-            mInstanceField.isAccessible = true
-            synchronized(singleton) { mInstanceField.set(singleton, null) }
+            synchronized(singleton) { singletonInstanceField.set(singleton, null) }
           }
         }
         .onFailure { Log.w(TAG, "Failed to clear system caches via reflection", it) }
