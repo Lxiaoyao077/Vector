@@ -169,95 +169,29 @@ object FileSystem {
 
     val preLoadedApk = PreLoadedApk()
     val preLoadedDexes = mutableListOf<SharedMemory>()
-    val moduleClassNames = mutableListOf<String>()
-    val moduleLibraryNames = mutableListOf<String>()
+    var moduleClassNames = mutableListOf<String>()
+    var moduleLibraryNames = mutableListOf<String>()
     var isLegacy = false
 
-    runCatching {
-          ZipFile(file).use { zip ->
-            // Parse module.prop to get targetApiVersion
-            val props =
-                zip.getEntry("META-INF/xposed/module.prop")?.let { entry ->
-                  zip.getInputStream(entry).bufferedReader().useLines { lines ->
-                    lines
-                        .filter { it.contains("=") }
-                        .associate {
-                          val parts = it.split("=", limit = 2)
-                          parts[0].trim() to parts[1].trim()
-                        }
-                  }
-                } ?: emptyMap()
-
-            val targetApi = props["targetApiVersion"]?.toIntOrNull() ?: 0
-            val hasLegacyFile = zip.getEntry("assets/xposed_init") != null
-
-            // Determine Loading Strategy based on Priority: API 101+ > Legacy > API 100
-            val strategy =
-                when {
-                  targetApi >= 101 -> "MODERN"
-                  hasLegacyFile -> "LEGACY"
-                  targetApi == 100 -> "UNSUPPORTED" // API 100 is dropped
-                  else -> "NONE"
-                }
-
-            // Helper to read the list files
-            fun readList(name: String, dest: MutableList<String>) {
-              zip.getEntry(name)?.let { entry ->
-                zip.getInputStream(entry).bufferedReader().useLines { lines ->
-                  lines
-                      .map { it.trim() }
-                      .filter { it.isNotEmpty() && !it.startsWith("#") }
-                      .forEach { dest.add(it) }
-                }
+    val metadata =
+        runCatching {
+              ZipFile(file).use { zip ->
+                val parsed = parseModuleMetadata(zip, apkPath) ?: return null
+                moduleClassNames = parsed.classNames.toMutableList()
+                moduleLibraryNames = parsed.libNames.toMutableList()
+                isLegacy = parsed.legacy
+                readDexFiles(zip, obfuscate, preLoadedDexes)
               }
             }
-
-            when (strategy) {
-              "MODERN" -> {
-                isLegacy = false
-                readList("META-INF/xposed/java_init.list", moduleClassNames)
-                readList("META-INF/xposed/native_init.list", moduleLibraryNames)
-              }
-              "LEGACY" -> {
-                isLegacy = true
-                readList("assets/xposed_init", moduleClassNames)
-                readList("assets/native_init", moduleLibraryNames)
-              }
-              "UNSUPPORTED" -> {
-                Log.w(TAG, "Module $apkPath uses API 100 which is no longer supported.")
-                return null
-              }
-              else -> return null // No valid init files found
+            .onFailure {
+              Log.e(TAG, "Failed to load module $apkPath", it)
+              return null
             }
-
-            if (moduleClassNames.isEmpty()) return null
-
-            // Read DEX files
-            var secondary = 1
-            while (true) {
-              val entryName = if (secondary == 1) "classes.dex" else "classes$secondary.dex"
-              val dexEntry = zip.getEntry(entryName) ?: break
-              zip.getInputStream(dexEntry).use { preLoadedDexes.add(readDex(it, obfuscate)) }
-              secondary++
-            }
-          }
-        }
-        .onFailure {
-          Log.e(TAG, "Failed to load module $apkPath", it)
-          return null
-        }
 
     if (preLoadedDexes.isEmpty()) return null
 
-    // Apply obfuscation
     if (obfuscate) {
-      val signatures = ObfuscationManager.getSignatures()
-      for (i in moduleClassNames.indices) {
-        val s = moduleClassNames[i]
-        signatures.entries
-            .firstOrNull { s.startsWith(it.key) }
-            ?.let { moduleClassNames[i] = s.replace(it.key, it.value) }
-      }
+      moduleClassNames = applyObfuscation(moduleClassNames)
     }
 
     preLoadedApk.apply {
@@ -268,6 +202,98 @@ object FileSystem {
     }
 
     return preLoadedApk
+  }
+
+  private data class ModuleMetadata(
+      val classNames: List<String>,
+      val libNames: List<String>,
+      val legacy: Boolean,
+  )
+
+  private fun parseModuleMetadata(zip: ZipFile, apkPath: String): ModuleMetadata? {
+    val props =
+        zip.getEntry("META-INF/xposed/module.prop")?.let { entry ->
+          zip.getInputStream(entry).bufferedReader().useLines { lines ->
+            lines
+                .filter { it.contains("=") }
+                .associate {
+                  val parts = it.split("=", limit = 2)
+                  parts[0].trim() to parts[1].trim()
+                }
+          }
+        } ?: emptyMap()
+
+    val targetApi = props["targetApiVersion"]?.toIntOrNull() ?: 0
+    val hasLegacyFile = zip.getEntry("assets/xposed_init") != null
+
+    val strategy =
+        when {
+          targetApi >= 101 -> "MODERN"
+          hasLegacyFile -> "LEGACY"
+          targetApi == 100 -> "UNSUPPORTED"
+          else -> "NONE"
+        }
+
+    val classNames = mutableListOf<String>()
+    val libNames = mutableListOf<String>()
+    val isLegacy: Boolean
+
+    fun readList(name: String, dest: MutableList<String>) {
+      zip.getEntry(name)?.let { entry ->
+        zip.getInputStream(entry).bufferedReader().useLines { lines ->
+          lines
+              .map { it.trim() }
+              .filter { it.isNotEmpty() && !it.startsWith("#") }
+              .forEach { dest.add(it) }
+        }
+      }
+    }
+
+    when (strategy) {
+      "MODERN" -> {
+        isLegacy = false
+        readList("META-INF/xposed/java_init.list", classNames)
+        readList("META-INF/xposed/native_init.list", libNames)
+      }
+      "LEGACY" -> {
+        isLegacy = true
+        readList("assets/xposed_init", classNames)
+        readList("assets/native_init", libNames)
+      }
+      "UNSUPPORTED" -> {
+        Log.w(TAG, "Module $apkPath uses API 100 which is no longer supported.")
+        return null
+      }
+      else -> return null
+    }
+
+    if (classNames.isEmpty()) return null
+    return ModuleMetadata(classNames, libNames, isLegacy)
+  }
+
+  private fun readDexFiles(
+      zip: ZipFile,
+      obfuscate: Boolean,
+      dest: MutableList<SharedMemory>,
+  ) {
+    var secondary = 1
+    while (true) {
+      val entryName = if (secondary == 1) "classes.dex" else "classes$secondary.dex"
+      val dexEntry = zip.getEntry(entryName) ?: break
+      zip.getInputStream(dexEntry).use { dest.add(readDex(it, obfuscate)) }
+      secondary++
+    }
+  }
+
+  private fun applyObfuscation(names: MutableList<String>): MutableList<String> {
+    val signatures = ObfuscationManager.getSignatures()
+    for (i in names.indices) {
+      val s = names[i]
+      signatures.entries
+          .firstOrNull { s.startsWith(it.key) }
+          ?.let { names[i] = s.replace(it.key, it.value) }
+    }
+    return names
   }
 
   /** Safely creates the log directory. If a file exists with the same name, it deletes it first. */
