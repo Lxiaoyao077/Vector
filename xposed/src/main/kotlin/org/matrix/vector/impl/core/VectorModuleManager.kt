@@ -10,6 +10,7 @@ import io.github.libxposed.api.XposedModuleInterface.HotReloadingParam
 import io.github.libxposed.api.XposedModuleInterface.ModuleLoadedParam
 import java.io.File
 import java.lang.reflect.Array
+import java.lang.reflect.Constructor
 import java.util.Collections
 import java.util.IdentityHashMap
 import org.lsposed.lspd.models.Module
@@ -31,6 +32,7 @@ object VectorModuleManager {
 
     private const val TAG = "VectorModuleManager"
     private val moduleStates = java.util.concurrent.ConcurrentHashMap<String, ModuleState>()
+    private val constructorCache = java.util.concurrent.ConcurrentHashMap<Class<*>, Constructor<*>>()
 
     private data class ModuleState(
         val module: Module,
