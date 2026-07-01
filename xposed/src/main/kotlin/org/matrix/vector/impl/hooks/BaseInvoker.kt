@@ -67,15 +67,15 @@ internal abstract class BaseInvoker<T : Invoker<T, U>, U : Executable>(
         }
     }
 
-    /** Helper to generate the JNI shorty for non-virtual special invocations. */
-    protected fun getExecutableShorty(): CharArray {
+    /** Pre-computed JNI shorty for non-virtual special invocations. */
+    protected val executableShorty: CharArray by lazy {
         val parameterTypes = executable.parameterTypes
         val shorty = CharArray(parameterTypes.size + 1)
         shorty[0] = getTypeShorty(if (executable is Method) executable.returnType else Void.TYPE)
         for (i in 1..shorty.lastIndex) {
             shorty[i] = getTypeShorty(parameterTypes[i - 1])
         }
-        return shorty
+        shorty
     }
 
     private fun getTypeShorty(type: Class<*>): Char =
@@ -104,7 +104,7 @@ internal class VectorMethodInvoker(method: Method) :
     override fun invokeSpecial(thisObject: Any, vararg args: Any?): Any? {
         return HookBridge.invokeSpecialMethod(
             executable,
-            getExecutableShorty(),
+            executableShorty,
             executable.declaringClass,
             thisObject,
             *args,
@@ -128,7 +128,7 @@ internal class VectorCtorInvoker<T : Any>(constructor: Constructor<T>) :
     override fun invokeSpecial(thisObject: Any, vararg args: Any?): Any? {
         HookBridge.invokeSpecialMethod(
             executable,
-            getExecutableShorty(),
+            executableShorty,
             executable.declaringClass,
             thisObject,
             *args,
@@ -155,7 +155,7 @@ internal class VectorCtorInvoker<T : Any>(constructor: Constructor<T>) :
         val obj = HookBridge.allocateObject(subClass)
         HookBridge.invokeSpecialMethod(
             executable,
-            getExecutableShorty(),
+            executableShorty,
             executable.declaringClass,
             obj,
             *args,
