@@ -21,11 +21,10 @@ android {
         buildConfigField("long", "VERSION_CODE", versionCodeProvider.get())
     }
 
-    sourceSets { named("main") { java.srcDirs("src/main/kotlin", "libxposed/api/src/main/java") } }
+    sourceSets { named("main") { java.srcDirs("src/main/kotlin", "libxposed/api/src/main/java", "../external/axml/manifest-editor/lib/src/main/java") } }
 }
 
 dependencies {
-    implementation(projects.external.axml)
     implementation(projects.hiddenapi.bridge)
     implementation(projects.services.daemonService)
     compileOnly(libs.androidx.annotation)
