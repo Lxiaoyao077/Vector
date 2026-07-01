@@ -139,7 +139,33 @@ object VectorModuleManager {
 
         val oldClassLoaders =
             oldState.entries.mapNotNullTo(mutableSetOf<ClassLoader>()) { it.javaClass.classLoader }
-        var savedInstanceState: Any? = null
+
+        val (savedInstanceState, allowReload) = notifyHotReloading(oldState, oldClassLoaders, extras)
+        if (!allowReload) {
+            Log.d(TAG, "Module ${module.packageName} rejected hot reload")
+            throw IllegalStateException()
+        }
+
+        freezeHooks(module.packageName, oldClassLoaders)
+        val oldHandles = getActiveHookHandles(module.packageName)
+        try {
+            commitHotReload(module, oldState, oldHandles, savedInstanceState, extras)
+        } finally {
+            unfreezeHooks(module.packageName)
+        }
+    }
+
+    private data class HotReloadingResult(
+        val savedState: Any?,
+        val allowReload: Boolean,
+    )
+
+    private fun notifyHotReloading(
+        oldState: ModuleState,
+        oldClassLoaders: MutableSet<ClassLoader>,
+        extras: Bundle?,
+    ): HotReloadingResult {
+        var savedState: Any? = null
         val reloadingParam =
             object : HotReloadingParam {
                 override fun getExtras(): Bundle? = extras
@@ -150,7 +176,7 @@ object VectorModuleManager {
                             "Saved state must not be created by the old module classloader"
                         )
                     }
-                    savedInstanceState = outState
+                    savedState = outState
                 }
             }
 
@@ -159,70 +185,61 @@ object VectorModuleManager {
             if (!allowReload) return@forEach
             allowReload =
                 runCatching { entry.onHotReloading(reloadingParam) }
-                    .onFailure { Log.e(TAG, "Error in onHotReloading for ${module.packageName}", it) }
+                    .onFailure { Log.e(TAG, "Error in onHotReloading", it) }
                     .getOrThrow()
         }
-        if (!allowReload) {
-            Log.d(TAG, "Module ${module.packageName} rejected hot reload")
-            throw IllegalStateException()
+        return HotReloadingResult(savedState, allowReload)
+    }
+
+    private fun commitHotReload(
+        module: Module,
+        oldState: ModuleState,
+        oldHandles: List<XposedInterface.HookHandle>,
+        savedState: Any?,
+        extras: Bundle?,
+    ) {
+        val newEntries = loadAndInstantiateModule(module)
+        val param =
+            object : HotReloadedParam {
+                override fun isSystemServer(): Boolean = oldState.isSystemServer
+                override fun getProcessName(): String = oldState.processName
+                override fun getExtras(): Bundle? = extras
+                override fun getSavedInstanceState(): Any? = savedState
+                override fun getOldHookHandles(): List<XposedInterface.HookHandle> = oldHandles
+            }
+
+        moduleStates[module.packageName] =
+            ModuleState(module, oldState.processName, oldState.isSystemServer, newEntries)
+
+        oldState.entries.forEach(VectorLifecycleManager::detach)
+        newEntries.forEach { entry ->
+            VectorLifecycleManager.activeModules.add(entry)
+            runCatching { entry.onHotReloaded(param) }
+                .onFailure { Log.e(TAG, "Error in onHotReloaded for ${module.packageName}", it) }
+                .getOrThrow()
         }
+    }
 
-        freezeHooks(module.packageName, oldClassLoaders)
-        val oldHandles = getActiveHookHandles(module.packageName)
-        var newStateCommitted = false
-        var newEntries: List<XposedModule> = emptyList()
-        try {
-            val librarySearchPath = buildLibrarySearchPath(module)
-            val moduleClassLoader =
-                VectorModuleClassLoader.loadApk(
-                    module.apkPath,
-                    module.file.preLoadedDexes,
-                    librarySearchPath,
-                    XposedModule::class.java.classLoader,
-                )
-            val vectorContext =
-                VectorContext(
-                    packageName = module.packageName,
-                    applicationInfo = module.applicationInfo,
-                    service = module.service,
-                )
-            newEntries = instantiateEntries(module, moduleClassLoader, vectorContext)
-            if (newEntries.isEmpty() && module.file.moduleClassNames.isNotEmpty()) {
-                throw IllegalStateException("Failed to instantiate any hot reload entry")
-            }
-
-            val param =
-                object : HotReloadedParam {
-                    override fun isSystemServer(): Boolean = oldState.isSystemServer
-
-                    override fun getProcessName(): String = oldState.processName
-
-                    override fun getExtras(): Bundle? = extras
-
-                    override fun getSavedInstanceState(): Any? = savedInstanceState
-
-                    override fun getOldHookHandles(): List<XposedInterface.HookHandle> = oldHandles
-                }
-            moduleStates[module.packageName] =
-                ModuleState(module, oldState.processName, oldState.isSystemServer, newEntries)
-            newStateCommitted = true
-            // Keep oldState strongly reachable until callbacks finish, but stop lifecycle dispatch.
-            oldState.entries.forEach(VectorLifecycleManager::detach)
-            newEntries.forEach { entry ->
-                VectorLifecycleManager.activeModules.add(entry)
-                runCatching { entry.onHotReloaded(param) }
-                    .onFailure { Log.e(TAG, "Error in onHotReloaded for ${module.packageName}", it) }
-                    .getOrThrow()
-            }
-        } finally {
-            if (newStateCommitted) {
-                oldState.entries.forEach(VectorLifecycleManager::detach)
-            } else {
-                newEntries.forEach(VectorLifecycleManager::detach)
-                unhookAllModuleHooks(module.packageName, oldHandles.toSet())
-            }
-            unfreezeHooks(module.packageName)
+    private fun loadAndInstantiateModule(module: Module): List<XposedModule> {
+        val librarySearchPath = buildLibrarySearchPath(module)
+        val moduleClassLoader =
+            VectorModuleClassLoader.loadApk(
+                module.apkPath,
+                module.file.preLoadedDexes,
+                librarySearchPath,
+                XposedModule::class.java.classLoader,
+            )
+        val vectorContext =
+            VectorContext(
+                packageName = module.packageName,
+                applicationInfo = module.applicationInfo,
+                service = module.service,
+            )
+        val entries = instantiateEntries(module, moduleClassLoader, vectorContext)
+        if (entries.isEmpty() && module.file.moduleClassNames.isNotEmpty()) {
+            throw IllegalStateException("Failed to instantiate any hot reload entry")
         }
+        return entries
     }
 
     private fun buildLibrarySearchPath(module: Module): String = buildString {
