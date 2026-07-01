@@ -22,7 +22,6 @@ include(
     ":app",
     ":daemon",
     ":dex2oat",
-    ":external:axml",
     ":external:apache",
     ":hiddenapi:stubs",
     ":hiddenapi:bridge",
