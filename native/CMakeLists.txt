@@ -4,14 +4,14 @@ project(native)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_subdirectory(${VECTOR_ROOT}/external external)
+add_subdirectory(${VECTOR_FORK_ROOT}/external external)
 
 file(GLOB_RECURSE NATIVE_SOURCES "src/*.cpp")
 add_library(${PROJECT_NAME} STATIC ${NATIVE_SOURCES})
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
-    VERSION_CODE=${VECTOR_VERSION_CODE}
-    VERSION_NAME="${VECTOR_VERSION_NAME}"
+    VERSION_CODE=${VECTOR_FORK_VERSION_CODE}
+    VERSION_NAME="${VECTOR_FORK_VERSION_NAME}"
 )
 
 set(IGNORED_WARNINGS
@@ -31,7 +31,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Add the 'src' directory and external XZ library includes as PRIVATE.
 # These are only needed to build vector_native itself.
-target_include_directories(${PROJECT_NAME} PRIVATE src ${VECTOR_ROOT}/external/xz-embedded/linux/include)
+target_include_directories(${PROJECT_NAME} PRIVATE src ${VECTOR_FORK_ROOT}/external/xz-embedded/linux/include)
 
 # --- Compiler Options ---
 # Apply the standard pedantic warnings and the ignored warnings list.
