@@ -258,7 +258,7 @@ object VectorService : IDaemonService.Stub() {
     handlePostPackageChange(intent, moduleName, userId, isXposedModule, action, isRemovedForAllUsers)
   }
 
-  private fun isXposedModule(moduleName: String?): Boolean {
+  internal fun isXposedModule(moduleName: String?): Boolean {
     val appInfo = moduleName?.let {
       packageManager
           ?.getPackageInfoCompat(it, MATCH_ALL_FLAGS or PackageManager.GET_META_DATA, 0)
@@ -269,7 +269,7 @@ object VectorService : IDaemonService.Stub() {
             ConfigCache.getModuleApkPath(appInfo) != null)
   }
 
-  private fun handleFullyRemoved(moduleName: String?, userId: Int, isRemovedForAllUsers: Boolean) {
+  internal fun handleFullyRemoved(moduleName: String?, userId: Int, isRemovedForAllUsers: Boolean) {
     if (moduleName == null) return
     PreferenceStore.deleteModulePrefs(moduleName, userId, group = null)
     if (isRemovedForAllUsers) ModuleDatabase.removeModule(moduleName)
@@ -304,7 +304,7 @@ object VectorService : IDaemonService.Stub() {
     }
   }
 
-  private fun autoIncludeModule(moduleName: String, userId: Int) {
+  internal fun autoIncludeModule(moduleName: String, userId: Int) {
     ConfigCache.getAutoIncludeModules().forEach { xposedModule ->
       val scopeList = ConfigCache.getModuleScope(xposedModule) ?: mutableListOf()
       scopeList.add(Application().apply {
