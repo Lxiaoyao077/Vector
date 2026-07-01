@@ -94,6 +94,7 @@ private data class HookKey(
 private object HookRegistry {
     val records = ConcurrentHashMap<HookKey, VectorHookRecord>()
     val allRecords = ConcurrentHashMap.newKeySet<VectorHookRecord>()
+    private val moduleRecords = ConcurrentHashMap<String, MutableSet<VectorHookRecord>>()
     private val frozenLoaders = ConcurrentHashMap<String, MutableSet<ClassLoader>>()
 
     fun freeze(modulePackageName: String, classLoaders: Collection<ClassLoader>) {
@@ -112,9 +113,10 @@ private object HookRegistry {
     }
 
     fun handlesForModule(modulePackageName: String): List<HookHandle> {
-        return allRecords
-            .filter { it.modulePackageName == modulePackageName && it.isActive() }
-            .map { VectorHookHandle(it, it.id?.let { id -> HookKey(modulePackageName, it.executable, id) }) }
+        return moduleRecords[modulePackageName]
+            ?.filter { it.isActive() }
+            ?.map { VectorHookHandle(it, it.id?.let { id -> HookKey(modulePackageName, it.executable, id) }) }
+            ?: emptyList()
     }
 }
 
@@ -193,6 +195,9 @@ private fun installRecord(record: VectorHookRecord) {
         throw HookFailedError("Cannot hook ${record.executable}")
     }
     HookRegistry.allRecords.add(record)
+    HookRegistry.moduleRecords
+        .getOrPut(record.modulePackageName) { ConcurrentHashMap.newKeySet() }
+        .add(record)
 }
 
 private fun uninstallRecord(record: VectorHookRecord): Boolean {
@@ -202,6 +207,7 @@ private fun uninstallRecord(record: VectorHookRecord): Boolean {
         HookRegistry.records.remove(HookKey(record.modulePackageName, record.executable, id), record)
     }
     HookRegistry.allRecords.remove(record)
+    HookRegistry.moduleRecords[record.modulePackageName]?.remove(record)
     return true
 }
 
