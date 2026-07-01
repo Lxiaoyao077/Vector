@@ -5,14 +5,14 @@ project(zygisk)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_subdirectory(${VECTOR_ROOT}/native native)
+add_subdirectory(${VECTOR_FORK_ROOT}/native native)
 
 add_library(${PROJECT_NAME} SHARED module.cpp ipc_bridge.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 target_compile_definitions(${PROJECT_NAME} PRIVATE
-        INJECTED_PACKAGE_NAME="${VECTOR_INJECTED_PACKAGE_NAME}"
-        INJECTED_PACKAGE_UID=${VECTOR_INJECTED_PACKAGE_UID}
-        MANAGER_PACKAGE_NAME="${VECTOR_MANAGER_PACKAGE_NAME}"
+        INJECTED_PACKAGE_NAME="${VECTOR_FORK_INJECTED_PACKAGE_NAME}"
+        INJECTED_PACKAGE_UID=${VECTOR_FORK_INJECTED_PACKAGE_UID}
+        MANAGER_PACKAGE_NAME="${VECTOR_FORK_MANAGER_PACKAGE_NAME}"
 )
 
 target_link_libraries(${PROJECT_NAME} native log)
