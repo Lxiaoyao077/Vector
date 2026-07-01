@@ -48,7 +48,7 @@ class VectorChain(
 
     override fun getThisObject(): Any? = thisObj
 
-    override fun getArgs(): List<Any?> = args.toList()
+    override fun getArgs(): List<Any?> = java.util.Arrays.asList(*args)
 
     override fun getArg(index: Int): Any? = args[index]
 
