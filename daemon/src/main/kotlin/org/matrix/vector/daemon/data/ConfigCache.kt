@@ -11,7 +11,11 @@ import java.nio.file.Paths
 import java.nio.file.attribute.PosixFilePermissions
 import java.util.UUID
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.lsposed.lspd.models.Application
 import org.lsposed.lspd.models.Module
 import org.matrix.vector.daemon.BuildConfig
@@ -131,6 +135,17 @@ object ConfigCache {
     val obsoleteModules = mutableSetOf<String>()
     val obsoletePaths = mutableMapOf<String, String>()
 
+    // --- Pass 1: Collect pending module loads (sequential, cursor is not thread-safe) ---
+    data class PendingLoad(
+        val pkgName: String,
+        val apkPath: String,
+        val appInfo: ApplicationInfo,
+        val pkgInfo: android.content.pm.PackageInfo,
+        val oldModule: Module?,
+    )
+
+    val pendingLoads = mutableListOf<PendingLoad>()
+
     db.query(
             "modules",
             arrayOf("module_pkg_name", "apk_path"),
@@ -185,25 +200,44 @@ object ConfigCache {
               obsoletePaths[pkgName] = realApkPath
             }
 
-            val preLoadedApk = FileSystem.loadModule(apkPath, state.isDexObfuscateEnabled)
-            if (preLoadedApk != null) {
-              val module =
-                  Module().apply {
-                    packageName = pkgName
-                    this.apkPath = apkPath
-                    appId = appInfo.uid
-                    versionCode = pkgInfo.longVersionCode
-                    applicationInfo = appInfo
-                    service = oldModule?.service ?: InjectedModuleService(pkgName)
-                    file = preLoadedApk
-                  }
-              newModules[pkgName] = module
-            } else {
-              Log.w(TAG, "Failed to parse DEX/ZIP for $pkgName, skipping.")
-              obsoleteModules.add(pkgName)
-            }
+            pendingLoads.add(PendingLoad(pkgName, apkPath, appInfo, pkgInfo, oldModule))
           }
         }
+
+    // --- Pass 2: Parallel module loading ---
+    if (pendingLoads.isNotEmpty()) {
+      val obfuscate = state.isDexObfuscateEnabled
+      val results =
+          coroutineScope {
+            pendingLoads
+                .map { pending ->
+                  async {
+                    runCatching { pending to FileSystem.loadModule(pending.apkPath, obfuscate) }
+                        .getOrDefault(pending to null)
+                  }
+                }
+                .awaitAll()
+          }
+
+      for ((pending, preLoadedApk) in results) {
+        if (preLoadedApk != null) {
+          val module =
+              Module().apply {
+                packageName = pending.pkgName
+                apkPath = pending.apkPath
+                appId = pending.appInfo.uid
+                versionCode = pending.pkgInfo.longVersionCode
+                applicationInfo = pending.appInfo
+                service = pending.oldModule?.service ?: InjectedModuleService(pending.pkgName)
+                file = preLoadedApk
+              }
+          newModules[pending.pkgName] = module
+        } else {
+          Log.w(TAG, "Failed to parse DEX/ZIP for ${pending.pkgName}, skipping.")
+          obsoleteModules.add(pending.pkgName)
+        }
+      }
+    }
 
     if (packageManager?.asBinder()?.isBinderAlive == true) {
       obsoleteModules.forEach { ModuleDatabase.removeModule(it) }
@@ -358,6 +392,11 @@ object ConfigCache {
 
     val currentState = state
 
+    // --- Pass 1: Collect pending system_server module loads ---
+    data class SysPendingLoad(val module: Module, val pkgName: String, val apkPath: String)
+
+    val sysPendingLoads = mutableListOf<SysPendingLoad>()
+
     dbHelper.readableDatabase
         .query(
             "scope INNER JOIN modules ON scope.mid = modules.mid",
@@ -408,13 +447,33 @@ object ConfigCache {
               uid = module.appId
             }
 
-            FileSystem.loadModule(apkPath, state.isDexObfuscateEnabled)?.let {
-              module.file = it
-              modules.add(module)
-              // We intentionally don't mutate state.modules here. Cache update will catch it.
-            }
+            sysPendingLoads.add(SysPendingLoad(module, pkgName, apkPath))
           }
         }
+
+    // --- Pass 2: Parallel system_server module loading ---
+    if (sysPendingLoads.isNotEmpty()) {
+      val obfuscate = state.isDexObfuscateEnabled
+      val results =
+          runBlocking {
+            sysPendingLoads
+                .map { pending ->
+                  async {
+                    runCatching { pending to FileSystem.loadModule(pending.apkPath, obfuscate) }
+                        .getOrDefault(pending to null)
+                  }
+                }
+                .awaitAll()
+          }
+
+      for ((pending, preLoadedApk) in results) {
+        if (preLoadedApk != null) {
+          pending.module.file = preLoadedApk
+          modules.add(pending.module)
+          // We intentionally don't mutate state.modules here. Cache update will catch it.
+        }
+      }
+    }
     return modules
   }
 
