@@ -208,7 +208,7 @@ object ConfigCache {
     if (pendingLoads.isNotEmpty()) {
       val obfuscate = state.isDexObfuscateEnabled
       val results =
-          coroutineScope {
+          runBlocking {
             pendingLoads
                 .map { pending ->
                   async {
