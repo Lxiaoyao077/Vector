@@ -50,7 +50,7 @@ jobs:
           echo 'org.gradle.parallel=true' >> ~/.gradle/gradle.properties
           echo 'org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8 -XX:+UseParallelGC'
           echo 'org.gradle.caching=true' >> ~/.gradle/gradle.properties
-          echo 'org.gradle.configuration-cache=true' >> ~/.gradle/gradle.properties >> ~/.gradle/gradle.properties
+          echo 'org.gradle.configuration-cache=true' >> ~/.gradle/gradle.properties
           echo 'android.native.buildOutput=verbose' >> ~/.gradle/gradle.properties
 
       - name: Setup ninja
