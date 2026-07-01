@@ -145,7 +145,17 @@ object ParasiticManagerHooker {
     }
 
     private fun hookForManager(managerService: ILSPManagerService) {
-        // Hook 1: Swap ApplicationInfo during host binding
+        hookSwapAppInfo()
+        hookClassLoader(managerService)
+        hookActivityLifecycle()
+        hookIgnoreReceivers()
+        hookProviderContext()
+        hookWebViewProvider()
+        hookStateCapture()
+    }
+
+    /** Swap host ApplicationInfo with parasitic manager's during bind. */
+    private fun hookSwapAppInfo() {
         XposedHelpers.findAndHookMethod(
             ActivityThread::class.java,
             "handleBindApplication",
@@ -161,8 +171,10 @@ object ParasiticManagerHooker {
                 }
             },
         )
+    }
 
-        // Hook 2: Inject APK path into the ClassLoader
+    /** Inject the manager APK into the ClassLoader and send the binder once. */
+    private fun hookClassLoader(managerService: ILSPManagerService) {
         var classLoaderUnhook: XC_MethodHook.Unhook? = null
         val classLoaderHook =
             object : XC_MethodHook() {
@@ -170,7 +182,6 @@ object ParasiticManagerHooker {
                     val pkgInfo = getManagerPkgInfo(null) ?: return
                     val mAppInfo =
                         XposedHelpers.getObjectField(param.thisObject, "mApplicationInfo")
-
                     val managerAppInfo = pkgInfo.applicationInfo!!
 
                     if (mAppInfo == managerAppInfo) {
@@ -186,7 +197,7 @@ object ParasiticManagerHooker {
                             XposedHelpers.callMethod(pathClassLoader, "addDexPath", dexPath)
                         }
                         sendBinderToManager(pathClassLoader, managerService.asBinder())
-                        classLoaderUnhook!!.unhook() // Only need to inject once
+                        classLoaderUnhook!!.unhook()
                     }
                 }
             }
@@ -196,8 +207,10 @@ object ParasiticManagerHooker {
                 "getClassLoader",
                 classLoaderHook,
             )
+    }
 
-        // Hook 3: Activity Lifecycle & Intent Redirection
+    /** Redirect ActivityInfo, Intent components, and inject captured state on launch. */
+    private fun hookActivityLifecycle() {
         val activityClientRecordClass =
             XposedHelpers.findClass(
                 "android.app.ActivityThread\$ActivityClientRecord",
@@ -206,48 +219,8 @@ object ParasiticManagerHooker {
         val activityHooker =
             object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam<*>) {
-                    param.args.forEachIndexed { i, arg ->
-                        if (arg is ActivityInfo) {
-                            val pkgInfo =
-                                getManagerPkgInfo(arg.applicationInfo) ?: return@forEachIndexed
-                            pkgInfo.activities
-                                ?.find {
-                                    it.name ==
-                                        BuildConfig.ManagerPackageName + ".ui.activity.MainActivity"
-                                }
-                                ?.let {
-                                    it.applicationInfo = pkgInfo.applicationInfo
-                                    param.args[i] = it
-                                }
-                        }
-                        if (arg is Intent) {
-                            arg.component =
-                                ComponentName(
-                                    arg.component!!.packageName,
-                                    BuildConfig.ManagerPackageName + ".ui.activity.MainActivity",
-                                )
-                        }
-                    }
-
-                    // Captured State Injection
-                    if (param.method.getName() == "scheduleLaunchActivity") {
-                        var currentAInfo: ActivityInfo? = null
-                        val types = (param.method as Method).parameterTypes
-                        types.forEachIndexed { idx, type ->
-                            when (type) {
-                                ActivityInfo::class.java ->
-                                    currentAInfo = param.args[idx] as ActivityInfo
-                                Bundle::class.java ->
-                                    currentAInfo?.let { info ->
-                                        states[info.name]?.let { param.args[idx] = it }
-                                    }
-                                PersistableBundle::class.java ->
-                                    currentAInfo?.let { info ->
-                                        persistentStates[info.name]?.let { param.args[idx] = it }
-                                    }
-                            }
-                        }
-                    }
+                    redirectActivityArgs(param)
+                    injectCapturedState(param)
                 }
 
                 override fun afterHookedMethod(param: MethodHookParam<*>) {
@@ -262,6 +235,50 @@ object ParasiticManagerHooker {
                         }
                     }
                 }
+
+                private fun redirectActivityArgs(param: MethodHookParam<*>) {
+                    param.args.forEachIndexed { i, arg ->
+                        if (arg is ActivityInfo) {
+                            val pkgInfo =
+                                getManagerPkgInfo(arg.applicationInfo) ?: return@forEachIndexed
+                            pkgInfo.activities
+                                ?.find {
+                                    it.name == BuildConfig.ManagerPackageName + ".ui.activity.MainActivity"
+                                }
+                                ?.let {
+                                    it.applicationInfo = pkgInfo.applicationInfo
+                                    param.args[i] = it
+                                }
+                        }
+                        if (arg is Intent) {
+                            arg.component =
+                                ComponentName(
+                                    arg.component!!.packageName,
+                                    BuildConfig.ManagerPackageName + ".ui.activity.MainActivity",
+                                )
+                        }
+                    }
+                }
+
+                private fun injectCapturedState(param: MethodHookParam<*>) {
+                    if (param.method.getName() != "scheduleLaunchActivity") return
+                    var currentAInfo: ActivityInfo? = null
+                    val types = (param.method as Method).parameterTypes
+                    types.forEachIndexed { idx, type ->
+                        when (type) {
+                            ActivityInfo::class.java ->
+                                currentAInfo = param.args[idx] as ActivityInfo
+                            Bundle::class.java ->
+                                currentAInfo?.let { info ->
+                                    states[info.name]?.let { param.args[idx] = it }
+                                }
+                            PersistableBundle::class.java ->
+                                currentAInfo?.let { info ->
+                                    persistentStates[info.name]?.let { param.args[idx] = it }
+                                }
+                        }
+                    }
+                }
             }
 
         XposedBridge.hookAllConstructors(activityClientRecordClass, activityHooker)
@@ -273,8 +290,10 @@ object ParasiticManagerHooker {
                 )
             XposedBridge.hookAllMethods(appThreadClass, "scheduleLaunchActivity", activityHooker)
         }
+    }
 
-        // Hook 4: Ignore Receivers (Manager doesn't need to handle host receivers)
+    /** Suppress host receiver handling — manager doesn't need them. */
+    private fun hookIgnoreReceivers() {
         XposedBridge.hookAllMethods(
             ActivityThread::class.java,
             "handleReceiver",
@@ -287,8 +306,10 @@ object ParasiticManagerHooker {
                 }
             },
         )
+    }
 
-        // Hook 5: Provider Context Spoofing
+    /** Replace context for ContentProvider installation to mimic the manager package. */
+    private fun hookProviderContext() {
         XposedBridge.hookAllMethods(
             ActivityThread::class.java,
             "installProvider",
@@ -302,10 +323,7 @@ object ParasiticManagerHooker {
 
                     param.args.forEachIndexed { i, arg ->
                         when (arg) {
-                            is Context -> {
-                                ctx = arg
-                                ctxIdx = i
-                            }
+                            is Context -> { ctx = arg; ctxIdx = i }
                             is ProviderInfo -> info = arg
                         }
                     }
@@ -316,7 +334,6 @@ object ParasiticManagerHooker {
                         if (info.applicationInfo.packageName != managerPackage) return
 
                         if (originalContext == null) {
-                            // Create a fake original context to satisfy internal package checks
                             info.applicationInfo.packageName = "$managerPackage.origin"
                             val compatibilityInfo =
                                 HiddenApiBridge.Resources_getCompatibilityInfo(ctx.resources)
@@ -324,11 +341,7 @@ object ParasiticManagerHooker {
                                 ActivityThread.currentActivityThread()
                                     .getPackageInfoNoCheck(info.applicationInfo, compatibilityInfo)
                             XposedHelpers.setObjectField(
-                                originalPkgInfo,
-                                "mPackageName",
-                                managerPackage,
-                            )
-
+                                originalPkgInfo, "mPackageName", managerPackage)
                             val contextImplClass =
                                 XposedHelpers.findClass("android.app.ContextImpl", null)
                             originalContext =
@@ -345,8 +358,10 @@ object ParasiticManagerHooker {
                 }
             },
         )
+    }
 
-        // Hook 6: WebView initialization within Parasitic process
+    /** Initialize Chromium WebView provider in the parasitic process. */
+    private fun hookWebViewProvider() {
         XposedHelpers.findAndHookMethod(
             WebViewFactory::class.java,
             "getProvider",
@@ -354,32 +369,23 @@ object ParasiticManagerHooker {
                 override fun replaceHookedMethod(param: MethodHookParam<*>): Any? {
                     val existing =
                         XposedHelpers.getStaticObjectField(
-                            WebViewFactory::class.java,
-                            "sProviderInstance",
-                        )
+                            WebViewFactory::class.java, "sProviderInstance")
                     if (existing != null) return existing
 
                     val providerClass =
                         XposedHelpers.callStaticMethod(
-                            WebViewFactory::class.java,
-                            "getProviderClass",
-                        ) as Class<*>
+                            WebViewFactory::class.java, "getProviderClass") as Class<*>
                     return try {
                         val staticFactory =
                             providerClass.getMethod(
-                                CHROMIUM_WEBVIEW_FACTORY_METHOD,
-                                WebViewDelegate::class.java,
-                            )
+                                CHROMIUM_WEBVIEW_FACTORY_METHOD, WebViewDelegate::class.java)
                         val delegateCtor =
                             WebViewDelegate::class.java.getDeclaredConstructor().apply {
                                 isAccessible = true
                             }
                         val instance = staticFactory.invoke(null, delegateCtor.newInstance())
                         XposedHelpers.setStaticObjectField(
-                            WebViewFactory::class.java,
-                            "sProviderInstance",
-                            instance,
-                        )
+                            WebViewFactory::class.java, "sProviderInstance", instance)
                         logD("WebView provider initialized: $instance")
                         instance
                     } catch (e: Exception) {
@@ -389,8 +395,10 @@ object ParasiticManagerHooker {
                 }
             },
         )
+    }
 
-        // Hook 7: State Capture on Stop
+    /** Capture Activity instance state on stop for later restoration. */
+    private fun hookStateCapture() {
         val stateCaptureHooker =
             object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam<*>) {
@@ -409,7 +417,8 @@ object ParasiticManagerHooker {
                                 else "callCallActivityOnSaveInstanceState"
                             XposedHelpers.callMethod(param.thisObject, saveMethod, record)
 
-                            val state = XposedHelpers.getObjectField(record, "state") as? Bundle
+                            val state =
+                                XposedHelpers.getObjectField(record, "state") as? Bundle
                             val pState =
                                 XposedHelpers.getObjectField(record, "persistentState")
                                     as? PersistableBundle
@@ -424,10 +433,7 @@ object ParasiticManagerHooker {
                 }
             }
         XposedBridge.hookAllMethods(
-            ActivityThread::class.java,
-            "performStopActivityInner",
-            stateCaptureHooker,
-        )
+            ActivityThread::class.java, "performStopActivityInner", stateCaptureHooker)
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
             XposedHelpers.findAndHookMethod(
                 ActivityThread::class.java,
