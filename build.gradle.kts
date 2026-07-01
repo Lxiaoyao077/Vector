@@ -102,9 +102,9 @@ subprojects {
                 val args =
                     listOf(
                         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
-                        "-DVECTOR_ROOT=${rootDir.absolutePath}",
-                        "-DVECTOR_VERSION_CODE=${versionCodeProvider.get()}",
-                        "-DVECTOR_VERSION_NAME=${versionNameProvider.get()}",
+                        "-DVECTOR_FORK_ROOT=${rootDir.absolutePath}",
+                        "-DVECTOR_FORK_VERSION_CODE=${versionCodeProvider.get()}",
+                        "-DVECTOR_FORK_VERSION_NAME=${versionNameProvider.get()}",
                         // Enforce 16 KB page size alignment for Android 15+ compatibility
                         "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384",
                         "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-z,max-page-size=16384",
