@@ -135,11 +135,9 @@ object Dex2OatServer {
                 return
 
             val is64Bit = header[4] == 2.toByte()
-            val isDebug = path.contains("dex2oatd")
-
             val index =
                 when {
-                  is64Bit -> if (isDebug) 3 else 2
+                  is64Bit -> 2
                   else -> -1
                 }
 
