@@ -63,7 +63,7 @@ class VectorModuleClassLoader : ByteBufferDexClassLoader {
 
         try {
             return Any::class.java.classLoader!!.loadClass(name)
-        } catch (ignored: ClassNotFoundException) {}
+        } catch (_: ClassNotFoundException) { /* fall through to module DEX */ }
 
         var fromSuper: ClassNotFoundException? = null
         try {
@@ -102,7 +102,7 @@ class VectorModuleClassLoader : ByteBufferDexClassLoader {
                     val fd = Os.open(entryPath, OsConstants.O_RDONLY, 0)
                     Os.close(fd)
                     return entryPath
-                } catch (ignored: ErrnoException) {}
+                } catch (_: ErrnoException) { /* file not accessible, try next dir */ }
             }
         }
         return null
