@@ -57,6 +57,8 @@
     <string name="home_loading_activity">Đang tải hoạt động gần đây…</string>
     <string name="home_offline">Đang hiện hoạt động đã lưu — không kết nối được GitHub.</string>
     <string name="home_bumps">%1$d bản cập nhật phụ thuộc</string>
+    <string name="home_actions">Thao t谩c nhanh</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Tham gia</string>
     <string name="home_test_canary">Thử bản canary</string>
     <string name="home_open_issue">Báo lỗi</string>

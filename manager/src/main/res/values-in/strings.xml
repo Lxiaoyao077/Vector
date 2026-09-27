@@ -61,6 +61,8 @@
     <string name="home_loading_activity">Memuat aktivitas terbaru…</string>
     <string name="home_offline">Menampilkan aktivitas tersimpan — GitHub tidak dapat dihubungi.</string>
     <string name="home_bumps">%1$d pembaruan dependensi</string>
+    <string name="home_actions">Tindakan cepat</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Ikut serta</string>
     <string name="home_test_canary">Coba canary</string>
     <string name="home_open_issue">Laporkan masalah</string>

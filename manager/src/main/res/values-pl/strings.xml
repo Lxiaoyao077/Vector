@@ -117,6 +117,8 @@
     <string name="home_window_changed">Wyświetlana jest zapisana aktywność dla nowego zakresu — pociągnij, aby odświeżyć</string>
     <string name="home_offline">Wyświetlana jest zapisana aktywność — nie można nawiązać połączenia z GitHubem.</string>
     <string name="home_bumps">%1$d aktualizacji zależności</string>
+    <string name="home_actions">Szybkie akcje</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Weź udział</string>
     <string name="home_test_canary">Wypróbuj Canary</string>
     <string name="home_open_issue">Zgłoś problem</string>

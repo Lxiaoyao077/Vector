@@ -59,6 +59,8 @@
     <string name="home_loading_activity">Letzte Aktivität wird geladen…</string>
     <string name="home_offline">Gespeicherte Aktivität — GitHub war nicht erreichbar.</string>
     <string name="home_bumps">%1$d Abhängigkeits-Updates</string>
+    <string name="home_actions">Schnellaktionen</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Mitmachen</string>
     <string name="home_test_canary">Canary testen</string>
     <string name="home_open_issue">Problem melden</string>

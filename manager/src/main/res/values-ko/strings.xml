@@ -57,6 +57,8 @@
     <string name="home_loading_activity">최근 활동을 불러오는 중…</string>
     <string name="home_offline">저장된 활동을 표시합니다 — GitHub에 연결하지 못했습니다.</string>
     <string name="home_bumps">의존성 업데이트 %1$d건</string>
+    <string name="home_actions">牍犽ジ 鞛戩梾</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">함께하기</string>
     <string name="home_test_canary">canary 체험</string>
     <string name="home_open_issue">문제 신고</string>

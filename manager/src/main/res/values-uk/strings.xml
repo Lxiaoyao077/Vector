@@ -63,6 +63,8 @@
     <string name="home_loading_activity">Завантаження нещодавньої активності…</string>
     <string name="home_offline">Показано збережену активність — GitHub недоступний.</string>
     <string name="home_bumps">%1$d оновлень залежностей</string>
+    <string name="home_actions">楔胁懈写泻褨 写褨褩</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Долучитися</string>
     <string name="home_test_canary">Спробувати canary</string>
     <string name="home_open_issue">Повідомити про проблему</string>

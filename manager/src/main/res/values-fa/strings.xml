@@ -59,6 +59,8 @@
     <string name="home_loading_activity">در حال بارگیری فعالیت اخیر…</string>
     <string name="home_offline">فعالیت ذخیره‌شده نمایش داده می‌شود — دسترسی به GitHub ممکن نشد.</string>
     <string name="home_bumps">%1$d به‌روزرسانی وابستگی</string>
+    <string name="home_actions">丕賯丿丕賲丕鬲 爻乇蹖毓</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">مشارکت کنید</string>
     <string name="home_test_canary">آزمایش Canary</string>
     <string name="home_open_issue">گزارش مشکل</string>

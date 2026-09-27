@@ -59,6 +59,8 @@
     <string name="home_loading_activity">Carregando a atividade recente…</string>
     <string name="home_offline">Mostrando a atividade salva — não foi possível acessar o GitHub.</string>
     <string name="home_bumps">%1$d atualizações de dependências</string>
+    <string name="home_actions">A莽玫es r谩pidas</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Participar</string>
     <string name="home_test_canary">Testar canary</string>
     <string name="home_open_issue">Relatar um problema</string>

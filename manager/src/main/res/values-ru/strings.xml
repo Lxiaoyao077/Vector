@@ -59,6 +59,8 @@
     <string name="home_loading_activity">Загрузка недавней активности…</string>
     <string name="home_offline">Показана сохранённая лента — GitHub недоступен.</string>
     <string name="home_bumps">%1$d обновлений зависимостей</string>
+    <string name="home_actions">袘褘褋褌褉褘械 写械泄褋褌胁懈褟</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Присоединиться</string>
     <string name="home_test_canary">Попробовать canary</string>
     <string name="home_open_issue">Сообщить о проблеме</string>

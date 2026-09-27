@@ -59,6 +59,8 @@
     <string name="home_loading_activity">Son hareketler yükleniyor…</string>
     <string name="home_offline">Kayıtlı hareketler gösteriliyor — GitHub\'a ulaşılamadı.</string>
     <string name="home_bumps">%1$d bağımlılık güncellemesi</string>
+    <string name="home_actions">H谋zl谋 i艧lemler</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Katıl</string>
     <string name="home_test_canary">Canary dene</string>
     <string name="home_open_issue">Sorun bildir</string>
