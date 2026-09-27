@@ -47,7 +47,10 @@ abstract class GitLatestTagValueSource : ValueSource<String, ValueSourceParamete
     override fun obtain(): String {
         val output = ByteArrayOutputStream()
         val result = execOperations.exec {
-            commandLine("git", "tag", "--list", "--sort=-v:refname")
+            // Only v-prefixed tags are version names. CI's canary releases are tagged
+            // canary-<code>, and a fork starts with no tags but those, so an unfiltered
+            // listing once named a version "canary-3115".
+            commandLine("git", "tag", "--list", "v*", "--sort=-v:refname")
             standardOutput = output
             isIgnoreExitValue = true
         }
