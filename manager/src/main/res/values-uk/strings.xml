@@ -65,11 +65,8 @@
     <string name="home_bumps">%1$d оновлень залежностей</string>
     <string name="home_actions">Швидкі дії</string>
     <string name="home_github">GitHub</string>
-    <string name="home_contribute">Долучитися</string>
     <string name="home_test_canary">Спробувати canary</string>
     <string name="home_open_issue">Повідомити про проблему</string>
-    <string name="home_discussions">Обговорення</string>
-    <string name="home_review_prs">Переглянути зміну</string>
 
     <string name="home_with_coauthor">%1$s і %2$s</string>
     <string name="home_with_coauthors">%1$s і ще %2$d</string>

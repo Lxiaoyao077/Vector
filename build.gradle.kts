@@ -226,7 +226,7 @@ val injectedPackageUid = 2000
 val defaultManagerPackageName = "org.matrix.vector.manager"
 
 val androidTargetSdkVersion = 37
-val androidMinSdkVersion = 27
+val androidMinSdkVersion = 31
 val androidBuildToolsVersion = "37.0.0"
 val androidCompileSdkVersion = 37
 val androidCompileNdkVersion = "29.0.14206865"
@@ -287,19 +287,6 @@ subprojects {
                     listOf(
                         "-DVERSION_CODE=${versionCodeProvider.get()}",
                         "-DVERSION_NAME='\"${versionNameProvider.get()}\"'",
-                        // parallel_hashmap reaches for <emmintrin.h> whenever __SSE2__ is defined,
-                        // and that header's static inline intrinsics arrive twice on the x86 ABIs:
-                        // dex_builder.ixx and dex_helper.ixx each include phmap in their global
-                        // module fragment, so importing dex_builder gives clang two definitions
-                        // with the same mangled name. clang 21 (NDK r29) rejects that outright,
-                        // where clang 20 merged them. Turning phmap's SSE2 group scan off costs
-                        // nothing on arm, which never had it, and is set for every native module
-                        // rather than for dex_builder alone because phmap's layout depends on the
-                        // flag -- our own hook_bridge.cpp instantiates the same templates, and two
-                        // group sizes in one .so would be an ODR violation the linker cannot see.
-                        "-DPHMAP_HAVE_SSE2=0",
-                        // phmap refuses to configure with SSSE3 but no SSE2, so both go together.
-                        "-DPHMAP_HAVE_SSSE3=0",
                     )
 
                 val args =

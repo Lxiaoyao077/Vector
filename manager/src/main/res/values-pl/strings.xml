@@ -119,11 +119,8 @@
     <string name="home_bumps">%1$d aktualizacji zależności</string>
     <string name="home_actions">Szybkie akcje</string>
     <string name="home_github">GitHub</string>
-    <string name="home_contribute">Weź udział</string>
     <string name="home_test_canary">Wypróbuj Canary</string>
     <string name="home_open_issue">Zgłoś problem</string>
-    <string name="home_discussions">Dyskusje</string>
-    <string name="home_review_prs">Przejrzyj zmianę</string>
     <!-- Joins a commit's author with its co-authors, e.g. "Leaf-lsgtky &amp; Qing" -->
     <string name="home_with_coauthor">%1$s i %2$s</string>
     <string name="home_with_coauthors">%1$s i %2$d innych</string>

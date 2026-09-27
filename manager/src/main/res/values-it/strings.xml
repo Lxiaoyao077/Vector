@@ -61,11 +61,8 @@
     <string name="home_bumps">%1$d aggiornamenti di dipendenze</string>
     <string name="home_actions">Azioni rapide</string>
     <string name="home_github">GitHub</string>
-    <string name="home_contribute">Partecipa</string>
     <string name="home_test_canary">Prova canary</string>
     <string name="home_open_issue">Segnala un problema</string>
-    <string name="home_discussions">Discussioni</string>
-    <string name="home_review_prs">Rivedi una modifica</string>
 
     <string name="home_with_coauthor">%1$s e %2$s</string>
     <string name="home_with_coauthors">%1$s e altri %2$d</string>

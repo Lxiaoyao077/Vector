@@ -13,6 +13,7 @@ Everything this fork has done since diverging from [Vector](https://github.com/J
 
 - Rebranded Vector as **Vekta**: the manager (every locale), the module's `module.prop`, the packaged zips, the release titles, the CLI banner, and the log archives all carry the new name. The module credits `JingMatrix, Lxyao` as authors, and the repository itself was renamed to `Lxiaoyao077/Vekta`.
 - Version line moved to release-candidate naming. The `v2.2-rc` tag drives names like `Vekta-v2.2-rc-3130-Release.zip`, where the trailing number stays the commit count.
+- **Minimum supported version raised to Android 12** (minSdk 31). The installer now aborts on older devices before extracting anything, and the module description and README say Android 12 through 17.
 
 ### Fixed
 
@@ -22,7 +23,7 @@ Everything this fork has done since diverging from [Vector](https://github.com/J
 ### Removed
 
 - **New XSharedPreferences**, ahead of the upstream 2.3.0 removal. Gone are the daemon-provisioned prefs safe-zone, the `ContextImpl` `checkMode`/`getPreferencesDir` hooks, and the `getPrefsPath` IPC method. `XSharedPreferences` reads the classic world-readable `/data/data` path again; modules still on the bridge must move to the libxposed service's remote preferences. The rest of the legacy module - loading, hook dispatch, resource hooking - is untouched.
-- The x86 and x86_64 ABIs. Artifacts carry `arm64-v8a` and `armeabi-v7a` only, and the module installer aborts cleanly with "Unsupported platform" on x86 devices.
+- The x86 and x86_64 ABIs. Artifacts carry `arm64-v8a` and `armeabi-v7a` only, and the module installer aborts cleanly with "Unsupported platform" on x86 devices. A follow-up sweep removed what the ABI drop left behind: the dead x86/x86_64/riscv branches in the dex2oat ABI macros, and the phmap SSE2/SSSE3 build flags that only ever existed for the x86 ABIs.
 
 ### Build
 

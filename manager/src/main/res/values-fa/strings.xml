@@ -61,11 +61,8 @@
     <string name="home_bumps">%1$d به‌روزرسانی وابستگی</string>
     <string name="home_actions">اقدامات سریع</string>
     <string name="home_github">GitHub</string>
-    <string name="home_contribute">مشارکت کنید</string>
     <string name="home_test_canary">آزمایش Canary</string>
     <string name="home_open_issue">گزارش مشکل</string>
-    <string name="home_discussions">گفتگوها</string>
-    <string name="home_review_prs">بازبینی یک تغییر</string>
 
     <string name="home_with_coauthor">%1$s و %2$s</string>
     <string name="home_with_coauthors">%1$s و %2$d نفر دیگر</string>

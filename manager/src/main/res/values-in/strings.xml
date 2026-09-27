@@ -63,11 +63,8 @@
     <string name="home_bumps">%1$d pembaruan dependensi</string>
     <string name="home_actions">Tindakan cepat</string>
     <string name="home_github">GitHub</string>
-    <string name="home_contribute">Ikut serta</string>
     <string name="home_test_canary">Coba canary</string>
     <string name="home_open_issue">Laporkan masalah</string>
-    <string name="home_discussions">Diskusi</string>
-    <string name="home_review_prs">Tinjau sebuah perubahan</string>
 
     <string name="home_with_coauthor">%1$s &amp; %2$s</string>
     <string name="home_with_coauthors">%1$s &amp; %2$d lainnya</string>

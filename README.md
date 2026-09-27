@@ -27,7 +27,7 @@ The framework allows modules to modify system and application behavior in-memory
 
 ### Compatibility
 
-Vector supports devices running **Android 8.1 through Android 17 Beta**.
+Vekta supports devices running **Android 12 through Android 17 Beta**.
 
 > [!TIP]
 > This framework requires a recent installation of Magisk or KernelSU with Zygisk enabled.

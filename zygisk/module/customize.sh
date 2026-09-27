@@ -1,5 +1,12 @@
 SKIPUNZIP=1
 
+# The framework only supports Android 12 and newer; fail before anything is extracted.
+if [ "$API" -lt 31 ]; then
+    ui_print "*********************************************************"
+    ui_print "! Android 12 or newer is required (device reports API $API)"
+    abort    "*********************************************************"
+fi
+
 # =========================================================
 # Utils functions to extract and verify installation package
 
