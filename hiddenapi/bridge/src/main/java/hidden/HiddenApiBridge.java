@@ -12,9 +12,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.UserHandle;
 import android.system.ErrnoException;
-import android.system.Int32Ref;
 import android.system.Os;
-import android.util.MutableInt;
 
 import androidx.annotation.RequiresApi;
 

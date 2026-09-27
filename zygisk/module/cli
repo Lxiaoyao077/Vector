@@ -15,7 +15,7 @@ else
 	done
 
 	if [ -z "$dex_path" ]; then
-		echo "No vector module path found"
+		echo "No Vekta module path found"
 		exit 1
 	fi
 
@@ -24,4 +24,4 @@ else
 fi
 
 # Launch the cli
-exec /system/bin/app_process $java_options /system/bin --nice-name=VectorCli org.matrix.vector.daemon.Cli "$@"
+exec /system/bin/app_process $java_options /system/bin --nice-name=VektaCli org.matrix.vector.daemon.Cli "$@"
