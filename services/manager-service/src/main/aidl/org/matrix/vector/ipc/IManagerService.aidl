@@ -730,6 +730,22 @@ interface IManagerService {
     @nullable ParcelFileDescriptor getManagerApk();
 
     /**
+     * Whether the framework currently advertises {@code PROP_RT_API_PROTECTION} to modules.
+     *
+     * <p>Lives in the daemon's own preference store and survives its restart; the in-memory state
+     * the properties call reads is seeded from it when the daemon starts.</p>
+     */
+    boolean isApiProtectionEnabled();
+
+    /**
+     * Turns the runtime API protection advertisement on or off, and persists the choice.
+     *
+     * <p>The new value takes effect from the next {@code getFrameworkProperties} call a module
+     * makes; processes that already read their properties keep what they read.</p>
+     */
+    void setApiProtectionEnabled(boolean enabled);
+
+    /**
      * The daemon did not say which root implementation is installed.
      *
      * <p>Takes 0 because 0 is also what a binder proxy hands back for a transaction the daemon does

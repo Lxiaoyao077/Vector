@@ -284,6 +284,12 @@ object ManagerService : IManagerService.Stub() {
     if (isVerboseLogEnabled()) LogcatMonitor.startVerbose() else LogcatMonitor.stopVerbose()
   }
 
+  override fun isApiProtectionEnabled() = ConfigCache.state.isApiProtectionEnabled
+
+  override fun setApiProtectionEnabled(enabled: Boolean) {
+    ConfigCache.setApiProtectionEnabled(enabled)
+  }
+
   override fun getLogParts(verbose: Boolean): List<String> = FileSystem.listLogParts(verbose)
 
   override fun getLogPart(verbose: Boolean, name: String): ParcelFileDescriptor? =
@@ -519,8 +525,7 @@ object ManagerService : IManagerService.Stub() {
 
   override fun optimizePackage(packageName: String) = PackageOptimizer.optimize(packageName)
 
-  override fun getDex2OatWrapperState() =
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) Dex2OatServer.compatibility else 0
+  override fun getDex2OatWrapperState() = Dex2OatServer.compatibility
 
   override fun setIncludeNewApps(packageName: String, enabled: Boolean) =
       ModuleDatabase.setIncludeNewApps(packageName, enabled)

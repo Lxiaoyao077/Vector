@@ -386,6 +386,8 @@
     <string name="crash_unreadable">Ce plantage n\'a pas pu être lu. Copiez-le et joignez-le tel quel au rapport.</string>
     <string name="force_launcher_icons">Empêcher les applications de masquer leur icône de lancement</string>
     <string name="force_launcher_icons_summary">Depuis Android 10, une application qui masque sa propre icône de lancement en récupère une, qui ouvre sa page d\'infos sur l\'application. Désactivez cette option pour la laisser masquée — votre lanceur ne s\'en apercevra peut-être qu\'après son redémarrage. Les applications qui n\'ont jamais eu d\'icône de lancement, dont la plupart des modules, ne sont pas concernées.</string>
+    <string name="api_protection">Protection de l'API</string>
+    <string name="api_protection_summary">Advertise runtime API protection to modules. Only matters for modules that check for it; off by default.</string>
     <string name="action_force_stop_failed">Impossible d\'arrêter %1$s.</string>
     <string name="modules_load_unsupported_api">Activé, mais conçu pour l\'API libxposed 100, que ce framework ne charge plus.</string>
     <string name="update_root_unknown">Ce build du framework n\'indique pas quelle implémentation root est installée.</string>

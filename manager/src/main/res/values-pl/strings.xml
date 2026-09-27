@@ -88,6 +88,8 @@
     <string name="status_notification_summary">Stałe powiadomienie pokazujące, że Vekta jest uruchomiony.</string>
     <string name="force_launcher_icons">Nie pozwalaj aplikacjom ukrywać ikon w launcherze</string>
     <string name="force_launcher_icons_summary">Od Androida 10 aplikacja, która ukrywa własną ikonę launchera, otrzymuje z powrotem jedną ikonę, która otwiera stronę informacji o aplikacji. Wyłącz to, aby pozostała ukryta — launcher może się nie zaktualizować do czasu restartu. Nie dotyczy to aplikacji, które nigdy nie miały ikony launchera, w tym większość modułów.</string>
+    <string name="api_protection">Ochrona API</string>
+    <string name="api_protection_summary">Advertise runtime API protection to modules. Only matters for modules that check for it; off by default.</string>
     <!-- Home: the community feed -->
     <string name="home_quarter_title">Ostatnia aktywność</string>
     <!-- Example: "7 commits by 4 people" -->

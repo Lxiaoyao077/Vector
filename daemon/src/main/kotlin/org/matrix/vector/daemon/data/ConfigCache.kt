@@ -75,6 +75,12 @@ object ConfigCache {
           Log.i(TAG, "System services are ready. Mapping modules and scopes.")
           updateManager(false)
           setupMiscPath()
+          // The protection advertisement is the reader's choice and outlives the daemon: seed the
+          // state from the preference now that the store is reachable, before anything can ask.
+          val apiProtection =
+              PreferenceStore.getModulePrefs("lspd", 0, "config")["enable_api_protection"]
+                  as? Boolean ?: false
+          synchronized(this) { state = state.copy(isApiProtectionEnabled = apiProtection) }
           performCacheUpdate()
           synchronized(this) { state = state.copy(isCacheReady = true) }
         }
@@ -604,5 +610,15 @@ object ConfigCache {
   fun shouldSkipProcess(scope: ProcessScope): Boolean {
     ensureCacheReady()
     return !state.scopes.containsKey(scope)
+  }
+
+  /**
+   * Applies the reader's choice to the state the properties call reads, and persists it so a
+   * restart keeps it. The swap is the same short one the other toggles use; modules that already
+   * read their properties keep what they read.
+   */
+  fun setApiProtectionEnabled(enabled: Boolean) {
+    PreferenceStore.updateModulePrefs("lspd", 0, "config", "enable_api_protection", enabled)
+    synchronized(this) { state = state.copy(isApiProtectionEnabled = enabled) }
   }
 }

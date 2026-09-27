@@ -96,6 +96,7 @@ fun SystemStatusScreen(
     val device = viewModel.device
     val context = LocalContext.current
     val statusNotification by viewModel.statusNotification.collectAsStateWithLifecycle()
+    val apiProtection by viewModel.apiProtection.collectAsStateWithLifecycle()
     val hiddenIcon by viewModel.hiddenIcon.collectAsStateWithLifecycle()
     val presence by viewModel.presence.collectAsStateWithLifecycle()
     val managerInstall by viewModel.managerInstall.collectAsStateWithLifecycle()
@@ -226,6 +227,15 @@ fun SystemStatusScreen(
                     checked = hiddenIcon,
                     enabled = daemonAlive,
                     onCheckedChange = viewModel::setForcedLauncherIcons,
+                )
+            }
+            item {
+                FrameworkToggle(
+                    title = stringResource(R.string.api_protection),
+                    subtitle = stringResource(R.string.api_protection_summary),
+                    checked = apiProtection,
+                    enabled = daemonAlive,
+                    onCheckedChange = viewModel::setApiProtectionEnabled,
                 )
             }
 

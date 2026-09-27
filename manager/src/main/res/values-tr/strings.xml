@@ -386,6 +386,8 @@
     <string name="crash_unreadable">Bu çökme okunamadı. Olduğu gibi kopyalayıp bildirime ekleyin.</string>
     <string name="force_launcher_icons">Uygulamaların başlatıcı simgesini gizlemesini engelle</string>
     <string name="force_launcher_icons_summary">Android 10\'dan beri, kendi başlatıcı simgesini gizleyen bir uygulamaya, uygulama bilgisi sayfasını açan bir simge geri verilir. Gizli kalabilmesi için bunu kapatın — başlatıcınız yeniden başlatılana kadar durumu yansıtmayabilir. Hiçbir zaman başlatıcı simgesi olmamış uygulamalar, çoğu modül dahil, bundan etkilenmez.</string>
+    <string name="api_protection">API korumas谋</string>
+    <string name="api_protection_summary">Advertise runtime API protection to modules. Only matters for modules that check for it; off by default.</string>
     <string name="action_force_stop_failed">%1$s durdurulamadı.</string>
     <string name="modules_load_unsupported_api">Etkin, ancak libxposed API 100 için derlendi; bu çerçeve artık onu yüklemiyor.</string>
     <string name="update_root_unknown">Bu çatı derlemesi hangi root uygulamasının kurulu olduğunu bildirmiyor.</string>

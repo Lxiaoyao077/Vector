@@ -215,6 +215,9 @@ class HomeViewModel(
     private val _hiddenIcon = MutableStateFlow(true)
     val hiddenIcon: StateFlow<Boolean> = _hiddenIcon.asStateFlow()
 
+    private val _apiProtection = MutableStateFlow(false)
+    val apiProtection: StateFlow<Boolean> = _apiProtection.asStateFlow()
+
     /**
      * How this manager can be opened, and how it currently is.
      *
@@ -552,6 +555,10 @@ class HomeViewModel(
             .isForcedLauncherIcons()
             .onSuccess { _hiddenIcon.value = it }
             .onFailure { e -> logW("status: launcher-icon toggle unread", e) }
+        daemon
+            .isApiProtectionEnabled()
+            .onSuccess { _apiProtection.value = it }
+            .onFailure { e -> logW("status: api-protection toggle unread", e) }
     }
 
     fun setStatusNotification(enabled: Boolean) {
@@ -581,6 +588,16 @@ class HomeViewModel(
                 // applies it by running `settings put global`, which can fail without saying so —
                 // so a transaction that arrived is not yet a setting that changed.
                 _hiddenIcon.value = daemon.isForcedLauncherIcons().getOrDefault(force)
+            }
+        }
+    }
+
+    fun setApiProtectionEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            daemon.setApiProtectionEnabled(enabled).onSuccess {
+                _apiProtection.value = enabled
+            }.onFailure { e ->
+                logE("framework: setting api protection to $enabled failed", e)
             }
         }
     }

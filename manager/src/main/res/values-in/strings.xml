@@ -379,6 +379,8 @@
     <string name="crash_unreadable">Crash ini tidak terbaca. Salin dan lampirkan apa adanya ke laporan.</string>
     <string name="force_launcher_icons">Cegah aplikasi menyembunyikan ikon launcher-nya</string>
     <string name="force_launcher_icons_summary">Sejak Android 10, aplikasi yang menyembunyikan ikon launcher-nya sendiri diberi ikon pengganti yang membuka halaman info aplikasinya. Matikan ini agar aplikasi tersebut tetap tersembunyi — launcher Anda mungkin baru menyusul setelah dimulai ulang. Aplikasi yang memang tidak pernah punya ikon launcher, termasuk sebagian besar modul, tidak terpengaruh.</string>
+    <string name="api_protection">Perlindungan API</string>
+    <string name="api_protection_summary">Advertise runtime API protection to modules. Only matters for modules that check for it; off by default.</string>
     <string name="action_force_stop_failed">%1$s tidak bisa dihentikan.</string>
     <string name="modules_load_unsupported_api">Aktif, tetapi dibuat untuk libxposed API 100, yang tidak lagi dimuat framework ini.</string>
     <string name="update_root_unknown">Build framework ini tidak melaporkan implementasi root mana yang terpasang.</string>

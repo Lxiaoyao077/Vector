@@ -218,6 +218,11 @@ class DaemonClient(private val serviceState: StateFlow<IManagerService?>) {
     suspend fun setVerboseLogEnabled(enabled: Boolean): Result<Unit> = runIpc { it.setVerboseLogEnabled(enabled)
     }
 
+    suspend fun isApiProtectionEnabled(): Result<Boolean> = runIpc { it.isApiProtectionEnabled }
+
+    suspend fun setApiProtectionEnabled(enabled: Boolean): Result<Unit> =
+        runIpc { it.setApiProtectionEnabled(enabled) }
+
     /**
      * The rotated parts the daemon still holds for one of the two logs, oldest first.
      *
