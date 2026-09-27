@@ -57,7 +57,7 @@
     <string name="home_loading_activity">最近のアクティビティを読み込んでいます…</string>
     <string name="home_offline">保存されたアクティビティを表示しています — GitHub に接続できませんでした。</string>
     <string name="home_bumps">依存関係の更新: %1$d 件</string>
-    <string name="home_actions">銈偆銉冦偗鎿嶄綔</string>
+    <string name="home_actions">クイック操作</string>
     <string name="home_github">GitHub</string>
     <string name="home_contribute">参加</string>
     <string name="home_test_canary">Canary を試す</string>

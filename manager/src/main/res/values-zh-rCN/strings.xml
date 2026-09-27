@@ -57,7 +57,7 @@
     <string name="home_loading_activity">正在加载近期动态…</string>
     <string name="home_offline">正在显示已保存的动态——无法连接 GitHub。</string>
     <string name="home_bumps">%1$d 次依赖更新</string>
-    <string name="home_actions">蹇嵎鎿嶄綔</string>
+    <string name="home_actions">快捷操作</string>
     <string name="home_github">GitHub</string>
     <string name="home_contribute">参与进来</string>
     <string name="home_test_canary">试用 Canary</string>

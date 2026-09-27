@@ -59,7 +59,7 @@
     <string name="home_loading_activity">Cargando la actividad reciente…</string>
     <string name="home_offline">Mostrando la actividad guardada: no se pudo acceder a GitHub.</string>
     <string name="home_bumps">%1$d actualizaciones de dependencias</string>
-    <string name="home_actions">Acciones r谩pidas</string>
+    <string name="home_actions">Acciones rápidas</string>
     <string name="home_github">GitHub</string>
     <string name="home_contribute">Participar</string>
     <string name="home_test_canary">Probar canary</string>

@@ -67,7 +67,7 @@
     <string name="home_loading_activity">جارٍ تحميل النشاط الأخير…</string>
     <string name="home_offline">يُعرض النشاط المحفوظ — تعذّر الوصول إلى GitHub.</string>
     <string name="home_bumps">%1$d تحديثات للاعتماديات</string>
-    <string name="home_actions">廿噩乇丕亍丕鬲 爻乇賷毓丞</string>
+    <string name="home_actions">إجراءات سريعة</string>
     <string name="home_github">GitHub</string>
     <string name="home_contribute">شارِك</string>
     <string name="home_test_canary">جرّب Canary</string>

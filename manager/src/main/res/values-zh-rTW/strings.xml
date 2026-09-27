@@ -57,7 +57,7 @@
     <string name="home_loading_activity">正在載入近期動態…</string>
     <string name="home_offline">正在顯示已儲存的動態——無法連線 GitHub。</string>
     <string name="home_bumps">%1$d 次相依套件更新</string>
-    <string name="home_actions">蹇嵎鎿嶄綔</string>
+    <string name="home_actions">快捷操作</string>
     <string name="home_github">GitHub</string>
     <string name="home_contribute">一起參與</string>
     <string name="home_test_canary">試用 Canary</string>

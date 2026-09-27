@@ -67,7 +67,7 @@
     <string name="home_loading_activity">טוען פעילות אחרונה…</string>
     <string name="home_offline">מוצגת פעילות שמורה — לא הייתה גישה ל-GitHub.</string>
     <string name="home_bumps">%1$d עדכוני תלויות</string>
-    <string name="home_actions">驻注讜诇讜转 诪讛讬专讜转</string>
+    <string name="home_actions">פעולות מהירות</string>
     <string name="home_github">GitHub</string>
     <string name="home_contribute">קחו חלק</string>
     <string name="home_test_canary">לנסות canary</string>
