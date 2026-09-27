@@ -16,7 +16,7 @@ jobs:
     # once, as the stable release, never also as a canary. The tag build is a separate push event
     # (ref refs/tags/v*, not refs/heads/master) and is unaffected, so the release still ships.
     if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master' && startsWith(github.event.head_commit.message, 'Release Vector')) }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     # Needed to publish the canary prerelease below. Everything else here only reads.
     permissions:
       contents: write
