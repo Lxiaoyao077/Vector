@@ -193,7 +193,7 @@ jobs:
         run: |
           set -euo pipefail
           # `%s` arguments, never the format string, so a `%` anywhere in the changelog is literal.
-          notes=$(printf '# 🎉 Vekta %s 🎉\n\n%s\n' "${TAG#v}" "$(cat zygisk/changelog.md)")
+          notes=$(printf '# Vekta %s\n\n%s\n' "${TAG#v}" "$(cat zygisk/changelog.md)")
 
           # Recreated rather than edited so a re-run replaces the assets instead of appending a
           # second copy. No `--cleanup-tag`: the release is rebuilt, the pushed release tag is kept.
