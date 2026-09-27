@@ -618,7 +618,12 @@ object ConfigCache {
    * read their properties keep what they read.
    */
   fun setApiProtectionEnabled(enabled: Boolean) {
-    PreferenceStore.updateModulePrefs("lspd", 0, "config", "enable_api_protection", enabled)
+    PreferenceStore.updateModulePrefs(
+        "lspd",
+        0,
+        "config",
+        mapOf("enable_api_protection" to enabled),
+    )
     synchronized(this) { state = state.copy(isApiProtectionEnabled = enabled) }
   }
 }
