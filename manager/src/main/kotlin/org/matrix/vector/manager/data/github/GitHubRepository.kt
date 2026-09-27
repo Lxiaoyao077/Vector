@@ -432,13 +432,29 @@ class GitHubRepository(
                 json.decodeFromString<List<GhCommit>>(it)
             } ?: throw IllegalStateException("commits unavailable")
 
+        // This fork's own commits ride the same rail, and the reader cares about neither
+        // boundary between the two histories: everything upstream is also here, so the merge
+        // is by sha, newest first on the committer date - the same field the `since` filter
+        // runs on. A failure on the fork side must not lose upstream's commits, for the same
+        // reason the repo stats below must not.
+        val fork = runCatching {
+            get("$API/$LOCAL_REPO/commits?since=$since&per_page=100", freshness)?.let {
+                json.decodeFromString<List<GhCommit>>(it)
+            }
+        }.getOrNull().orEmpty()
+
+        val merged =
+            (commits + fork)
+                .distinctBy { it.sha }
+                .sortedByDescending { it.commit.committer?.date ?: it.commit.author.date }
+
         // The repo stats are a nice-to-have; a failure here must not lose the commits.
         val repo =
             runCatching { get("$API/$REPO", freshness)?.let { json.decodeFromString<GhRepo>(it) } }
                 .getOrNull()
 
         val total = runCatching { fetchTotalCommits() }.getOrDefault(0L)
-        return Fetched(commits, repo, total)
+        return Fetched(merged, repo, total)
     }
 
     /**
@@ -930,6 +946,10 @@ class GitHubRepository(
         const val ISSUES_URL = "$REPO_URL/issues"
         const val PULLS_URL = "$REPO_URL/pulls"
         const val DISCUSSIONS_URL = "$REPO_URL/discussions"
+
+        /** This fork's own repository - the second history the Home feed reads. */
+        const val LOCAL_REPO = "Lxiaoyao077/Vekta"
+        const val LOCAL_REPO_URL = "https://github.com/$LOCAL_REPO"
 
         /**
          * The Actions page, filtered the way the project README's build badge filters it.

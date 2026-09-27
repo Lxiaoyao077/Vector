@@ -8,14 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.BugReport
-import androidx.compose.material.icons.rounded.Forum
-import androidx.compose.material.icons.rounded.RateReview
-import androidx.compose.material.icons.rounded.Science
+import androidx.compose.material.icons.rounded.Code
+import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -30,79 +27,48 @@ import org.matrix.vector.manager.R
 import org.matrix.vector.manager.data.github.GitHubRepository
 
 /**
- * Where the page turns a reader into a participant.
+ * Two doors off the Home page: this repository on GitHub, and a soft reboot.
  *
- * Four doors into the project, none of which needs an account to walk through: pull requests to
- * review, discussions to join, a canary build to test, and an issue to report. The first two open
- * GitHub in the built-in viewer; the last two open screens of their own.
- *
- * The canary door is the one that matters most for a project like this. Testing a CI build needs
- * no account, no Git and no code, so it is the lowest-friction way for an ordinary user to help —
- * and it is what actually catches regressions on the long tail of devices and ROMs before they
- * reach a release.
+ * The fork is a personal build rather than a community project, so the old contributor doors -
+ * pull requests to review, discussions, a canary to test, an issue to report - are gone. The
+ * GitHub door opens the repository itself; the soft-reboot door restarts the framework in place,
+ * which is the one action a flashed change regularly asks for. It confirms before it acts, and
+ * the confirmation lives with the caller: everything on screen dies with the zygote, so the
+ * wording is the caller's business.
  */
 @Composable
 fun TakePartSection(
     modifier: Modifier = Modifier,
     onOpen: (String) -> Unit,
-    onCanary: () -> Unit,
-    onReport: () -> Unit,
+    onSoftReboot: () -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
-            text = stringResource(R.string.home_contribute),
+            text = stringResource(R.string.home_actions),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary,
         )
         Spacer(Modifier.height(10.dp))
         // IntrinsicSize.Min, so the two doors in a row settle on the height of the taller one and
         // each can then fill it. Without it a card is only as tall as its own label, and a language
-        // where one label wraps and its neighbour does not — "Relire une modification" beside
-        // "Discussions" — leaves a short card floating in a tall row.
-        //
-        // Deliberately not a fixed two lines: that would pay for the worst case in every language,
-        // and English, where all four fit on one line, would carry a blank line in each card. It
-        // also only postpones the problem to the first label that needs three.
+        // where one label wraps and its neighbour does not leaves a short card floating in a tall
+        // row.
         Row(
             modifier = Modifier.height(IntrinsicSize.Min),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Door(
-                Icons.Rounded.RateReview,
-                stringResource(R.string.home_review_prs),
+                Icons.Rounded.Code,
+                stringResource(R.string.home_github),
                 Modifier.weight(1f).fillMaxHeight(),
             ) {
-                onOpen(GitHubRepository.PULLS_URL)
+                onOpen(GitHubRepository.LOCAL_REPO_URL)
             }
             Door(
-                Icons.Rounded.Forum,
-                stringResource(R.string.home_discussions),
+                Icons.Rounded.RestartAlt,
+                stringResource(R.string.action_soft_reboot),
                 Modifier.weight(1f).fillMaxHeight(),
-            ) {
-                onOpen(GitHubRepository.DISCUSSIONS_URL)
-            }
-        }
-        Spacer(Modifier.height(10.dp))
-        Row(
-            modifier = Modifier.height(IntrinsicSize.Min),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            // A screen rather than a link to the Actions page, which shows an anonymous visitor
-            // that a build exists and then refuses to hand it over. The screen lists the builds
-            // without a sign-in.
-            Door(
-                Icons.Rounded.Science,
-                stringResource(R.string.home_test_canary),
-                Modifier.weight(1f).fillMaxHeight(),
-                onClick = onCanary,
-            )
-            // Also a screen rather than a link. The maintainer's own first reply to a bug report
-            // is a checklist, and a screen can do most of it instead of describing it.
-            Door(
-                Icons.Rounded.BugReport,
-                stringResource(R.string.home_open_issue),
-                Modifier.weight(1f).fillMaxHeight(),
-                onClick = onReport,
+                onClick = onSoftReboot,
             )
         }
     }

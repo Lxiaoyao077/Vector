@@ -117,6 +117,8 @@
     <string name="home_window_changed">Showing saved activity for the new range — pull to refresh</string>
     <string name="home_offline">Showing saved activity — could not reach GitHub.</string>
     <string name="home_bumps">%1$d dependency updates</string>
+    <string name="home_actions">Quick actions</string>
+    <string name="home_github">GitHub</string>
     <string name="home_contribute">Take part</string>
     <string name="home_test_canary">Try a canary</string>
     <string name="home_open_issue">Report a problem</string>

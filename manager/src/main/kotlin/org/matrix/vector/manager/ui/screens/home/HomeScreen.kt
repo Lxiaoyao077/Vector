@@ -76,6 +76,7 @@ import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.rounded.KeyboardDoubleArrowDown
 import androidx.compose.material.icons.rounded.KeyboardDoubleArrowUp
+import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
@@ -94,9 +95,11 @@ import org.matrix.vector.manager.ui.theme.VectorLocaleController
 import org.matrix.vector.ui.locale.LanguageSheet
 import org.matrix.vector.ui.locale.currentLocale
 import org.matrix.vector.manager.di.ServiceLocator
+import org.matrix.vector.manager.logE
 import org.matrix.vector.ui.SharedAlertDialog
 import org.matrix.vector.ui.SharedSnackbarHost
 import org.matrix.vector.ui.show
+import org.matrix.vector.ui.R as UiR
 import org.matrix.vector.manager.data.github.CommunityFeed
 import org.matrix.vector.manager.data.github.FeedItem
 import org.matrix.vector.manager.data.github.FeedLayout
@@ -137,8 +140,6 @@ import org.matrix.vector.ui.theme.Mono
 fun HomeScreen(
     onOpenStatus: () -> Unit,
     onOpenUrl: (String) -> Unit,
-    onOpenCanary: () -> Unit,
-    onOpenReport: () -> Unit,
     onOpenUpdate: () -> Unit,
     viewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
 ) {
@@ -163,6 +164,9 @@ fun HomeScreen(
     // Answered or waved away once per visit, not once per return to Home. Saved so that a rotation
     // does not put a dialog back in front of someone who has just dismissed it.
     var showLauncherPrompt by rememberSaveable { mutableStateOf(true) }
+    // A soft reboot closes everything on screen, so it asks once before it acts.
+    var confirmSoftReboot by rememberSaveable { mutableStateOf(false) }
+    val softRebootScope = rememberCoroutineScope()
 
     // The status screen has its own copy of this ViewModel — a nav destination is its own store —
     // so a shortcut pinned or an app installed from there is invisible to this one until it is
@@ -285,8 +289,7 @@ fun HomeScreen(
                     item {
                         TakePartSection(
                             onOpen = ::open,
-                            onCanary = onOpenCanary,
-                            onReport = onOpenReport,
+                            onSoftReboot = { confirmSoftReboot = true },
                         )
                         Spacer(Modifier.height(14.dp))
                         ProjectFooter(feed = feed, onClick = { open(GitHubRepository.REPO_URL) })
@@ -316,6 +319,37 @@ fun HomeScreen(
                 listState = listState,
                 modifier = Modifier.align(Alignment.BottomEnd).padding(end = 12.dp, bottom = 12.dp),
             )
+
+            if (confirmSoftReboot) {
+                SharedAlertDialog(
+                    onDismissRequest = { confirmSoftReboot = false },
+                    icon = { Icon(Icons.Rounded.RestartAlt, contentDescription = null) },
+                    title = { Text(stringResource(R.string.action_soft_reboot)) },
+                    text = { Text(stringResource(R.string.action_soft_reboot_confirm)) },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                confirmSoftReboot = false
+                                softRebootScope.launch {
+                                    ServiceLocator.daemon.softReboot().onFailure {
+                                        logE("home: soft reboot request failed", it)
+                                    }
+                                }
+                            }
+                        ) {
+                            Text(
+                                stringResource(R.string.action_soft_reboot),
+                                color = MaterialTheme.colorScheme.error,
+                            )
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { confirmSoftReboot = false }) {
+                            Text(stringResource(UiR.string.store_cancel))
+                        }
+                    },
+                )
+            }
 
             StatusHeader(
                 brand = stringResource(R.string.app_name),

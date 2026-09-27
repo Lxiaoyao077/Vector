@@ -200,8 +200,6 @@ private fun EntryProviderScope<NavKey>.registerRoutes(navigator: Navigator) {
         HomeScreen(
             onOpenStatus = { navigator.go(SystemStatus) },
             onOpenUrl = { url -> navigator.go(Web(url)) },
-            onOpenCanary = { navigator.go(Canary) },
-            onOpenReport = { navigator.go(Troubleshoot) },
             onOpenUpdate = { navigator.go(FrameworkUpdate()) },
         )
     }
