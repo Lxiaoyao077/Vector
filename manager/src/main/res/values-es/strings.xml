@@ -386,7 +386,7 @@
     <string name="crash_unreadable">No se ha podido leer este fallo. Cópialo y adjúntalo al informe tal cual.</string>
     <string name="force_launcher_icons">Impedir que las apps oculten su icono del launcher</string>
     <string name="force_launcher_icons_summary">Desde Android 10, a una app que oculta su propio icono del launcher se le devuelve uno que abre su página de información de la app. Desactiva esta opción para que pueda seguir oculta: puede que tu launcher no se dé cuenta hasta que se reinicie. Las apps que nunca tuvieron icono en el launcher, incluida la mayoría de los módulos, no se ven afectadas.</string>
-    <string name="api_protection">Protecci贸n de la API</string>
+    <string name="api_protection">Protección de la API</string>
     <string name="api_protection_summary">Advertise runtime API protection to modules. Only matters for modules that check for it; off by default.</string>
     <string name="action_force_stop_failed">No se pudo detener %1$s.</string>
     <string name="modules_load_unsupported_api">Activado, pero compilado para la API 100 de libxposed, que este framework ya no carga.</string>

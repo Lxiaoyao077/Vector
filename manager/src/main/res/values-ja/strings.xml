@@ -365,7 +365,7 @@
     <string name="crash_unreadable">このクラッシュ情報を読み取ることができませんでした。コピーして、そのままレポートに添付してください。</string>
     <string name="force_launcher_icons">アプリがランチャーアイコンを非表示にするのを防止</string>
     <string name="force_launcher_icons_summary">Android 10 以降、自身のランチャーアイコンを非表示にしたアプリには、代わりにアプリ情報画面を開くアイコンが表示されます。この設定をオフにすると、アイコンを非表示のままにできます。ただし、ランチャーを再起動するまで表示が更新されない可能性があります。ほとんどのモジュールを含め、もともとランチャーアイコンを持たないアプリには影響しません。</string>
-    <string name="api_protection">API淇濊</string>
+    <string name="api_protection">API保護</string>
     <string name="api_protection_summary">Advertise runtime API protection to modules. Only matters for modules that check for it; off by default.</string>
     <string name="action_force_stop_failed">%1$s を停止できませんでした。</string>
     <string name="modules_load_unsupported_api">有効になっていますが、libxposed API 100 向けにビルドされています。このフレームワークは現在、そのバージョンを読み込みません。</string>
