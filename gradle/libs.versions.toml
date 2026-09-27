@@ -33,7 +33,7 @@ androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "l
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version = "1.13.0" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.2.0" }
 # Needed to make the in-app browser honour the app's own light/dark choice.
-androidx-webkit = { group = "androidx.webkit", name = "webkit", version = "1.17.0" }
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version = "1.17.1" }
 
 # Compose. The BOM governs every artifact here — do not pin these individually,
 # or BOM alignment is silently defeated.
