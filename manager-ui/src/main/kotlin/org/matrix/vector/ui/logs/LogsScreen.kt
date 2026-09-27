@@ -746,6 +746,7 @@ private fun LogSettingsSheet(
     onReset: () -> Unit,
 ) {
     val enabled by viewModel.verboseEnabled.collectAsStateWithLifecycle()
+    val modulesEnabled by viewModel.modulesLogEnabled.collectAsStateWithLifecycle()
     val enforced by viewModel.verboseEnforced.collectAsStateWithLifecycle()
     val inlineTraces by viewModel.tracesInline.collectAsStateWithLifecycle()
     val sheetState = rememberBottomSheetState(initialValue = SheetValue.Hidden)
@@ -760,6 +761,31 @@ private fun LogSettingsSheet(
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 8.dp),
                 )
+
+                // Above the verbose row, because this decides what the daemon bothers to collect
+                // at all: turning it off starves the modules stream of everything that follows,
+                // which is a bigger fact about the log than the verbose switch is.
+                if (viewModel.canConfigureModulesLog) {
+                    ListItem(
+                        modifier = Modifier.clickable { viewModel.setModulesLog(!modulesEnabled) },
+                        supportingContent = {
+                            Text(
+                                stringResource(R.string.logs_modules_summary),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        },
+                        leadingContent = {
+                            Icon(Icons.Rounded.Apps, contentDescription = null)
+                        },
+                        trailingContent = {
+                            Switch(
+                                checked = modulesEnabled,
+                                onCheckedChange = { viewModel.setModulesLog(it) },
+                            )
+                        },
+                        colors = sheetRowColors,
+                    ) { Text(stringResource(R.string.logs_modules_switch)) }
+                }
 
                 if (viewModel.canConfigureVerbose) {
                     ListItem(

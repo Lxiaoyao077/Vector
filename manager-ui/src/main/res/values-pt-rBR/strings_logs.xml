@@ -42,6 +42,10 @@
     <string name="logs_state_failed_body">O daemon entregou um arquivo que não pôde ser lido: %1$s</string>
     <string name="logs_loading">Indexando…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Registro de módulos</string>
+    <string name="logs_modules_summary">Desative isso e o daemon para de coletar a saída dos módulos em modules.log. O registro detalhado não é afetado.</string>
+
     <string name="logs_verbose_switch">Registro detalhado</string>
     <string name="logs_verbose_enforced">O daemon em execução mantém isto ligado de qualquer forma.</string>
 

@@ -39,6 +39,10 @@
     <string name="logs_state_failed_body">常駐程式提供了一個無法讀取的檔案：%1$s</string>
     <string name="logs_loading">正在建立索引…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">模組日誌</string>
+    <string name="logs_modules_summary">關閉後，常駐程式不再把模組輸出收集到 modules.log。詳細日誌不受影響。</string>
+
     <string name="logs_verbose_switch">詳細日誌</string>
     <string name="logs_verbose_enforced">執行中的常駐程式強制開啟了此項。</string>
 

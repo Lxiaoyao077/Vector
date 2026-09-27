@@ -238,6 +238,12 @@ class DaemonClient(private val serviceState: StateFlow<IManagerService?>) {
     suspend fun removeClone(packageName: String): Result<Unit> =
         runIpc { it.removeClone(packageName) }
 
+    /** Whether the daemon is capturing the modules log. True where nobody has said otherwise. */
+    suspend fun isModulesLogEnabled(): Result<Boolean> = runIpc { it.isModulesLogEnabled }
+
+    suspend fun setModulesLogEnabled(enabled: Boolean): Result<Unit> =
+        runIpc { it.setModulesLogEnabled(enabled) }
+
     /**
      * The rotated parts the daemon still holds for one of the two logs, oldest first.
      *

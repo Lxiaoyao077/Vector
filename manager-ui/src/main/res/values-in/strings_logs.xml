@@ -39,6 +39,10 @@
     <string name="logs_state_failed_body">Daemon menyerahkan berkas yang tidak bisa dibaca: %1$s</string>
     <string name="logs_loading">Mengindeks…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Pencatatan modul</string>
+    <string name="logs_modules_summary">Matikan ini dan daemon berhenti mengumpulkan keluaran modul ke modules.log. Pencatatan rinci tidak terpengaruh.</string>
+
     <string name="logs_verbose_switch">Pencatatan rinci</string>
     <string name="logs_verbose_enforced">Daemon yang sedang berjalan tetap memaksanya menyala.</string>
 

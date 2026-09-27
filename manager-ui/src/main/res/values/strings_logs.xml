@@ -61,6 +61,10 @@
     <string name="logs_state_failed_body">The daemon handed over a file that could not be read: %1$s</string>
     <string name="logs_loading">Indexing…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Module logging</string>
+    <string name="logs_modules_summary">Turn this off and the daemon stops collecting module output into modules.log. The verbose log is unaffected.</string>
+
     <!-- Verbose logging -->
     <string name="logs_verbose_switch">Verbose logging</string>
     <string name="logs_verbose_enforced">The running daemon is forcing this on regardless.</string>

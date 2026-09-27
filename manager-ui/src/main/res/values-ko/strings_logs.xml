@@ -39,6 +39,10 @@
     <string name="logs_state_failed_body">데몬이 건넨 파일을 읽을 수 없었습니다: %1$s</string>
     <string name="logs_loading">색인하는 중…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">모듈 로깅</string>
+    <string name="logs_modules_summary">이 옵션을 끄면 데몬이 modules.log에 모듈 출력을 수집하지 않습니다. 상세 로깅에는 영향을 주지 않습니다.</string>
+
     <string name="logs_verbose_switch">상세 기록</string>
     <string name="logs_verbose_enforced">실행 중인 데몬이 이 설정을 강제로 켜 두고 있습니다.</string>
 

@@ -42,6 +42,10 @@
     <string name="logs_state_failed_body">سرویس پرونده‌ای داد که خوانده نشد: %1$s</string>
     <string name="logs_loading">در حال نمایه‌سازی…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">ثبت ماژول‌ها</string>
+    <string name="logs_modules_summary">با خاموش کردن این، دیمون دیگر خروجی ماژول‌ها را در modules.log جمع نمی‌کند. ثبت پرگو تحت تأثیر قرار نمی‌گیرد.</string>
+
     <string name="logs_verbose_switch">ثبت پرگو</string>
     <string name="logs_verbose_enforced">سرویسِ در حال اجرا این را به‌هر‌روی روشن نگه می‌دارد.</string>
 

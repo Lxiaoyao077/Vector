@@ -73,7 +73,7 @@ interface IManagerService {
      * transaction ids follow declaration order, this number is the only thing standing between a
      * mismatched pair and a call that lands on the wrong method.</p>
      */
-    const int PROTOCOL_VERSION = 2;
+    const int PROTOCOL_VERSION = 3;
 
     /**
      * Which generation of this interface the daemon implements, never below 1.
@@ -806,4 +806,26 @@ interface IManagerService {
      * asked of {@code pm}, which is silent about a user it holds no copy for, and so is this.</p>
      */
     void removeClone(String packageName);
+
+    // ---- the modules log ---------------------------------------------------------------------------
+
+    /**
+     * Whether the daemon is capturing the modules log. True on a device where nobody has said
+     * otherwise.
+     *
+     * <p>The stored value, not the value or'd with the build type, for the same reason
+     * {@link #isVerboseLogEnabled} says so: a value the manager could never read as false would
+     * make its switch unwritable.</p>
+     */
+    boolean isModulesLogEnabled();
+
+    /**
+     * Sets that, and asks the daemon's log reader to start or stop capturing to match.
+     *
+     * <p>The reader acts on a sentinel written into the log rather than on this call returning, so
+     * capture is not yet in step when this comes back. What is already written stays written; only
+     * what is captured from here on changes. The verbose stream is not touched: the two are
+     * captured independently, and this is about the modules one alone.</p>
+     */
+    void setModulesLogEnabled(boolean enabled);
 }

@@ -108,12 +108,16 @@ object VectorDaemon {
     // us during specialization, but when the injection fails nothing else has, and the daemon
     // used to die here on an unreadable preference.
     val isVerboseLog = ManagerService.isVerboseLogEnabled()
+    val isModulesLog = ManagerService.isModulesLogEnabled()
 
     // Setup IPC channel for applications by injecting DaemonService binder
     sendToBridge(VectorService.asBinder(), false, systemServerMaxRetry)
 
     if (!isVerboseLog) {
       LogcatMonitor.stopVerbose()
+    }
+    if (!isModulesLog) {
+      LogcatMonitor.stopModules()
     }
 
     Looper.loop()

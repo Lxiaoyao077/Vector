@@ -39,6 +39,10 @@
     <string name="logs_state_failed_body">守护进程返回了一个无法读取的文件：%1$s</string>
     <string name="logs_loading">正在建立索引…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">模块日志</string>
+    <string name="logs_modules_summary">关闭后，守护进程不再把模块输出收集到 modules.log。详细日志不受影响。</string>
+
     <string name="logs_verbose_switch">详细日志</string>
     <string name="logs_verbose_enforced">正在运行的守护进程强制开启了此项。</string>
 

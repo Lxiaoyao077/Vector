@@ -42,6 +42,10 @@
     <string name="logs_state_failed_body">Der Daemon hat eine Datei übergeben, die sich nicht lesen ließ: %1$s</string>
     <string name="logs_loading">Wird indiziert…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Modul-Protokollierung</string>
+    <string name="logs_modules_summary">Schalte dies aus und der Daemon sammelt keine Modulausgaben mehr in modules.log. Die ausführliche Protokollierung ist davon nicht betroffen.</string>
+
     <string name="logs_verbose_switch">Ausführliche Protokollierung</string>
     <string name="logs_verbose_enforced">Der laufende Daemon erzwingt dies ohnehin.</string>
 

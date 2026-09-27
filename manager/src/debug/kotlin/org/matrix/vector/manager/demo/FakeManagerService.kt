@@ -245,6 +245,14 @@ class FakeManagerService(
             ?: throw IllegalStateException("removeClone: no daemon behind the demo")
     }
 
+    // `?: true` to match the daemon, whose preference reads this one `?: true` when nobody has set
+    // it - the same reasoning as isStatusNotificationEnabled above.
+    override fun isModulesLogEnabled(): Boolean = real?.isModulesLogEnabled ?: true
+
+    override fun setModulesLogEnabled(enabled: Boolean) {
+        real?.setModulesLogEnabled(enabled)
+    }
+
     override fun getLiveLogPart(verbose: Boolean): ParcelFileDescriptor? =
         real?.getLiveLogPart(verbose)
 

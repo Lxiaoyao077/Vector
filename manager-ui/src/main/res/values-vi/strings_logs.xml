@@ -39,6 +39,10 @@
     <string name="logs_state_failed_body">Tiến trình nền đưa ra một tệp không đọc được: %1$s</string>
     <string name="logs_loading">Đang lập chỉ mục…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Ghi nhật ký mô đun</string>
+    <string name="logs_modules_summary">Tắt tính năng này và daemon ngừng thu thập đầu ra của mô đun vào modules.log. Ghi nhật ký chi tiết không bị ảnh hưởng.</string>
+
     <string name="logs_verbose_switch">Ghi nhật ký chi tiết</string>
     <string name="logs_verbose_enforced">Tiến trình nền đang chạy vẫn buộc bật mục này.</string>
 

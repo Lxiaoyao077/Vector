@@ -77,6 +77,17 @@ interface LogSource {
     /** Writes the preference and returns the value the host reports afterwards. */
     suspend fun setVerboseEnabled(enabled: Boolean): Boolean
 
+    // --- Modules-logging preference -------------------------------------------------------------
+
+    /** Whether the host has a persistent "capture module output at all" preference to toggle. */
+    val canConfigureModulesLog: Boolean
+
+    /** The preference's current value, read back from the host after any write. */
+    suspend fun isModulesLogEnabled(): Boolean
+
+    /** Writes the preference and returns the value the host reports afterwards. */
+    suspend fun setModulesLogEnabled(enabled: Boolean): Boolean
+
     // --- Export --------------------------------------------------------------------------------
 
     val canSaveArchive: Boolean

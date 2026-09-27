@@ -52,6 +52,18 @@ class VectorLogSource : LogSource {
         return daemon.isVerboseLogEnabled().getOrDefault(enabled)
     }
 
+    override val canConfigureModulesLog: Boolean = true
+
+    override suspend fun isModulesLogEnabled(): Boolean =
+        daemon.isModulesLogEnabled().getOrDefault(true)
+
+    override suspend fun setModulesLogEnabled(enabled: Boolean): Boolean {
+        daemon.setModulesLogEnabled(enabled)
+        // Read back for the same reason as the verbose preference above: the screen shows the
+        // value the daemon holds, not the value that was asked for.
+        return daemon.isModulesLogEnabled().getOrDefault(enabled)
+    }
+
     override val canSaveArchive: Boolean = true
     override val archiveMimeType: String = "application/zip"
 

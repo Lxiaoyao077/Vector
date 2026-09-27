@@ -55,6 +55,10 @@
     <string name="logs_state_failed_title">Nie można odczytać dziennika</string>
     <string name="logs_state_failed_body">Usługa przekazała plik, którego nie można odczytać: %1$s</string>
     <string name="logs_loading">Indeksowanie…</string>
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Rejestrowanie modułów</string>
+    <string name="logs_modules_summary">Wyłącz to, a demon przestanie zbierać dane wyjściowe modułów do modules.log. Szczegółowe rejestrowanie pozostaje bez zmian.</string>
+
     <!-- Verbose logging -->
     <string name="logs_verbose_switch">Szczegółowe rejestrowanie</string>
     <string name="logs_verbose_enforced">Działająca usługa i tak wymusza tę opcję.</string>

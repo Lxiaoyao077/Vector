@@ -161,6 +161,9 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
     private val _verboseEnabled = MutableStateFlow(false)
     val verboseEnabled: StateFlow<Boolean> = _verboseEnabled.asStateFlow()
 
+    private val _modulesLogEnabled = MutableStateFlow(false)
+    val modulesLogEnabled: StateFlow<Boolean> = _modulesLogEnabled.asStateFlow()
+
     /**
      * True when the user asked for verbose logging off and the host kept it on.
      *
@@ -191,6 +194,9 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
     init {
         if (source.canConfigureVerbose) {
             viewModelScope.launch { _verboseEnabled.value = source.isVerboseEnabled() }
+        }
+        if (source.canConfigureModulesLog) {
+            viewModelScope.launch { _modulesLogEnabled.value = source.isModulesLogEnabled() }
         }
     }
 
@@ -634,6 +640,29 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
             _verboseEnabled.value = actual
             _verboseEnforced.value = !enabled && actual
             if (actual) refresh(LogTab.VERBOSE)
+        }
+    }
+
+    /**
+     * Turns the capture of module output on or off.
+     *
+     * No "enforced" branch here, unlike [setVerbose]: nothing overrides this preference, so the
+     * value the host reports back is the whole story. What does change with it is the modules
+     * stream itself - a capture that has just been switched on has lines the pane has not seen -
+     * so the tab is reloaded once the host confirms the write.
+     */
+    fun setModulesLog(enabled: Boolean) {
+        viewModelScope.launch {
+            val actual =
+                runCatching {
+                        source.setModulesLogEnabled(enabled)
+                    }
+                    .getOrElse {
+                        Log.e(TAG, "logs: setting modules logging to $enabled failed", it)
+                        enabled
+                    }
+            _modulesLogEnabled.value = actual
+            if (actual) refresh(LogTab.MODULES)
         }
     }
 
