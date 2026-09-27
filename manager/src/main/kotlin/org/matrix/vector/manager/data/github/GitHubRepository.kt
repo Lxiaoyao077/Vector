@@ -1,6 +1,8 @@
 package org.matrix.vector.manager.data.github
 
 import java.io.File
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -427,34 +429,57 @@ class GitHubRepository(
 
     private fun fetch(windowStartEpochSeconds: Long, freshness: Freshness): Fetched {
         val since = iso8601(windowStartEpochSeconds)
-        val commits =
-            get("$API/$REPO/commits?since=$since&per_page=100", freshness)?.let {
-                json.decodeFromString<List<GhCommit>>(it)
-            } ?: throw IllegalStateException("commits unavailable")
 
-        // This fork's own commits ride the same rail, and the reader cares about neither
-        // boundary between the two histories: everything upstream is also here, so the merge
-        // is by sha, newest first on the committer date - the same field the `since` filter
-        // runs on. A failure on the fork side must not lose upstream's commits, for the same
-        // reason the repo stats below must not.
-        val fork = runCatching {
-            get("$API/$LOCAL_REPO/commits?since=$since&per_page=100", freshness)?.let {
-                json.decodeFromString<List<GhCommit>>(it)
-            }
-        }.getOrNull().orEmpty()
+        // The four answers are independent, and each one is a full round trip to GitHub: fired
+        // together, the wait is the slowest of them rather than their sum. OkHttp serializes
+        // nothing here, so the executor only needs room for the four calls.
+        val pool = Executors.newFixedThreadPool(4)
+        try {
+            val commits =
+                pool.submit(
+                    Callable {
+                        get("$API/$REPO/commits?since=$since&per_page=100", freshness)?.let {
+                            json.decodeFromString<List<GhCommit>>(it)
+                        } ?: throw IllegalStateException("commits unavailable")
+                    },
+                )
+            val fork =
+                pool.submit(
+                    Callable {
+                        // A failure on the fork side must not lose upstream's commits, for the
+                        // same reason the repo stats below must not.
+                        runCatching {
+                            get("$API/$LOCAL_REPO/commits?since=$since&per_page=100", freshness)
+                                ?.let { json.decodeFromString<List<GhCommit>>(it) }
+                        }.getOrNull().orEmpty()
+                    },
+                )
+            val repo =
+                pool.submit(
+                    Callable {
+                        // The repo stats are a nice-to-have; a failure here must not lose the
+                        // commits.
+                        runCatching {
+                            get("$API/$REPO", freshness)?.let { json.decodeFromString<GhRepo>(it) }
+                        }.getOrNull()
+                    },
+                )
+            val total =
+                pool.submit(Callable { runCatching { fetchTotalCommits() }.getOrDefault(0L) })
 
-        val merged =
-            (commits + fork)
-                .distinctBy { it.sha }
-                .sortedByDescending { it.commit.committer?.date ?: it.commit.author.date }
+            // This fork's own commits ride the same rail, and the reader cares about neither
+            // boundary between the two histories: everything upstream is also here, so the merge
+            // is by sha, newest first on the committer date - the same field the `since` filter
+            // runs on.
+            val merged =
+                (commits.get() + fork.get())
+                    .distinctBy { it.sha }
+                    .sortedByDescending { it.commit.committer?.date ?: it.commit.author.date }
 
-        // The repo stats are a nice-to-have; a failure here must not lose the commits.
-        val repo =
-            runCatching { get("$API/$REPO", freshness)?.let { json.decodeFromString<GhRepo>(it) } }
-                .getOrNull()
-
-        val total = runCatching { fetchTotalCommits() }.getOrDefault(0L)
-        return Fetched(merged, repo, total)
+            return Fetched(merged, repo.get(), total.get())
+        } finally {
+            pool.shutdownNow()
+        }
     }
 
     /**
