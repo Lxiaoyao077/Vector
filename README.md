@@ -1,8 +1,12 @@
 <div align="center">
 
-# Vector Framework
+# Vekta Framework
 
 **A high-performance ART hooking framework for modern Android**
+
+> **Vekta** is a rebranded fork of [Vector](https://github.com/JingMatrix/Vector) (by JingMatrix),
+> maintained by [Lxyao](https://github.com/Lxiaoyao077). The codebase follows upstream; the
+> releases, the manager, and the module ship under the Vekta name.
 
 [![Build](https://img.shields.io/github/actions/workflow/status/JingMatrix/Vector/core.yml?branch=master&event=push&logo=github&label=Build)](https://github.com/JingMatrix/Vector/actions/workflows/core.yml?query=event%3Apush+branch%3Amaster+is%3Acompleted)
 [![Crowdin](https://img.shields.io/badge/Localization-Crowdin-blueviolet?logo=Crowdin)](https://crowdin.com/project/lsposed_jingmatrix)
