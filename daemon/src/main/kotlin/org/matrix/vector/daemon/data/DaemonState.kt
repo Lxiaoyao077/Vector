@@ -13,6 +13,10 @@ data class ProcessScope(val processName: String, val uid: Int)
 data class DaemonState(
     // State non configurable for users
     val isDexObfuscateEnabled: Boolean = !BuildConfig.DEBUG,
+    // Whether the runtime API protection is claimed to modules (PROP_RT_API_PROTECTION). Dex
+    // obfuscation stays a build property; this flag only decides whether the capability is
+    // advertised, and starts off until the manager grows a switch for it.
+    val isApiProtectionEnabled: Boolean = false,
     // States initialized after system services are ready
     val isCacheReady: Boolean = false,
     val managerUid: Int = -1,

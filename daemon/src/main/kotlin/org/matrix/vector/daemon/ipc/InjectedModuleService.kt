@@ -34,7 +34,7 @@ class InjectedModuleService(private val packageName: String) : IModuleService.St
 
   override fun getFrameworkProperties(): Long {
     var prop = IXposedService.PROP_CAP_SYSTEM or IXposedService.PROP_CAP_REMOTE
-    if (ConfigCache.state.isDexObfuscateEnabled) {
+    if (ConfigCache.state.isApiProtectionEnabled) {
       prop = prop or IXposedService.PROP_RT_API_PROTECTION
     }
     return prop
