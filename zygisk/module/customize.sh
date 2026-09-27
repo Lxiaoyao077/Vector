@@ -71,10 +71,6 @@ case "$ARCH" in
         ABI32="armeabi-v7a"
         ABI64="arm64-v8a"
         ;;
-    x86|x64)
-        ABI32="x86"
-        ABI64="x86_64"
-        ;;
     *)
         abort "! Unsupported platform: $ARCH"
         ;;
