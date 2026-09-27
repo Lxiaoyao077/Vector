@@ -28,7 +28,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">Daemon tidak dapat dihubungi</string>
-    <string name="logs_state_daemon_body">Tidak ada yang diketahui tentang log selama Vector belum berjalan. Alasan yang sama membuat pita status di Beranda tidak hijau.</string>
+    <string name="logs_state_daemon_body">Tidak ada yang diketahui tentang log selama Vekta belum berjalan. Alasan yang sama membuat pita status di Beranda tidak hijau.</string>
     <string name="logs_state_nofile_title">Belum ada berkas log</string>
     <string name="logs_state_nofile_body">Daemon berjalan tetapi belum membuka log ini. Untuk log rinci, biasanya itu berarti pencatatan rinci sedang mati.</string>
     <string name="logs_state_empty_title">Log ini kosong</string>
@@ -64,7 +64,7 @@
     <string name="logs_settings">Setelan log</string>
     <string name="logs_source_more">Sertakan juga baris milik framework</string>
     <string name="logs_source_less">Tampilkan hanya baris modul</string>
-    <string name="logs_verbose_summary">Nyalakan ini sebelum melaporkan bug. Aplikasi bisa membaca lognya sendiri, jadi membiarkannya menyala adalah satu cara sebuah aplikasi mengenali Vector.</string>
+    <string name="logs_verbose_summary">Nyalakan ini sebelum melaporkan bug. Aplikasi bisa membaca lognya sendiri, jadi membiarkannya menyala adalah satu cara sebuah aplikasi mengenali Vekta.</string>
     <string name="logs_trace_title">Jejak tumpukan</string>
     <string name="logs_traces_inline">Buka jejak di tempat</string>
     <string name="logs_traces_inline_summary">Jejak tumpukan terbuka di bawah barisnya. Matikan ini untuk membukanya di layar tersendiri.</string>

@@ -62,7 +62,7 @@
     <string name="store_confirm_title">‏%1$s نصب شود؟</string>
     <string name="store_confirm_body">‏%1$s ‏(%2$s) از فهرست ماژول‌ها بارگیری و با نام %3$s نصب می‌شود.</string>
     <string name="store_confirm_trust">ماژول با اختیارات چارچوب درون برنامه‌هایی که به آن‌ها قلاب می‌زند اجرا می‌شود. تنها در صورتی نصب کنید که به سازنده‌اش اعتماد دارید.</string>
-    <string name="store_confirm_silent">‏Vector خودش نصب می‌کند و سامانه دوباره نخواهد پرسید.</string>
+    <string name="store_confirm_silent">‏Vekta خودش نصب می‌کند و سامانه دوباره نخواهد پرسید.</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">بارگیری %1$s از %2$s</string>
     <string name="store_installing">در حال نصب…</string>

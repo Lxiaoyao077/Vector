@@ -70,7 +70,7 @@
     <string name="store_confirm_title">Install %1$s?</string>
     <string name="store_confirm_body">%1$s (%2$s) will be downloaded from the module repository and installed as %3$s.</string>
     <string name="store_confirm_trust">A module runs with the framework\'s privileges inside the apps it hooks. Install one only if you trust its author.</string>
-    <string name="store_confirm_silent">Vector installs this itself and the system will not ask again.</string>
+    <string name="store_confirm_silent">Vekta installs this itself and the system will not ask again.</string>
 
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">Downloading %1$s of %2$s</string>

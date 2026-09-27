@@ -28,7 +28,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">Không liên lạc được tiến trình nền</string>
-    <string name="logs_state_daemon_body">Không biết gì về nhật ký khi Vector chưa chạy. Cũng vì lý do đó mà dải trạng thái ở trang chính không xanh.</string>
+    <string name="logs_state_daemon_body">Không biết gì về nhật ký khi Vekta chưa chạy. Cũng vì lý do đó mà dải trạng thái ở trang chính không xanh.</string>
     <string name="logs_state_nofile_title">Chưa có tệp nhật ký</string>
     <string name="logs_state_nofile_body">Tiến trình nền đang chạy nhưng chưa mở nhật ký này. Với nhật ký chi tiết, điều đó thường nghĩa là ghi nhật ký chi tiết đang tắt.</string>
     <string name="logs_state_empty_title">Nhật ký này trống</string>
@@ -64,7 +64,7 @@
     <string name="logs_settings">Cài đặt nhật ký</string>
     <string name="logs_source_more">Kèm cả các dòng của framework</string>
     <string name="logs_source_less">Chỉ hiện các dòng của mô-đun</string>
-    <string name="logs_verbose_summary">Hãy bật trước khi báo lỗi. Ứng dụng đọc được nhật ký của chính nó, nên để bật lâu dài là một cách để ứng dụng nhận ra Vector.</string>
+    <string name="logs_verbose_summary">Hãy bật trước khi báo lỗi. Ứng dụng đọc được nhật ký của chính nó, nên để bật lâu dài là một cách để ứng dụng nhận ra Vekta.</string>
     <string name="logs_trace_title">Vết ngăn xếp</string>
     <string name="logs_traces_inline">Mở vết lỗi tại chỗ</string>
     <string name="logs_traces_inline_summary">Vết lỗi bung ra ngay dưới dòng của nó. Tắt mục này để mở nó trên màn hình riêng.</string>

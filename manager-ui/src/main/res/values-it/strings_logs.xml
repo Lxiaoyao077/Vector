@@ -31,7 +31,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">Il daemon non è raggiungibile</string>
-    <string name="logs_state_daemon_body">Del log non si sa nulla finché Vector non è in esecuzione. È lo stesso motivo per cui la fascia di stato nella Home non è verde.</string>
+    <string name="logs_state_daemon_body">Del log non si sa nulla finché Vekta non è in esecuzione. È lo stesso motivo per cui la fascia di stato nella Home non è verde.</string>
     <string name="logs_state_nofile_title">Ancora nessun file di log</string>
     <string name="logs_state_nofile_body">Il daemon è in esecuzione ma non ha aperto questo log. Per il log dettagliato di solito vuol dire che la registrazione dettagliata è disattivata.</string>
     <string name="logs_state_empty_title">Questo log è vuoto</string>
@@ -67,7 +67,7 @@
     <string name="logs_settings">Impostazioni dei log</string>
     <string name="logs_source_more">Includi anche le righe del framework</string>
     <string name="logs_source_less">Mostra solo le righe dei moduli</string>
-    <string name="logs_verbose_summary">Attivala prima di segnalare un bug. Le app possono leggere i propri log, quindi lasciarla attiva è un modo in cui un\'app può accorgersi di Vector.</string>
+    <string name="logs_verbose_summary">Attivala prima di segnalare un bug. Le app possono leggere i propri log, quindi lasciarla attiva è un modo in cui un\'app può accorgersi di Vekta.</string>
     <string name="logs_trace_title">Stack trace</string>
     <string name="logs_traces_inline">Apri le tracce sul posto</string>
     <string name="logs_traces_inline_summary">Una traccia si apre sotto la sua riga. Disattivalo per aprirla invece su una schermata dedicata.</string>

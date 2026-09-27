@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Modul frissítve, rendszer újraindítás szükséges</string>
     <string name="xposed_module_updated_notification_content_system">%s frissítve lett, mivel a hatókör tartalmazza a System Framework-et, a változások alkalmazásához szükséges újraindítás szükséges.</string>
     <string name="module_updated_channel_name">A modul frissítése befejeződött</string>
-    <string name="status_channel_name">Vector állapot</string>
-    <string name="vector_running_notification_title">Vector betöltve</string>
+    <string name="status_channel_name">Vekta állapot</string>
+    <string name="vector_running_notification_title">Vekta betöltve</string>
     <string name="vector_running_notification_content">Érintse meg az értesítést a menedzser megnyitásához</string>
     <string name="xposed_module_request_scope_title">Hatókör kérés</string>
     <string name="xposed_module_request_scope_content">%1$s a felhasználó %2$s kérésére a %3$s hozzáadására a hatóköréhez.</string>

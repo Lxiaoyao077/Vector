@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">モジュールが更新されました。システムの再起動が必要です</string>
     <string name="xposed_module_updated_notification_content_system">%s が更新されました。適用範囲内にシステムフレームワークが含まれているため、変更を適用するには再起動が必要です</string>
     <string name="module_updated_channel_name">モジュールの更新完了通知</string>
-    <string name="status_channel_name">Vector のステータス通知</string>
-    <string name="vector_running_notification_title">Vector の読み込み完了通知</string>
+    <string name="status_channel_name">Vekta のステータス通知</string>
+    <string name="vector_running_notification_title">Vekta の読み込み完了通知</string>
     <string name="vector_running_notification_content">通知をタップしてマネージャーを開きます</string>
     <string name="xposed_module_request_scope_title">適用範囲のリクエスト</string>
     <string name="xposed_module_request_scope_content">ユーザー %2$s の %1$s が %3$s をその適用範囲に追加するようリクエストしています。</string>

@@ -949,7 +949,7 @@ class GitHubRepository(
          * The release list still carries the pre-rename LSPosed builds, whose version codes are
          * from a different and higher numbering; see `versionCode()`.
          */
-        private const val ZIP_PREFIX = "Vector-"
+        private const val ZIP_PREFIX = "Vekta-"
 
         /** CI keeps five; a few extra are fetched so a stable release among them costs nothing. */
         private const val CANARY_FETCH = 12

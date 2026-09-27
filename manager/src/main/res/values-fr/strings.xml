@@ -21,7 +21,7 @@
     <string name="status_open_details">Ouvrir l\'état du système</string>
 
     <string name="issue_sepolicy_title">Politique SELinux non chargée</string>
-    <string name="issue_sepolicy_summary">Certaines fonctions ne marcheront pas. Cela signifie en général que l\'implémentation root n\'a pas appliqué les règles de Vector.</string>
+    <string name="issue_sepolicy_summary">Certaines fonctions ne marcheront pas. Cela signifie en général que l\'implémentation root n\'a pas appliqué les règles de Vekta.</string>
     <string name="issue_system_server_title">Échec de l\'injection dans le framework système</string>
     <string name="issue_system_server_summary">Les modules ne peuvent pas hooker les services système. C\'est rare, et c\'est en général un autre module root qui interfère.</string>
     <string name="issue_dex2oat_title">Wrapper dex2oat indisponible</string>
@@ -44,7 +44,7 @@
     <string name="info_injected">Injecté</string>
     <string name="info_not_injected">Non injecté</string>
     <string name="status_notification">Notification d\'état</string>
-    <string name="status_notification_summary">Une notification persistante indiquant que Vector fonctionne.</string>
+    <string name="status_notification_summary">Une notification persistante indiquant que Vekta fonctionne.</string>
     <string name="home_quarter_title">Activité récente</string>
     <plurals name="home_commit_count">
         <item quantity="one">%1$d commit</item>
@@ -120,7 +120,7 @@
     <string name="modules_incompatible">Nécessite l’API libxposed %1$d, que ce framework ne fournit pas.</string>
     <string name="modules_incompatible_legacy">Nécessite l\'API Xposed %1$d, que ce framework ne fournit pas.</string>
     <string name="modules_api_behind">Conçu pour l’API libxposed %1$d. L’API %2$d a modifié l’interface : ce module peut ne pas fonctionner entièrement.</string>
-    <string name="modules_no_daemon">Vector ne fonctionne pas, la liste des modules est donc indisponible. Ouvrez l\'état du système depuis l\'accueil pour savoir pourquoi.</string>
+    <string name="modules_no_daemon">Vekta ne fonctionne pas, la liste des modules est donc indisponible. Ouvrez l\'état du système depuis l\'accueil pour savoir pourquoi.</string>
 
     <string name="web_open_external">Ouvrir dans le navigateur</string>
 
@@ -141,7 +141,7 @@
         <item quantity="other">%1$d derniers mois</item>
     </plurals>
     <string name="settings_open_externally">Ouvrir les liens dans un navigateur</string>
-    <string name="settings_open_externally_summary">Désactivé : les pages GitHub s\'ouvrent dans Vector.</string>
+    <string name="settings_open_externally_summary">Désactivé : les pages GitHub s\'ouvrent dans Vekta.</string>
 
     <string name="scope_use_recommended">Prendre ce que le module demande</string>
     <string name="scope_select_visible">Tout sélectionner à l\'écran</string>
@@ -254,14 +254,14 @@
     <string name="report_save_with_root">Enregistrer le dossier des journaux (root requis)</string>
     <string name="report_saved_to">Enregistré dans %1$s</string>
     <string name="report_see_guide">Guide complet dans le ticket</string>
-    <string name="report_root_refused">Root refusé. Autorisez Vector dans votre gestionnaire root, puis réessayez%1$s</string>
+    <string name="report_root_refused">Root refusé. Autorisez Vekta dans votre gestionnaire root, puis réessayez%1$s</string>
     <string name="home_custom_build">Build personnalisé — en avance sur master</string>
     <string name="language_title">Langue</string>
     <string name="language_system">Langue du système</string>
     <string name="language_system_summary">Suivre la langue configurée sur le téléphone</string>
 
     <string name="language_help_short">Traduire</string>
-    <string name="language_help">Aider à traduire Vector</string>
+    <string name="language_help">Aider à traduire Vekta</string>
 
     <string name="update_title">Mise à jour du framework</string>
     <string name="update_channel_canary">Version canary</string>
@@ -276,7 +276,7 @@
     <string name="update_none">Aucune mise à jour disponible.</string>
     <string name="update_no_notes">Cette version n\'a pas publié de notes.</string>
     <string name="update_no_root">Aucune implémentation root trouvée : rien ne peut être flashé.</string>
-    <string name="update_root_multiple">Deux implémentations root trouvées. Vector ne devinera pas laquelle gère le module.</string>
+    <string name="update_root_multiple">Deux implémentations root trouvées. Vekta ne devinera pas laquelle gère le module.</string>
     <string name="update_failed_start">Impossible de lancer l\'installateur.</string>
     <string name="update_failed_download">Impossible de télécharger la mise à jour.</string>
     <string name="update_failed_exit">L\'installateur a échoué (code %1$d).</string>
@@ -375,7 +375,7 @@
     <string name="crash_message">Message</string>
     <string name="crash_where">Où</string>
     <string name="crash_when">Quand</string>
-    <string name="crash_where_unknown">Nulle part dans le code de Vector</string>
+    <string name="crash_where_unknown">Nulle part dans le code de Vekta</string>
     <string name="crash_when_value">%1$s sur %2$s</string>
     <string name="crash_open_trace">Voir la trace</string>
     <string name="crash_trace">Plantage</string>
@@ -399,8 +399,8 @@
     <string name="scope_framework_restart_title">Le framework n\'a pas encore pris en compte ce changement</string>
     <string name="scope_framework_restart_body">Le framework système n\'est chargé qu\'une fois, au démarrage d\'Android. Ce changement ne l\'atteindra qu\'au redémarrage du framework — toutes les applications en cours se ferment, et le téléphone reste allumé.</string>
     <string name="scope_framework_restart_later">Plus tard</string>
-    <string name="launcher_title">Comment ouvrir Vector</string>
-    <string name="launcher_body">Vector n\'est pas installé comme application, votre lanceur n\'a donc rien à afficher. Voici les moyens d\'y revenir.</string>
+    <string name="launcher_title">Comment ouvrir Vekta</string>
+    <string name="launcher_body">Vekta n\'est pas installé comme application, votre lanceur n\'a donc rien à afficher. Voici les moyens d\'y revenir.</string>
     <string name="launcher_shortcut">Raccourci sur l\'écran d\'accueil</string>
     <string name="launcher_shortcut_create">Créer</string>
     <string name="launcher_shortcut_unsupported">Votre lanceur n\'accepte pas les raccourcis épinglés.</string>
@@ -409,15 +409,15 @@
     <string name="launcher_install">Installer comme application</string>
     <string name="launcher_install_action">Installer</string>
     <string name="launcher_install_reinstall">Réinstaller</string>
-    <string name="launcher_install_done">Vector est installé. Ouvrez-le depuis votre lanceur.</string>
-    <string name="launcher_install_failed">Vector n\'a pas pu être installé.</string>
-    <string name="launcher_install_conflict">Une copie de Vector signée avec une autre clé est déjà installée. Il faut la supprimer avant que celle-ci puisse tenir.</string>
+    <string name="launcher_install_done">Vekta est installé. Ouvrez-le depuis votre lanceur.</string>
+    <string name="launcher_install_failed">Vekta n\'a pas pu être installé.</string>
+    <string name="launcher_install_conflict">Une copie de Vekta signée avec une autre clé est déjà installée. Il faut la supprimer avant que celle-ci puisse tenir.</string>
     <string name="launcher_install_remove">La supprimer</string>
-    <string name="launcher_install_diverged">La copie installée est un build différent de Vector — pas celui qui tourne ici. La réinstaller la remplace.</string>
+    <string name="launcher_install_diverged">La copie installée est un build différent de Vekta — pas celui qui tourne ici. La réinstaller la remplace.</string>
     <string name="launcher_route_available">Disponible</string>
-    <string name="launcher_note">Vous pouvez aussi composer %1$s, ou ouvrir Vector depuis le bouton d\'action de %2$s.</string>
+    <string name="launcher_note">Vous pouvez aussi composer %1$s, ou ouvrir Vekta depuis le bouton d\'action de %2$s.</string>
     <string name="launcher_root_generic">votre gestionnaire root</string>
-    <string name="launcher_prompt_title">Vector n\'a pas encore d\'icône</string>
-    <string name="launcher_prompt_body">Vector s\'exécute dans un autre processus au lieu d\'être installé : rien n\'apparaît dans votre lanceur et il n\'y a pas de moyen évident d\'y revenir. Donnez-lui un raccourci sur l\'écran d\'accueil, ou installez-le comme une application ordinaire.</string>
+    <string name="launcher_prompt_title">Vekta n\'a pas encore d\'icône</string>
+    <string name="launcher_prompt_body">Vekta s\'exécute dans un autre processus au lieu d\'être installé : rien n\'apparaît dans votre lanceur et il n\'y a pas de moyen évident d\'y revenir. Donnez-lui un raccourci sur l\'écran d\'accueil, ou installez-le comme une application ordinaire.</string>
     <string name="launcher_prompt_never">Ne plus demander</string>
 </resources>

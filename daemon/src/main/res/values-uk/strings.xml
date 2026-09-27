@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Модуль оновлено, потрібно перезавантаження системи</string>
     <string name="xposed_module_updated_notification_content_system">%s було оновлено, оскільки область містить System Framework, необхідне перезавантаження для застосування змін</string>
     <string name="module_updated_channel_name">Оновлення модуля завершено</string>
-    <string name="status_channel_name">Статус Vector</string>
-    <string name="vector_running_notification_title">Vector завантажено</string>
+    <string name="status_channel_name">Статус Vekta</string>
+    <string name="vector_running_notification_title">Vekta завантажено</string>
     <string name="vector_running_notification_content">Натисніть на повідомлення, щоб відкрити менеджер</string>
     <string name="xposed_module_request_scope_title">Запит на визначення обсягу робіт</string>
     <string name="xposed_module_request_scope_content">%1$s у користувача %2$s просить додати %3$s до своєї області видимості.</string>

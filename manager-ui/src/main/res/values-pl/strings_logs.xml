@@ -45,7 +45,7 @@
     </plurals>
     <!-- The four distinct nothing-to-show states -->
     <string name="logs_state_daemon_title">Usługa jest nieosiągalna</string>
-    <string name="logs_state_daemon_body">Nic nie wiadomo o dzienniku, dopóki Vector nie jest uruchomiony. Z tego samego powodu pasek stanu na ekranie głównym nie jest zielony.</string>
+    <string name="logs_state_daemon_body">Nic nie wiadomo o dzienniku, dopóki Vekta nie jest uruchomiony. Z tego samego powodu pasek stanu na ekranie głównym nie jest zielony.</string>
     <string name="logs_state_nofile_title">Nie ma jeszcze pliku dziennika</string>
     <string name="logs_state_nofile_body">Usługa działa, ale nie otworzyła tego dziennika. W przypadku dziennika szczegółowego zwykle oznacza to, że szczegółowe rejestrowanie jest wyłączone.</string>
     <string name="logs_state_empty_title">Ten dziennik jest pusty</string>
@@ -80,7 +80,7 @@
     <string name="logs_settings">Ustawienia dziennika</string>
     <string name="logs_source_more">Uwzględnij własne linie frameworka</string>
     <string name="logs_source_less">Pokaż tylko linie modułów</string>
-    <string name="logs_verbose_summary">Włącz tę opcję przed zgłoszeniem błędu. Aplikacje potrafią odczytywać własne dzienniki więc pozostawienie tej opcji włączonej to jeden ze sposobów na wykrycie Vectora.</string>
+    <string name="logs_verbose_summary">Włącz tę opcję przed zgłoszeniem błędu. Aplikacje potrafią odczytywać własne dzienniki więc pozostawienie tej opcji włączonej to jeden ze sposobów na wykrycie Vektaa.</string>
     <string name="logs_trace_title">Ślad stosu</string>
     <string name="logs_traces_inline">Otwórz ślady na miejscu</string>
     <string name="logs_traces_inline_summary">Ślad stosu rozwija się pod linią. Wyłącz tę opcję, aby otworzyć go na osobnym ekranie.</string>

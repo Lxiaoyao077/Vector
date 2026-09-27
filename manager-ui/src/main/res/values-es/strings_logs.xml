@@ -31,7 +31,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">No se puede contactar con el daemon</string>
-    <string name="logs_state_daemon_body">No se sabe nada del registro mientras Vector no esté en marcha. Es la misma razón por la que la cinta de estado de Inicio no está verde.</string>
+    <string name="logs_state_daemon_body">No se sabe nada del registro mientras Vekta no esté en marcha. Es la misma razón por la que la cinta de estado de Inicio no está verde.</string>
     <string name="logs_state_nofile_title">Todavía no hay archivo de registro</string>
     <string name="logs_state_nofile_body">El daemon está en marcha pero no ha abierto este registro. En el registro detallado eso suele significar que el registro detallado está desactivado.</string>
     <string name="logs_state_empty_title">Este registro está vacío</string>
@@ -67,7 +67,7 @@
     <string name="logs_settings">Ajustes de los registros</string>
     <string name="logs_source_more">Incluir también las líneas del framework</string>
     <string name="logs_source_less">Mostrar solo las líneas de los módulos</string>
-    <string name="logs_verbose_summary">Actívalo antes de informar de un error. Las apps pueden leer sus propios registros, así que dejarlo activado es una vía por la que una app puede detectar Vector.</string>
+    <string name="logs_verbose_summary">Actívalo antes de informar de un error. Las apps pueden leer sus propios registros, así que dejarlo activado es una vía por la que una app puede detectar Vekta.</string>
     <string name="logs_trace_title">Traza de pila</string>
     <string name="logs_traces_inline">Abrir las trazas en el sitio</string>
     <string name="logs_traces_inline_summary">La traza se despliega bajo su línea. Desactívalo para abrirla en una pantalla propia.</string>

@@ -49,7 +49,7 @@
     <string name="store_confirm_title">Pasang %1$s?</string>
     <string name="store_confirm_body">%1$s (%2$s) akan diunduh dari katalog modul dan dipasang sebagai %3$s.</string>
     <string name="store_confirm_trust">Sebuah modul berjalan dengan hak istimewa framework di dalam aplikasi yang di-hook-nya. Pasang hanya jika Anda memercayai pembuatnya.</string>
-    <string name="store_confirm_silent">Vector memasangnya sendiri dan sistem tidak akan bertanya lagi.</string>
+    <string name="store_confirm_silent">Vekta memasangnya sendiri dan sistem tidak akan bertanya lagi.</string>
 
     <string name="store_downloading">Mengunduh %1$s dari %2$s</string>
     <string name="store_installing">Memasang…</string>

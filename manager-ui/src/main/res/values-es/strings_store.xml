@@ -52,7 +52,7 @@
     <string name="store_confirm_title">¿Instalar %1$s?</string>
     <string name="store_confirm_body">%1$s (%2$s) se descargará del catálogo de módulos y se instalará como %3$s.</string>
     <string name="store_confirm_trust">Un módulo se ejecuta con los privilegios del framework dentro de las apps que hookea. Instala uno solo si confías en su autor.</string>
-    <string name="store_confirm_silent">Vector lo instala por su cuenta y el sistema no va a volver a preguntar.</string>
+    <string name="store_confirm_silent">Vekta lo instala por su cuenta y el sistema no va a volver a preguntar.</string>
 
     <string name="store_downloading">Descargando %1$s de %2$s</string>
     <string name="store_installing">Instalando…</string>

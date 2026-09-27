@@ -59,7 +59,7 @@
     <string name="store_confirm_title">%1$s をインストールしますか？</string>
     <string name="store_confirm_body">%1$s (%2$s) がモジュールリポジトリからダウンロードされ、%3$s としてインストールされます。</string>
     <string name="store_confirm_trust">モジュールは、フック対象のアプリ内でフレームワークの権限を使って動作します。開発者を信頼できる場合にのみインストールしてください。</string>
-    <string name="store_confirm_silent">Vector はこれを自動的にインストールするため、システムから再度確認されることはありません。</string>
+    <string name="store_confirm_silent">Vekta はこれを自動的にインストールするため、システムから再度確認されることはありません。</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">ダウンロード中: %1$s / %2$s</string>
     <string name="store_installing">インストールしています…</string>

@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Aktualizácia modulu, potrebný reštart systému</string>
     <string name="xposed_module_updated_notification_content_system">%s bola aktualizovaná, pretože rozsah obsahuje System Framework, potrebný reštart na uplatnenie zmien</string>
     <string name="module_updated_channel_name">Aktualizácia modulu dokončená</string>
-    <string name="status_channel_name">Stav Vector</string>
-    <string name="vector_running_notification_title">Vector naložené</string>
+    <string name="status_channel_name">Stav Vekta</string>
+    <string name="vector_running_notification_title">Vekta naložené</string>
     <string name="vector_running_notification_content">Ťuknutím na oznámenie otvorte správcu</string>
     <string name="xposed_module_request_scope_title">Žiadosť o rozsah</string>
     <string name="xposed_module_request_scope_content">%1$s na žiadosti používateľa %2$s o pridanie %3$s do jej rozsahu.</string>

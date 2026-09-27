@@ -68,7 +68,7 @@
     <string name="store_confirm_title">Zainstalować %1$s?</string>
     <string name="store_confirm_body">%1$s (%2$s) zostanie pobrany z katalogu modułów i zainstalowany jako %3$s.</string>
     <string name="store_confirm_trust">Moduł działa z uprawnieniami frameworka w aplikacjach, do których jest podłączony. Zainstaluj go tylko wtedy, gdy ufasz jego autorowi.</string>
-    <string name="store_confirm_silent">Vector instaluje tę aplikację samodzielnie i system nie będzie już pytał o to ponownie.</string>
+    <string name="store_confirm_silent">Vekta instaluje tę aplikację samodzielnie i system nie będzie już pytał o to ponownie.</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">Pobieranie %1$s z %2$s</string>
     <string name="store_installing">Instalowanie…</string>

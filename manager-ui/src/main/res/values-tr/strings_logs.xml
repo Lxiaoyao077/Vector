@@ -31,7 +31,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">Art alan sürecine ulaşılamıyor</string>
-    <string name="logs_state_daemon_body">Vector çalışmadığı sürece günlük hakkında hiçbir şey bilinemez. Ana sayfadaki durum şeridinin yeşil olmamasının nedeni de aynıdır.</string>
+    <string name="logs_state_daemon_body">Vekta çalışmadığı sürece günlük hakkında hiçbir şey bilinemez. Ana sayfadaki durum şeridinin yeşil olmamasının nedeni de aynıdır.</string>
     <string name="logs_state_nofile_title">Henüz günlük dosyası yok</string>
     <string name="logs_state_nofile_body">Art alan süreci çalışıyor ama bu günlüğü açmamış. Ayrıntılı günlük için bu genellikle ayrıntılı kaydın kapalı olduğu anlamına gelir.</string>
     <string name="logs_state_empty_title">Bu günlük boş</string>
@@ -67,7 +67,7 @@
     <string name="logs_settings">Günlük ayarları</string>
     <string name="logs_source_more">Çatının kendi satırlarını da göster</string>
     <string name="logs_source_less">Yalnızca modül satırlarını göster</string>
-    <string name="logs_verbose_summary">Bir hatayı bildirmeden önce bunu açın. Uygulamalar kendi günlüklerini okuyabilir; açık bırakmak, bir uygulamanın Vector\'ü fark etmesinin yollarından biridir.</string>
+    <string name="logs_verbose_summary">Bir hatayı bildirmeden önce bunu açın. Uygulamalar kendi günlüklerini okuyabilir; açık bırakmak, bir uygulamanın Vekta\'ü fark etmesinin yollarından biridir.</string>
     <string name="logs_trace_title">Yığın izi</string>
     <string name="logs_traces_inline">İzleri yerinde aç</string>
     <string name="logs_traces_inline_summary">Yığın izi kendi satırının altında açılır. Bunu kapatırsanız kendi ekranında açılır.</string>

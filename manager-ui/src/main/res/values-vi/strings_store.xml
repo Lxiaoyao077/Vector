@@ -59,7 +59,7 @@
     <string name="store_confirm_title">Cài %1$s?</string>
     <string name="store_confirm_body">%1$s (%2$s) sẽ được tải từ kho mô-đun và cài dưới tên %3$s.</string>
     <string name="store_confirm_trust">Mô-đun chạy với quyền của framework bên trong những ứng dụng nó hook. Chỉ cài khi bạn tin tác giả của nó.</string>
-    <string name="store_confirm_silent">Vector tự cài và hệ thống sẽ không hỏi lại.</string>
+    <string name="store_confirm_silent">Vekta tự cài và hệ thống sẽ không hỏi lại.</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">Đang tải %1$s trên %2$s</string>
     <string name="store_installing">Đang cài…</string>

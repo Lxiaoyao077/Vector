@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">המודול עודכן, נדרש אתחול המערכת</string>
     <string name="xposed_module_updated_notification_content_system">%s עודכן, מכיוון שההיקף מכיל System Framework, נדרש אתחול כדי להחיל שינויים</string>
     <string name="module_updated_channel_name">עדכון המודול הושלם</string>
-    <string name="status_channel_name">סטטוס Vector</string>
-    <string name="vector_running_notification_title">Vector נטען</string>
+    <string name="status_channel_name">סטטוס Vekta</string>
+    <string name="vector_running_notification_title">Vekta נטען</string>
     <string name="vector_running_notification_content">הקש על ההודעה כדי לפתוח את המנהל</string>
     <string name="xposed_module_request_scope_title">בקשת היקף</string>
     <string name="xposed_module_request_scope_content">%1$s על משתמש %2$s מבקש להוסיף %3$s להיקף שלו.</string>

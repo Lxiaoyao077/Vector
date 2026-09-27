@@ -43,7 +43,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">تعذّر الوصول إلى الخدمة</string>
-    <string name="logs_state_daemon_body">لا يُعرف شيء عن السجل ما دام Vector لا يعمل. وللسبب نفسه ليس شريط الحالة في الرئيسية أخضر.</string>
+    <string name="logs_state_daemon_body">لا يُعرف شيء عن السجل ما دام Vekta لا يعمل. وللسبب نفسه ليس شريط الحالة في الرئيسية أخضر.</string>
     <string name="logs_state_nofile_title">لا ملف سجل بعد</string>
     <string name="logs_state_nofile_body">الخدمة تعمل لكنها لم تفتح هذا السجل. في السجل المفصّل يعني ذلك عادةً أن التسجيل المفصّل مُطفأ.</string>
     <string name="logs_state_empty_title">هذا السجل فارغ</string>
@@ -79,7 +79,7 @@
     <string name="logs_settings">إعدادات السجلات</string>
     <string name="logs_source_more">تضمين أسطر الإطار نفسه</string>
     <string name="logs_source_less">إظهار أسطر الوحدات فقط</string>
-    <string name="logs_verbose_summary">فعّل هذا قبل الإبلاغ عن خلل. تستطيع التطبيقات قراءة سجلاتها، لذا فإبقاؤه مفعّلًا أحد السبل التي يكتشف بها تطبيقٌ وجود Vector.</string>
+    <string name="logs_verbose_summary">فعّل هذا قبل الإبلاغ عن خلل. تستطيع التطبيقات قراءة سجلاتها، لذا فإبقاؤه مفعّلًا أحد السبل التي يكتشف بها تطبيقٌ وجود Vekta.</string>
     <string name="logs_trace_title">تتبّع المكدّس</string>
     <string name="logs_traces_inline">فتح التتبّعات في مكانها</string>
     <string name="logs_traces_inline_summary">يُفتح التتبّع أسفل سطره. أوقف هذا ليُفتح في شاشة مستقلة.</string>

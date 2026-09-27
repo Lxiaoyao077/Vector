@@ -28,7 +28,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">無法連線到常駐程式</string>
-    <string name="logs_state_daemon_body">Vector 未執行時無從得知日誌狀況。主畫面上的狀態標示不是綠色，也是同樣的原因。</string>
+    <string name="logs_state_daemon_body">Vekta 未執行時無從得知日誌狀況。主畫面上的狀態標示不是綠色，也是同樣的原因。</string>
     <string name="logs_state_nofile_title">尚無日誌檔案</string>
     <string name="logs_state_nofile_body">常駐程式正在執行，但尚未開啟此日誌。就詳細日誌而言，這通常代表詳細記錄已關閉。</string>
     <string name="logs_state_empty_title">此日誌是空的</string>
@@ -64,7 +64,7 @@
     <string name="logs_settings">日誌設定</string>
     <string name="logs_source_more">一併顯示框架自身的日誌</string>
     <string name="logs_source_less">僅顯示模組日誌</string>
-    <string name="logs_verbose_summary">回報問題前請先開啟。應用程式可以讀取自己的日誌，因此持續開啟會讓應用程式有機會察覺 Vector。</string>
+    <string name="logs_verbose_summary">回報問題前請先開啟。應用程式可以讀取自己的日誌，因此持續開啟會讓應用程式有機會察覺 Vekta。</string>
     <string name="logs_trace_title">呼叫堆疊</string>
     <string name="logs_traces_inline">就地展開呼叫堆疊</string>
     <string name="logs_traces_inline_summary">呼叫堆疊會在所屬行下方展開。關閉後改為在獨立畫面開啟。</string>

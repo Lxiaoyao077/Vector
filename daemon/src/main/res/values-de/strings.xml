@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Modul aktualisiert, Systemneustart erforderlich</string>
     <string name="xposed_module_updated_notification_content_system">%s wurde aktualisiert, da der Geltungsbereich System-Framework enthält, ist ein Neustart erforderlich, damit die Änderungen übernommen werden</string>
     <string name="module_updated_channel_name">Modulaktualisierung abgeschlossen</string>
-    <string name="status_channel_name">Vector-Status</string>
-    <string name="vector_running_notification_title">Vector geladen</string>
+    <string name="status_channel_name">Vekta-Status</string>
+    <string name="vector_running_notification_title">Vekta geladen</string>
     <string name="vector_running_notification_content">Auf die Benachrichtigung tippen, um den Manager zu öffnen</string>
     <string name="xposed_module_request_scope_title">Scope-Anfrage</string>
     <string name="xposed_module_request_scope_content">%1$s von Benutzer %2$s fordert an, %3$s zu seinem Scope-Bereich hinzuzufügen.</string>

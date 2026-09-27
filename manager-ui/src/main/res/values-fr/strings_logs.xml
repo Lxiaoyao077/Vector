@@ -31,7 +31,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">Le démon est injoignable</string>
-    <string name="logs_state_daemon_body">Rien n\'est connu du journal tant que Vector ne fonctionne pas. C\'est la même raison pour laquelle le bandeau d\'état de l\'accueil n\'est pas vert.</string>
+    <string name="logs_state_daemon_body">Rien n\'est connu du journal tant que Vekta ne fonctionne pas. C\'est la même raison pour laquelle le bandeau d\'état de l\'accueil n\'est pas vert.</string>
     <string name="logs_state_nofile_title">Pas encore de fichier journal</string>
     <string name="logs_state_nofile_body">Le démon fonctionne mais n\'a pas ouvert ce journal. Pour le journal verbeux, cela veut généralement dire que la journalisation verbeuse est désactivée.</string>
     <string name="logs_state_empty_title">Ce journal est vide</string>
@@ -67,7 +67,7 @@
     <string name="logs_settings">Paramètres des journaux</string>
     <string name="logs_source_more">Inclure les lignes du framework</string>
     <string name="logs_source_less">Afficher seulement les lignes des modules</string>
-    <string name="logs_verbose_summary">Activez ceci avant de signaler un bug. Les applications peuvent lire leurs propres journaux : le laisser activé est donc un moyen pour une application de repérer Vector.</string>
+    <string name="logs_verbose_summary">Activez ceci avant de signaler un bug. Les applications peuvent lire leurs propres journaux : le laisser activé est donc un moyen pour une application de repérer Vekta.</string>
     <string name="logs_trace_title">Trace de pile</string>
     <string name="logs_traces_inline">Ouvrir les traces sur place</string>
     <string name="logs_traces_inline_summary">Une trace se déplie sous sa ligne. Désactivez ceci pour l\'ouvrir sur un écran dédié.</string>

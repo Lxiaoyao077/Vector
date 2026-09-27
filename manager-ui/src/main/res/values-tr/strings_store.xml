@@ -62,7 +62,7 @@
     <string name="store_confirm_title">%1$s kurulsun mu?</string>
     <string name="store_confirm_body">%1$s (%2$s) modül kataloğundan indirilip %3$s olarak kurulacak.</string>
     <string name="store_confirm_trust">Bir modül, hook taktığı uygulamaların içinde çatının ayrıcalıklarıyla çalışır. Yalnızca yazarına güveniyorsanız kurun.</string>
-    <string name="store_confirm_silent">Vector bunu kendisi kurar ve sistem bir daha sormaz.</string>
+    <string name="store_confirm_silent">Vekta bunu kendisi kurar ve sistem bir daha sormaz.</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">%2$s içinden %1$s indiriliyor</string>
     <string name="store_installing">Kuruluyor…</string>

@@ -59,7 +59,7 @@
     <string name="store_confirm_title">安裝 %1$s？</string>
     <string name="store_confirm_body">將從模組儲存庫下載 %1$s（%2$s），並以 %3$s 的身分安裝。</string>
     <string name="store_confirm_trust">模組會在它所掛鉤的應用程式中以框架的權限執行。請只安裝你信任其作者的模組。</string>
-    <string name="store_confirm_silent">Vector 會自行完成安裝，系統不會再詢問。</string>
+    <string name="store_confirm_silent">Vekta 會自行完成安裝，系統不會再詢問。</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">正在下載 %1$s / %2$s</string>
     <string name="store_installing">正在安裝…</string>

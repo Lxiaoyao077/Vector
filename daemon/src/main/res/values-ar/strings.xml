@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">تم تحديث الوحدة، مطلوب إعادة تشغيل النظام</string>
     <string name="xposed_module_updated_notification_content_system">%s تم تحديثه، نظراً لأن النطاق يحتوي على إطار النظام، يتطلب إعادة التشغيل لتطبيق التغييرات</string>
     <string name="module_updated_channel_name">اكتمل تحديث الوحدة</string>
-    <string name="status_channel_name">حالة Vector</string>
-    <string name="vector_running_notification_title">تم تحميل Vector</string>
+    <string name="status_channel_name">حالة Vekta</string>
+    <string name="vector_running_notification_title">تم تحميل Vekta</string>
     <string name="vector_running_notification_content">اضغط على الإشعار لفتح المدير</string>
     <string name="xposed_module_request_scope_title">طلب النطاق</string>
     <string name="xposed_module_request_scope_content">%1$s على %2$s طلبات المستخدم لإضافة %3$s إلى نطاقه.</string>

@@ -59,7 +59,7 @@
     <string name="store_confirm_title">%1$s을(를) 설치할까요?</string>
     <string name="store_confirm_body">%1$s(%2$s)을(를) 모듈 카탈로그에서 내려받아 %3$s(으)로 설치합니다.</string>
     <string name="store_confirm_trust">모듈은 후킹한 앱 안에서 프레임워크의 권한으로 실행됩니다. 만든 사람을 신뢰할 때만 설치하세요.</string>
-    <string name="store_confirm_silent">Vector가 직접 설치하므로 시스템이 다시 묻지 않습니다.</string>
+    <string name="store_confirm_silent">Vekta가 직접 설치하므로 시스템이 다시 묻지 않습니다.</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">%2$s 중 %1$s 내려받는 중</string>
     <string name="store_installing">설치하는 중…</string>

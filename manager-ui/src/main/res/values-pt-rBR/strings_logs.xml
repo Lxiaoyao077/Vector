@@ -31,7 +31,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">O daemon está inacessível</string>
-    <string name="logs_state_daemon_body">Não se sabe nada do registro enquanto o Vector não estiver em execução. É o mesmo motivo pelo qual a faixa de status no Início não está verde.</string>
+    <string name="logs_state_daemon_body">Não se sabe nada do registro enquanto o Vekta não estiver em execução. É o mesmo motivo pelo qual a faixa de status no Início não está verde.</string>
     <string name="logs_state_nofile_title">Ainda não há arquivo de registro</string>
     <string name="logs_state_nofile_body">O daemon está em execução mas não abriu este registro. No registro detalhado isso normalmente quer dizer que o registro detalhado está desligado.</string>
     <string name="logs_state_empty_title">Este registro está vazio</string>
@@ -67,7 +67,7 @@
     <string name="logs_settings">Configurações dos registros</string>
     <string name="logs_source_more">Incluir também as linhas do framework</string>
     <string name="logs_source_less">Mostrar só as linhas dos módulos</string>
-    <string name="logs_verbose_summary">Ligue isto antes de relatar um erro. Os apps conseguem ler os próprios registros, então deixar ligado é um jeito de um app perceber o Vector.</string>
+    <string name="logs_verbose_summary">Ligue isto antes de relatar um erro. Os apps conseguem ler os próprios registros, então deixar ligado é um jeito de um app perceber o Vekta.</string>
     <string name="logs_trace_title">Rastreamento de pilha</string>
     <string name="logs_traces_inline">Abrir os rastreamentos no lugar</string>
     <string name="logs_traces_inline_summary">O rastreamento se abre embaixo da linha dele. Desligue para abri-lo em uma tela própria.</string>

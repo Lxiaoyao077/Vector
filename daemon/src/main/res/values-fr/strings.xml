@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Module mis à jour, redémarrage du système requis</string>
     <string name="xposed_module_updated_notification_content_system">%s a été mis à jour, étant donné que le champ d\'application est étendu au sous système, un redémarrage est nécessaire pour appliquer les changements</string>
     <string name="module_updated_channel_name">Mise à jour du module terminée</string>
-    <string name="status_channel_name">Statut Vector</string>
-    <string name="vector_running_notification_title">Vector chargé</string>
+    <string name="status_channel_name">Statut Vekta</string>
+    <string name="vector_running_notification_title">Vekta chargé</string>
     <string name="vector_running_notification_content">Appuyer sur la notification pour ouvrir le gestionnaire</string>
     <string name="xposed_module_request_scope_title">Demande d\'Extension de Portée</string>
     <string name="xposed_module_request_scope_content">%1$s sur l\'utilisateur %2$s demande d\'ajouter %3$s à son périmètre d\'action.</string>

@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">ماڈیول کو اپ ڈیٹ کر دیا گیا، سسٹم ریبوٹ درکار ہے۔</string>
     <string name="xposed_module_updated_notification_content_system">%s کو اپ ڈیٹ کر دیا گیا ہے، چونکہ دائرہ کار میں سسٹم فریم ورک ہے، تبدیلیاں لاگو کرنے کے لیے ریبوٹ کی ضرورت ہے۔</string>
     <string name="module_updated_channel_name">ماڈیول اپ ڈیٹ مکمل ہو گیا۔</string>
-    <string name="status_channel_name">Vector کی حیثیت</string>
-    <string name="vector_running_notification_title">Vector لوڈ شدہ</string>
+    <string name="status_channel_name">Vekta کی حیثیت</string>
+    <string name="vector_running_notification_title">Vekta لوڈ شدہ</string>
     <string name="vector_running_notification_content">مینیجر کو کھولنے کے لیے نوٹیفکیشن کو تھپتھپائیں۔</string>
     <string name="xposed_module_request_scope_title">دائرہ کار کی درخواست</string>
     <string name="xposed_module_request_scope_content">صارف %2$s پر %1$s اپنے دائرہ کار میں %3$s شامل کرنے کی درخواست کرتا ہے۔</string>

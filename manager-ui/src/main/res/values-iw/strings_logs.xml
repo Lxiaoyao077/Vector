@@ -37,7 +37,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">אין גישה לשירות</string>
-    <string name="logs_state_daemon_body">כל עוד Vector לא פועל, לא ידוע דבר על היומן. מאותה סיבה פס המצב בבית אינו ירוק.</string>
+    <string name="logs_state_daemon_body">כל עוד Vekta לא פועל, לא ידוע דבר על היומן. מאותה סיבה פס המצב בבית אינו ירוק.</string>
     <string name="logs_state_nofile_title">אין עדיין קובץ יומן</string>
     <string name="logs_state_nofile_body">השירות פועל אבל לא פתח את היומן הזה. ביומן המפורט זה בדרך כלל אומר שהתיעוד המפורט כבוי.</string>
     <string name="logs_state_empty_title">היומן הזה ריק</string>
@@ -73,7 +73,7 @@
     <string name="logs_settings">הגדרות היומנים</string>
     <string name="logs_source_more">לכלול גם את השורות של המסגרת עצמה</string>
     <string name="logs_source_less">להציג רק שורות של מודולים</string>
-    <string name="logs_verbose_summary">הפעילו את זה לפני דיווח על תקלה. אפליקציות יכולות לקרוא את היומנים של עצמן, ולכן השארה במצב מופעל היא אחת הדרכים שבהן אפליקציה יכולה לזהות את Vector.</string>
+    <string name="logs_verbose_summary">הפעילו את זה לפני דיווח על תקלה. אפליקציות יכולות לקרוא את היומנים של עצמן, ולכן השארה במצב מופעל היא אחת הדרכים שבהן אפליקציה יכולה לזהות את Vekta.</string>
     <string name="logs_trace_title">מעקב מחסנית</string>
     <string name="logs_traces_inline">פתיחת מעקבים במקום</string>
     <string name="logs_traces_inline_summary">המעקב נפתח מתחת לשורה שלו. כבו את זה כדי לפתוח אותו במסך נפרד.</string>

@@ -21,7 +21,7 @@
     <string name="status_open_details">시스템 상태 열기</string>
 
     <string name="issue_sepolicy_title">SELinux 정책이 로드되지 않음</string>
-    <string name="issue_sepolicy_summary">일부 기능이 동작하지 않습니다. 보통은 루트 구현이 Vector의 정책 규칙을 적용하지 않았다는 뜻입니다.</string>
+    <string name="issue_sepolicy_summary">일부 기능이 동작하지 않습니다. 보통은 루트 구현이 Vekta의 정책 규칙을 적용하지 않았다는 뜻입니다.</string>
     <string name="issue_system_server_title">시스템 프레임워크 주입 실패</string>
     <string name="issue_system_server_summary">모듈이 시스템 서비스를 후킹할 수 없습니다. 드문 일이며, 보통 다른 루트 모듈이 간섭하는 경우입니다.</string>
     <string name="issue_dex2oat_title">dex2oat 래퍼를 사용할 수 없음</string>
@@ -44,7 +44,7 @@
     <string name="info_injected">주입됨</string>
     <string name="info_not_injected">주입되지 않음</string>
     <string name="status_notification">상태 알림</string>
-    <string name="status_notification_summary">Vector가 실행 중임을 알리는 상시 알림입니다.</string>
+    <string name="status_notification_summary">Vekta가 실행 중임을 알리는 상시 알림입니다.</string>
     <string name="home_quarter_title">최근 활동</string>
     <plurals name="home_commit_count">
         <item quantity="other">커밋 %1$d개</item>
@@ -115,7 +115,7 @@
     <string name="modules_incompatible">libxposed API %1$d이(가) 필요하지만 이 프레임워크는 제공하지 않습니다.</string>
     <string name="modules_incompatible_legacy">Xposed API %1$d이(가) 필요하지만 이 프레임워크는 제공하지 않습니다.</string>
     <string name="modules_api_behind">libxposed API %1$d용으로 빌드되었습니다. API %2$d에서 인터페이스가 바뀌어 이 모듈이 완전히 작동하지 않을 수 있습니다.</string>
-    <string name="modules_no_daemon">Vector가 실행 중이 아니라 모듈 목록을 가져올 수 없습니다. 이유는 홈의 시스템 상태에서 확인하세요.</string>
+    <string name="modules_no_daemon">Vekta가 실행 중이 아니라 모듈 목록을 가져올 수 없습니다. 이유는 홈의 시스템 상태에서 확인하세요.</string>
 
     <string name="web_open_external">브라우저에서 열기</string>
 
@@ -135,7 +135,7 @@
         <item quantity="other">최근 %1$d개월</item>
     </plurals>
     <string name="settings_open_externally">링크를 브라우저에서 열기</string>
-    <string name="settings_open_externally_summary">꺼두면 GitHub 페이지가 Vector 안에서 열립니다.</string>
+    <string name="settings_open_externally_summary">꺼두면 GitHub 페이지가 Vekta 안에서 열립니다.</string>
 
     <string name="scope_use_recommended">모듈이 요청한 대로 두기</string>
     <string name="scope_select_visible">표시된 항목 모두 선택</string>
@@ -244,14 +244,14 @@
     <string name="report_save_with_root">로그 폴더 저장(루트 필요)</string>
     <string name="report_saved_to">%1$s에 저장했습니다</string>
     <string name="report_see_guide">전체 안내는 이슈에</string>
-    <string name="report_root_refused">루트가 거부되었습니다. 루트 관리자에서 Vector를 허용한 뒤 다시 시도하세요%1$s</string>
+    <string name="report_root_refused">루트가 거부되었습니다. 루트 관리자에서 Vekta를 허용한 뒤 다시 시도하세요%1$s</string>
     <string name="home_custom_build">직접 만든 빌드 — master보다 앞섬</string>
     <string name="language_title">언어</string>
     <string name="language_system">시스템 기본값</string>
     <string name="language_system_summary">휴대전화에 설정된 언어를 따릅니다</string>
 
     <string name="language_help_short">번역</string>
-    <string name="language_help">Vector 번역에 참여하기</string>
+    <string name="language_help">Vekta 번역에 참여하기</string>
 
     <string name="update_title">프레임워크 업데이트</string>
     <string name="update_channel_canary">canary 빌드</string>
@@ -266,7 +266,7 @@
     <string name="update_none">사용할 수 있는 업데이트가 없습니다.</string>
     <string name="update_no_notes">이 릴리스에는 설명이 없습니다.</string>
     <string name="update_no_root">root 구현을 찾지 못해 설치할 수 없습니다.</string>
-    <string name="update_root_multiple">root 구현이 두 개 발견되었습니다. 어느 쪽이 모듈을 관리하는지 Vector가 짐작하지 않습니다.</string>
+    <string name="update_root_multiple">root 구현이 두 개 발견되었습니다. 어느 쪽이 모듈을 관리하는지 Vekta가 짐작하지 않습니다.</string>
     <string name="update_failed_start">설치 프로그램을 시작하지 못했습니다.</string>
     <string name="update_failed_download">업데이트를 내려받지 못했습니다.</string>
     <string name="update_failed_exit">설치 프로그램이 실패했습니다(종료 코드 %1$d).</string>
@@ -365,7 +365,7 @@
     <string name="crash_message">메시지</string>
     <string name="crash_where">위치</string>
     <string name="crash_when">시각</string>
-    <string name="crash_where_unknown">Vector 자체 코드에는 없음</string>
+    <string name="crash_where_unknown">Vekta 자체 코드에는 없음</string>
     <string name="crash_when_value">%1$s (%2$s 스레드)</string>
     <string name="crash_open_trace">스택 트레이스 보기</string>
     <string name="crash_trace">충돌</string>
@@ -388,8 +388,8 @@
     <string name="scope_framework_restart_title">프레임워크가 아직 반영하지 않았습니다</string>
     <string name="scope_framework_restart_body">시스템 프레임워크는 Android가 시작될 때 한 번만 로드됩니다. 이 변경은 프레임워크가 다시 시작될 때에만 반영됩니다. 실행 중인 앱은 모두 종료되지만 휴대전화 자체는 켜져 있습니다.</string>
     <string name="scope_framework_restart_later">나중에</string>
-    <string name="launcher_title">Vector를 여는 방법</string>
-    <string name="launcher_body">Vector는 앱으로 설치되지 않으므로 런처에 보여줄 것이 없습니다. 다시 들어오는 방법은 다음과 같습니다.</string>
+    <string name="launcher_title">Vekta를 여는 방법</string>
+    <string name="launcher_body">Vekta는 앱으로 설치되지 않으므로 런처에 보여줄 것이 없습니다. 다시 들어오는 방법은 다음과 같습니다.</string>
     <string name="launcher_shortcut">홈 화면 바로가기</string>
     <string name="launcher_shortcut_create">만들기</string>
     <string name="launcher_shortcut_unsupported">이 런처는 바로가기 고정을 받아들이지 않습니다.</string>
@@ -398,15 +398,15 @@
     <string name="launcher_install">앱으로 설치</string>
     <string name="launcher_install_action">설치</string>
     <string name="launcher_install_reinstall">다시 설치</string>
-    <string name="launcher_install_done">Vector가 설치되었습니다. 런처에서 열 수 있습니다.</string>
-    <string name="launcher_install_failed">Vector를 설치할 수 없습니다.</string>
-    <string name="launcher_install_conflict">다른 키로 서명된 Vector가 이미 설치되어 있습니다. 이것을 넣으려면 먼저 지워야 합니다.</string>
+    <string name="launcher_install_done">Vekta가 설치되었습니다. 런처에서 열 수 있습니다.</string>
+    <string name="launcher_install_failed">Vekta를 설치할 수 없습니다.</string>
+    <string name="launcher_install_conflict">다른 키로 서명된 Vekta가 이미 설치되어 있습니다. 이것을 넣으려면 먼저 지워야 합니다.</string>
     <string name="launcher_install_remove">지우기</string>
-    <string name="launcher_install_diverged">설치된 사본은 다른 빌드의 Vector입니다. 여기서 실행 중인 것이 아닙니다. 다시 설치하면 교체됩니다.</string>
+    <string name="launcher_install_diverged">설치된 사본은 다른 빌드의 Vekta입니다. 여기서 실행 중인 것이 아닙니다. 다시 설치하면 교체됩니다.</string>
     <string name="launcher_route_available">사용 가능</string>
     <string name="launcher_note">%1$s를 눌러 걸거나, %2$s의 액션 버튼에서도 열 수 있습니다.</string>
     <string name="launcher_root_generic">루트 관리자</string>
-    <string name="launcher_prompt_title">Vector에 아직 아이콘이 없습니다</string>
-    <string name="launcher_prompt_body">Vector는 설치되는 대신 다른 프로세스 안에서 실행되므로 런처에 아무것도 나타나지 않고 다시 들어올 뚜렷한 방법도 없습니다. 홈 화면 바로가기를 만들거나, 일반 앱으로 설치하세요.</string>
+    <string name="launcher_prompt_title">Vekta에 아직 아이콘이 없습니다</string>
+    <string name="launcher_prompt_body">Vekta는 설치되는 대신 다른 프로세스 안에서 실행되므로 런처에 아무것도 나타나지 않고 다시 들어올 뚜렷한 방법도 없습니다. 홈 화면 바로가기를 만들거나, 일반 앱으로 설치하세요.</string>
     <string name="launcher_prompt_never">다시 묻지 않기</string>
 </resources>

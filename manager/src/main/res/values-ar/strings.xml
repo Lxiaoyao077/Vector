@@ -21,7 +21,7 @@
     <string name="status_open_details">فتح حالة النظام</string>
 
     <string name="issue_sepolicy_title">لم تُحمَّل سياسة SELinux</string>
-    <string name="issue_sepolicy_summary">لن تعمل بعض الميزات. يعني هذا عادةً أن تطبيق الروت لم يطبّق قواعد Vector.</string>
+    <string name="issue_sepolicy_summary">لن تعمل بعض الميزات. يعني هذا عادةً أن تطبيق الروت لم يطبّق قواعد Vekta.</string>
     <string name="issue_system_server_title">فشل الحقن في إطار النظام</string>
     <string name="issue_system_server_summary">لا تستطيع الوحدات ربط خدمات النظام. هذا نادر، وسببه عادةً وحدة روت أخرى تتداخل معه.</string>
     <string name="issue_dex2oat_title">غلاف dex2oat غير متاح</string>
@@ -44,7 +44,7 @@
     <string name="info_injected">محقون</string>
     <string name="info_not_injected">غير محقون</string>
     <string name="status_notification">إشعار الحالة</string>
-    <string name="status_notification_summary">إشعار دائم يبيّن أن Vector يعمل.</string>
+    <string name="status_notification_summary">إشعار دائم يبيّن أن Vekta يعمل.</string>
     <string name="home_quarter_title">النشاط الأخير</string>
     <plurals name="home_commit_count">
         <item quantity="zero">لا إيداعات</item>
@@ -140,7 +140,7 @@
     <string name="modules_incompatible">يحتاج إلى libxposed API %1$d، وهو غير متوفّر في هذا الإطار.</string>
     <string name="modules_incompatible_legacy">تحتاج واجهة Xposed %1$d، وهذا الإطار لا يوفّرها.</string>
     <string name="modules_api_behind">بُني على libxposed API %1$d. غيّر الإصدار %2$d الواجهة، لذا قد لا تعمل هذه الوحدة بالكامل.</string>
-    <string name="modules_no_daemon">‏Vector لا يعمل، لذا قائمة الوحدات غير متاحة. افتح حالة النظام من الرئيسية لمعرفة السبب.</string>
+    <string name="modules_no_daemon">‏Vekta لا يعمل، لذا قائمة الوحدات غير متاحة. افتح حالة النظام من الرئيسية لمعرفة السبب.</string>
 
     <string name="web_open_external">فتح في المتصفح</string>
 
@@ -165,7 +165,7 @@
         <item quantity="other">آخر %1$d شهر</item>
     </plurals>
     <string name="settings_open_externally">فتح الروابط في المتصفح</string>
-    <string name="settings_open_externally_summary">عند الإيقاف: تُفتح صفحات GitHub داخل Vector.</string>
+    <string name="settings_open_externally_summary">عند الإيقاف: تُفتح صفحات GitHub داخل Vekta.</string>
 
     <string name="scope_use_recommended">استخدام ما تطلبه الوحدة</string>
     <string name="scope_select_visible">تحديد كل ما هو ظاهر</string>
@@ -294,14 +294,14 @@
     <string name="report_save_with_root">حفظ مجلد السجلات (يحتاج روت)</string>
     <string name="report_saved_to">حُفظ في %1$s</string>
     <string name="report_see_guide">الدليل الكامل في المشكلة</string>
-    <string name="report_root_refused">رُفض الروت. اسمح لـ Vector في مدير الروت لديك ثم أعد المحاولة%1$s</string>
+    <string name="report_root_refused">رُفض الروت. اسمح لـ Vekta في مدير الروت لديك ثم أعد المحاولة%1$s</string>
     <string name="home_custom_build">إصدار خاص — أحدث من master</string>
     <string name="language_title">اللغة</string>
     <string name="language_system">لغة النظام</string>
     <string name="language_system_summary">اتّباع اللغة المضبوطة على الهاتف</string>
 
     <string name="language_help_short">ترجمة</string>
-    <string name="language_help">ساعِد في ترجمة Vector</string>
+    <string name="language_help">ساعِد في ترجمة Vekta</string>
 
     <string name="update_title">تحديث الإطار</string>
     <string name="update_channel_canary">إصدار canary</string>
@@ -316,7 +316,7 @@
     <string name="update_none">لا يوجد تحديث متاح.</string>
     <string name="update_no_notes">لم يَنشر هذا الإصدار أي ملاحظات.</string>
     <string name="update_no_root">لم يُعثر على أي تطبيق للروت، فلا شيء يمكن التثبيت من خلاله.</string>
-    <string name="update_root_multiple">عُثر على تطبيقَي روت. لن يخمّن Vector أيهما يدير الوحدة.</string>
+    <string name="update_root_multiple">عُثر على تطبيقَي روت. لن يخمّن Vekta أيهما يدير الوحدة.</string>
     <string name="update_failed_start">تعذّر بدء برنامج التثبيت.</string>
     <string name="update_failed_download">تعذّر تنزيل التحديث.</string>
     <string name="update_failed_exit">أخفق برنامج التثبيت (رمز الخروج %1$d).</string>
@@ -415,7 +415,7 @@
     <string name="crash_message">الرسالة</string>
     <string name="crash_where">أين</string>
     <string name="crash_when">متى</string>
-    <string name="crash_where_unknown">ليس في أي موضع من كود Vector نفسه</string>
+    <string name="crash_where_unknown">ليس في أي موضع من كود Vekta نفسه</string>
     <string name="crash_when_value">%1$s في %2$s</string>
     <string name="crash_open_trace">عرض التتبّع</string>
     <string name="crash_trace">تعطّل</string>
@@ -443,8 +443,8 @@
     <string name="scope_framework_restart_title">لم يطبّق إطار النظام هذا بعد</string>
     <string name="scope_framework_restart_body">يُحمَّل إطار النظام مرة واحدة، عند بدء تشغيل أندرويد. لن يصل هذا التغيير إليه إلا بعد إعادة تشغيل الإطار — تُغلق كل التطبيقات العاملة، ويبقى الهاتف نفسه قيد التشغيل.</string>
     <string name="scope_framework_restart_later">لاحقًا</string>
-    <string name="launcher_title">كيف تفتح Vector</string>
-    <string name="launcher_body">لا يُثبَّت Vector كتطبيق، لذا لا يجد المشغّل ما يعرضه. هذه هي طرق العودة إليه.</string>
+    <string name="launcher_title">كيف تفتح Vekta</string>
+    <string name="launcher_body">لا يُثبَّت Vekta كتطبيق، لذا لا يجد المشغّل ما يعرضه. هذه هي طرق العودة إليه.</string>
     <string name="launcher_shortcut">اختصار على الشاشة الرئيسية</string>
     <string name="launcher_shortcut_create">إنشاء</string>
     <string name="launcher_shortcut_unsupported">المشغّل لديك لا يقبل الاختصارات المثبَّتة.</string>
@@ -453,15 +453,15 @@
     <string name="launcher_install">التثبيت كتطبيق</string>
     <string name="launcher_install_action">تثبيت</string>
     <string name="launcher_install_reinstall">إعادة التثبيت</string>
-    <string name="launcher_install_done">تم تثبيت Vector. افتحه من المشغّل.</string>
-    <string name="launcher_install_failed">تعذّر تثبيت Vector.</string>
-    <string name="launcher_install_conflict">توجد نسخة من Vector موقَّعة بمفتاح مختلف مثبَّتة بالفعل. لا بد من إزالتها قبل أن تُقبل هذه.</string>
+    <string name="launcher_install_done">تم تثبيت Vekta. افتحه من المشغّل.</string>
+    <string name="launcher_install_failed">تعذّر تثبيت Vekta.</string>
+    <string name="launcher_install_conflict">توجد نسخة من Vekta موقَّعة بمفتاح مختلف مثبَّتة بالفعل. لا بد من إزالتها قبل أن تُقبل هذه.</string>
     <string name="launcher_install_remove">إزالتها</string>
-    <string name="launcher_install_diverged">النسخة المثبَّتة بناء مختلف من Vector — ليست التي تعمل هنا. إعادة التثبيت تستبدلها.</string>
+    <string name="launcher_install_diverged">النسخة المثبَّتة بناء مختلف من Vekta — ليست التي تعمل هنا. إعادة التثبيت تستبدلها.</string>
     <string name="launcher_route_available">متاح</string>
-    <string name="launcher_note">يمكنك أيضًا طلب %1$s، أو فتح Vector من زر الإجراء في %2$s.</string>
+    <string name="launcher_note">يمكنك أيضًا طلب %1$s، أو فتح Vekta من زر الإجراء في %2$s.</string>
     <string name="launcher_root_generic">مدير الروت لديك</string>
-    <string name="launcher_prompt_title">ليس لـ Vector أيقونة بعد</string>
-    <string name="launcher_prompt_body">يعمل Vector داخل عملية أخرى بدل أن يكون مثبَّتًا، فلا يظهر شيء في المشغّل ولا توجد طريقة واضحة للعودة إليه. امنحه اختصارًا على الشاشة الرئيسية، أو ثبِّته كتطبيق عادي.</string>
+    <string name="launcher_prompt_title">ليس لـ Vekta أيقونة بعد</string>
+    <string name="launcher_prompt_body">يعمل Vekta داخل عملية أخرى بدل أن يكون مثبَّتًا، فلا يظهر شيء في المشغّل ولا توجد طريقة واضحة للعودة إليه. امنحه اختصارًا على الشاشة الرئيسية، أو ثبِّته كتطبيق عادي.</string>
     <string name="launcher_prompt_never">عدم السؤال مجددًا</string>
 </resources>

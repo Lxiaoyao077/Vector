@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">एक्सपोज़ड मॉड्यूल अपडेट किया गया, सिस्टम रीबूट की आवश्यकता है</string>
     <string name="xposed_module_updated_notification_content_system">%s को अपडेट कर दिया गया है, क्योंकि स्कोप में सिस्टम फ्रेमवर्क है, परिवर्तनों को लागू करने के लिए रीबूट की आवश्यकता है</string>
     <string name="module_updated_channel_name">मॉड्यूल अद्यतन पूर्ण</string>
-    <string name="status_channel_name">Vector की स्थिति</string>
-    <string name="vector_running_notification_title">Vector लोड किया गया</string>
+    <string name="status_channel_name">Vekta की स्थिति</string>
+    <string name="vector_running_notification_title">Vekta लोड किया गया</string>
     <string name="vector_running_notification_content">मैनेजर खोलने के लिए नोटिफिकेशन पर टैप करें</string>
     <string name="xposed_module_request_scope_title">गुंजाइश अनुरोध</string>
     <string name="xposed_module_request_scope_content">उपयोगकर्ता %2$s पर %1$s इसके दायरे में %3$s जोड़ने का अनुरोध करता है।</string>

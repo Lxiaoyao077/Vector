@@ -68,7 +68,7 @@
     <string name="store_confirm_title">Установить %1$s?</string>
     <string name="store_confirm_body">%1$s (%2$s) будет загружен из репозитория модулей и установлен как %3$s.</string>
     <string name="store_confirm_trust">Модуль работает с правами фреймворка внутри приложений, которые он перехватывает. Устанавливайте его, только если доверяете автору.</string>
-    <string name="store_confirm_silent">Vector установит его сам, система больше не спросит.</string>
+    <string name="store_confirm_silent">Vekta установит его сам, система больше не спросит.</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">Загружено %1$s из %2$s</string>
     <string name="store_installing">Установка…</string>

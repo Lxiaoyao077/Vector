@@ -25,7 +25,7 @@
     <string name="status_open_details">Buka status sistem</string>
 
     <string name="issue_sepolicy_title">Kebijakan SELinux tidak dimuat</string>
-    <string name="issue_sepolicy_summary">Sebagian fitur tidak akan bekerja. Biasanya ini berarti implementasi root tidak menerapkan aturan kebijakan Vector.</string>
+    <string name="issue_sepolicy_summary">Sebagian fitur tidak akan bekerja. Biasanya ini berarti implementasi root tidak menerapkan aturan kebijakan Vekta.</string>
     <string name="issue_system_server_title">Injeksi ke framework sistem gagal</string>
     <string name="issue_system_server_summary">Modul tidak bisa meng-hook layanan sistem. Ini jarang terjadi, dan biasanya disebabkan modul root lain yang mengganggu.</string>
     <string name="issue_dex2oat_title">Pembungkus dex2oat tidak tersedia</string>
@@ -48,7 +48,7 @@
     <string name="info_injected">Terinjeksi</string>
     <string name="info_not_injected">Tidak terinjeksi</string>
     <string name="status_notification">Notifikasi status</string>
-    <string name="status_notification_summary">Notifikasi permanen yang menandakan Vector sedang berjalan.</string>
+    <string name="status_notification_summary">Notifikasi permanen yang menandakan Vekta sedang berjalan.</string>
     <string name="home_quarter_title">Aktivitas terbaru</string>
     <plurals name="home_commit_count">
         <item quantity="other">%1$d commit</item>
@@ -119,7 +119,7 @@
     <string name="modules_incompatible">Membutuhkan libxposed API %1$d, yang tidak disediakan framework ini.</string>
     <string name="modules_incompatible_legacy">Butuh API Xposed %1$d, yang tidak disediakan framework ini.</string>
     <string name="modules_api_behind">Dibuat untuk libxposed API %1$d. API %2$d mengubah antarmukanya, jadi modul ini mungkin tidak berfungsi penuh.</string>
-    <string name="modules_no_daemon">Vector tidak berjalan, jadi daftar modul tidak tersedia. Buka status sistem dari Beranda untuk melihat sebabnya.</string>
+    <string name="modules_no_daemon">Vekta tidak berjalan, jadi daftar modul tidak tersedia. Buka status sistem dari Beranda untuk melihat sebabnya.</string>
 
     <string name="web_open_external">Buka di peramban</string>
 
@@ -139,7 +139,7 @@
         <item quantity="other">%1$d bulan terakhir</item>
     </plurals>
     <string name="settings_open_externally">Buka tautan di peramban</string>
-    <string name="settings_open_externally_summary">Mati: halaman GitHub dibuka di dalam Vector.</string>
+    <string name="settings_open_externally_summary">Mati: halaman GitHub dibuka di dalam Vekta.</string>
 
     <string name="scope_use_recommended">Pakai yang diminta modul</string>
     <string name="scope_select_visible">Pilih semua yang tampil</string>
@@ -248,14 +248,14 @@
     <string name="report_save_with_root">Simpan folder log (perlu root)</string>
     <string name="report_saved_to">Disimpan ke %1$s</string>
     <string name="report_see_guide">Panduan lengkap ada di isu</string>
-    <string name="report_root_refused">Root ditolak. Izinkan Vector di pengelola root Anda, lalu coba lagi%1$s</string>
+    <string name="report_root_refused">Root ditolak. Izinkan Vekta di pengelola root Anda, lalu coba lagi%1$s</string>
     <string name="home_custom_build">Build sendiri — lebih maju dari master</string>
     <string name="language_title">Bahasa</string>
     <string name="language_system">Bawaan sistem</string>
     <string name="language_system_summary">Ikuti bahasa yang disetel di ponsel</string>
 
     <string name="language_help_short">Terjemahkan</string>
-    <string name="language_help">Bantu menerjemahkan Vector</string>
+    <string name="language_help">Bantu menerjemahkan Vekta</string>
 
     <string name="update_title">Pembaruan framework</string>
     <string name="update_channel_canary">Build canary</string>
@@ -270,7 +270,7 @@
     <string name="update_none">Tidak ada pembaruan.</string>
     <string name="update_no_notes">Rilis ini tidak menerbitkan catatan.</string>
     <string name="update_no_root">Tidak ditemukan implementasi root, jadi tidak ada yang bisa dipasang.</string>
-    <string name="update_root_multiple">Ditemukan dua implementasi root. Vector tidak akan menebak yang mana yang mengurus modulnya.</string>
+    <string name="update_root_multiple">Ditemukan dua implementasi root. Vekta tidak akan menebak yang mana yang mengurus modulnya.</string>
     <string name="update_failed_start">Pemasang tidak bisa dijalankan.</string>
     <string name="update_failed_download">Pembaruan tidak bisa diunduh.</string>
     <string name="update_failed_exit">Pemasang gagal (kode %1$d).</string>
@@ -369,7 +369,7 @@
     <string name="crash_message">Pesan</string>
     <string name="crash_where">Di mana</string>
     <string name="crash_when">Kapan</string>
-    <string name="crash_where_unknown">Tidak ada di kode Vector sendiri</string>
+    <string name="crash_where_unknown">Tidak ada di kode Vekta sendiri</string>
     <string name="crash_when_value">%1$s di %2$s</string>
     <string name="crash_open_trace">Lihat jejaknya</string>
     <string name="crash_trace">Crash</string>
@@ -392,8 +392,8 @@
     <string name="scope_framework_restart_title">Framework belum menerapkan perubahan ini</string>
     <string name="scope_framework_restart_body">Framework sistem hanya dimuat sekali, saat Android dijalankan. Perubahan ini baru menjangkaunya setelah framework dimulai ulang — semua aplikasi yang berjalan akan ditutup, dan ponsel sendiri tetap menyala.</string>
     <string name="scope_framework_restart_later">Nanti</string>
-    <string name="launcher_title">Cara membuka Vector</string>
-    <string name="launcher_body">Vector tidak dipasang sebagai aplikasi, jadi launcher Anda tidak punya apa pun untuk ditampilkan. Ini jalan-jalan untuk kembali.</string>
+    <string name="launcher_title">Cara membuka Vekta</string>
+    <string name="launcher_body">Vekta tidak dipasang sebagai aplikasi, jadi launcher Anda tidak punya apa pun untuk ditampilkan. Ini jalan-jalan untuk kembali.</string>
     <string name="launcher_shortcut">Pintasan di layar utama</string>
     <string name="launcher_shortcut_create">Buat</string>
     <string name="launcher_shortcut_unsupported">Launcher Anda tidak menerima pintasan yang disematkan.</string>
@@ -402,15 +402,15 @@
     <string name="launcher_install">Pasang sebagai aplikasi</string>
     <string name="launcher_install_action">Pasang</string>
     <string name="launcher_install_reinstall">Pasang ulang</string>
-    <string name="launcher_install_done">Vector sudah terpasang. Buka dari launcher Anda.</string>
-    <string name="launcher_install_failed">Vector tidak bisa dipasang.</string>
-    <string name="launcher_install_conflict">Sudah ada salinan Vector yang ditandatangani dengan kunci berbeda. Salinan itu harus dihapus sebelum yang ini bisa masuk.</string>
+    <string name="launcher_install_done">Vekta sudah terpasang. Buka dari launcher Anda.</string>
+    <string name="launcher_install_failed">Vekta tidak bisa dipasang.</string>
+    <string name="launcher_install_conflict">Sudah ada salinan Vekta yang ditandatangani dengan kunci berbeda. Salinan itu harus dihapus sebelum yang ini bisa masuk.</string>
     <string name="launcher_install_remove">Hapus</string>
-    <string name="launcher_install_diverged">Salinan yang terpasang adalah build Vector yang berbeda — bukan yang berjalan di sini. Memasang ulang akan menggantinya.</string>
+    <string name="launcher_install_diverged">Salinan yang terpasang adalah build Vekta yang berbeda — bukan yang berjalan di sini. Memasang ulang akan menggantinya.</string>
     <string name="launcher_route_available">Tersedia</string>
-    <string name="launcher_note">Anda juga bisa memutar %1$s, atau membuka Vector dari tombol aksi di %2$s.</string>
+    <string name="launcher_note">Anda juga bisa memutar %1$s, atau membuka Vekta dari tombol aksi di %2$s.</string>
     <string name="launcher_root_generic">pengelola root Anda</string>
-    <string name="launcher_prompt_title">Vector belum punya ikon</string>
-    <string name="launcher_prompt_body">Vector berjalan di dalam proses lain alih-alih dipasang, jadi tidak ada yang muncul di launcher Anda dan tidak ada jalan kembali yang jelas. Beri dia pintasan di layar utama, atau pasang sebagai aplikasi biasa.</string>
+    <string name="launcher_prompt_title">Vekta belum punya ikon</string>
+    <string name="launcher_prompt_body">Vekta berjalan di dalam proses lain alih-alih dipasang, jadi tidak ada yang muncul di launcher Anda dan tidak ada jalan kembali yang jelas. Beri dia pintasan di layar utama, atau pasang sebagai aplikasi biasa.</string>
     <string name="launcher_prompt_never">Jangan tanya lagi</string>
 </resources>

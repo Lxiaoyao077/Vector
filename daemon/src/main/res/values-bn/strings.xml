@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">মডিউল আপডেট করা হয়েছে, সিস্টেম রিবুট প্রয়োজন</string>
     <string name="xposed_module_updated_notification_content_system">%s আপডেট করা হয়েছে, যেহেতু সুযোগে সিস্টেম ফ্রেমওয়ার্ক রয়েছে, পরিবর্তনগুলি প্রয়োগ করার জন্য রিবুট প্রয়োজন</string>
     <string name="module_updated_channel_name">মডিউল আপডেট সম্পূর্ণ</string>
-    <string name="status_channel_name">Vector স্ট্যাটাস</string>
-    <string name="vector_running_notification_title">Vector লোড</string>
+    <string name="status_channel_name">Vekta স্ট্যাটাস</string>
+    <string name="vector_running_notification_title">Vekta লোড</string>
     <string name="vector_running_notification_content">ম্যানেজার খুলতে বিজ্ঞপ্তিতে ট্যাপ করুন</string>
     <string name="xposed_module_request_scope_title">সুযোগ অনুরোধ</string>
     <string name="xposed_module_request_scope_content">ব্যবহারকারী %2$s এর সুযোগে %3$s যোগ করার অনুরোধে %1$s।</string>

@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Modulul a fost actualizat, este necesară repornirea sistemului</string>
     <string name="xposed_module_updated_notification_content_system">Modulul %s a fost actualizat. Este necesară repornirea dispozitivului, deoarece Sistemul Android face parte din configurația modulului.</string>
     <string name="module_updated_channel_name">Actualizarea modulelor este completă</string>
-    <string name="status_channel_name">Stare Vector</string>
-    <string name="vector_running_notification_title">Vector încărcat</string>
+    <string name="status_channel_name">Stare Vekta</string>
+    <string name="vector_running_notification_title">Vekta încărcat</string>
     <string name="vector_running_notification_content">Apăsați pentru a deschide managerul</string>
     <string name="xposed_module_request_scope_title">Cerere de modificare configurație</string>
     <string name="xposed_module_request_scope_content">Modulul %1$s, instalat pentru utilizatorul %2$s, dorește să adauge %3$s în configurația sa.</string>

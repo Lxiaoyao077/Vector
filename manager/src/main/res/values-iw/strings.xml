@@ -25,7 +25,7 @@
     <string name="status_open_details">פתיחת מצב המערכת</string>
 
     <string name="issue_sepolicy_title">מדיניות SELinux לא נטענה</string>
-    <string name="issue_sepolicy_summary">חלק מהיכולות לא יעבדו. בדרך כלל זה אומר שמימוש ההרשאות לא החיל את כללי Vector.</string>
+    <string name="issue_sepolicy_summary">חלק מהיכולות לא יעבדו. בדרך כלל זה אומר שמימוש ההרשאות לא החיל את כללי Vekta.</string>
     <string name="issue_system_server_title">ההזרקה למסגרת המערכת נכשלה</string>
     <string name="issue_system_server_summary">מודולים לא יכולים להתחבר לשירותי המערכת. זה נדיר, ובדרך כלל נגרם ממודול root אחר שמפריע.</string>
     <string name="issue_dex2oat_title">עוטף dex2oat לא זמין</string>
@@ -48,7 +48,7 @@
     <string name="info_injected">הוזרק</string>
     <string name="info_not_injected">לא הוזרק</string>
     <string name="status_notification">התראת מצב</string>
-    <string name="status_notification_summary">התראה קבועה שמראה ש-Vector פועל.</string>
+    <string name="status_notification_summary">התראה קבועה שמראה ש-Vekta פועל.</string>
     <string name="home_quarter_title">פעילות אחרונה</string>
     <plurals name="home_commit_count">
         <item quantity="one">קומיט אחד</item>
@@ -134,7 +134,7 @@
     <string name="modules_incompatible">דורש libxposed API %1$d, שהמסגרת הזו לא מספקת.</string>
     <string name="modules_incompatible_legacy">דורש ממשק Xposed %1$d, שהמסגרת הזאת לא מספקת.</string>
     <string name="modules_api_behind">נבנה עבור libxposed API %1$d. גרסה %2$d שינתה את הממשק, ולכן ייתכן שהמודול לא יעבוד במלואו.</string>
-    <string name="modules_no_daemon">‏Vector לא פועל, ולכן רשימת המודולים לא זמינה. פתחו את מצב המערכת מהבית כדי לראות למה.</string>
+    <string name="modules_no_daemon">‏Vekta לא פועל, ולכן רשימת המודולים לא זמינה. פתחו את מצב המערכת מהבית כדי לראות למה.</string>
 
     <string name="web_open_external">פתיחה בדפדפן</string>
 
@@ -157,7 +157,7 @@
         <item quantity="other">%1$d החודשים האחרונים</item>
     </plurals>
     <string name="settings_open_externally">פתיחת קישורים בדפדפן</string>
-    <string name="settings_open_externally_summary">כבוי: דפי GitHub נפתחים בתוך Vector.</string>
+    <string name="settings_open_externally_summary">כבוי: דפי GitHub נפתחים בתוך Vekta.</string>
 
     <string name="scope_use_recommended">להשתמש במה שהמודול מבקש</string>
     <string name="scope_select_visible">בחירת כל מה שמוצג</string>
@@ -278,14 +278,14 @@
     <string name="report_save_with_root">שמירת תיקיית היומנים (דורש root)</string>
     <string name="report_saved_to">נשמר ב-%1$s</string>
     <string name="report_see_guide">המדריך המלא בתקלה</string>
-    <string name="report_root_refused">‏root נדחה. אשרו את Vector במנהל ה-root שלכם ונסו שוב%1$s</string>
+    <string name="report_root_refused">‏root נדחה. אשרו את Vekta במנהל ה-root שלכם ונסו שוב%1$s</string>
     <string name="home_custom_build">גרסה עצמאית — מקדימה את master</string>
     <string name="language_title">שפה</string>
     <string name="language_system">ברירת המחדל של המערכת</string>
     <string name="language_system_summary">לפי השפה שמוגדרת בטלפון</string>
 
     <string name="language_help_short">תרגום</string>
-    <string name="language_help">עזרו לתרגם את Vector</string>
+    <string name="language_help">עזרו לתרגם את Vekta</string>
 
     <string name="update_title">עדכון המסגרת</string>
     <string name="update_channel_canary">גרסת canary</string>
@@ -300,7 +300,7 @@
     <string name="update_none">אין עדכון זמין.</string>
     <string name="update_no_notes">הגרסה הזאת לא פרסמה הערות.</string>
     <string name="update_no_root">לא נמצא שום מימוש הרשאות root, ולכן אין דרך להתקין.</string>
-    <string name="update_root_multiple">נמצאו שני מימושי root. ‏Vector לא ינחש איזה מהם מנהל את המודול.</string>
+    <string name="update_root_multiple">נמצאו שני מימושי root. ‏Vekta לא ינחש איזה מהם מנהל את המודול.</string>
     <string name="update_failed_start">לא ניתן היה להפעיל את תוכנית ההתקנה.</string>
     <string name="update_failed_download">לא ניתן היה להוריד את העדכון.</string>
     <string name="update_failed_exit">תוכנית ההתקנה נכשלה (קוד %1$d).</string>
@@ -399,7 +399,7 @@
     <string name="crash_message">הודעה</string>
     <string name="crash_where">איפה</string>
     <string name="crash_when">מתי</string>
-    <string name="crash_where_unknown">בשום מקום בקוד של Vector עצמו</string>
+    <string name="crash_where_unknown">בשום מקום בקוד של Vekta עצמו</string>
     <string name="crash_when_value">%1$s ב־%2$s</string>
     <string name="crash_open_trace">הצגת המעקב</string>
     <string name="crash_trace">קריסה</string>
@@ -425,8 +425,8 @@
     <string name="scope_framework_restart_title">מסגרת המערכת עדיין לא החילה את זה</string>
     <string name="scope_framework_restart_body">מסגרת המערכת נטענת פעם אחת בלבד, כשאנדרואיד עולה. השינוי הזה יגיע אליה רק כשהמסגרת תופעל מחדש — כל האפליקציות הפועלות נסגרות, והטלפון עצמו נשאר דלוק.</string>
     <string name="scope_framework_restart_later">מאוחר יותר</string>
-    <string name="launcher_title">איך פותחים את Vector</string>
-    <string name="launcher_body">Vector אינו מותקן כאפליקציה, ולכן אין למסך הבית מה להציג. אלה הדרכים לחזור אליו.</string>
+    <string name="launcher_title">איך פותחים את Vekta</string>
+    <string name="launcher_body">Vekta אינו מותקן כאפליקציה, ולכן אין למסך הבית מה להציג. אלה הדרכים לחזור אליו.</string>
     <string name="launcher_shortcut">קיצור דרך במסך הבית</string>
     <string name="launcher_shortcut_create">יצירה</string>
     <string name="launcher_shortcut_unsupported">אפליקציית מסך הבית שלכם אינה מקבלת קיצורי דרך מוצמדים.</string>
@@ -435,15 +435,15 @@
     <string name="launcher_install">התקנה כאפליקציה</string>
     <string name="launcher_install_action">התקנה</string>
     <string name="launcher_install_reinstall">התקנה מחדש</string>
-    <string name="launcher_install_done">Vector הותקן. אפשר לפתוח אותו ממסך הבית.</string>
-    <string name="launcher_install_failed">לא ניתן היה להתקין את Vector.</string>
-    <string name="launcher_install_conflict">כבר מותקן עותק של Vector החתום במפתח אחר. צריך להסיר אותו לפני שהעותק הזה ייכנס.</string>
+    <string name="launcher_install_done">Vekta הותקן. אפשר לפתוח אותו ממסך הבית.</string>
+    <string name="launcher_install_failed">לא ניתן היה להתקין את Vekta.</string>
+    <string name="launcher_install_conflict">כבר מותקן עותק של Vekta החתום במפתח אחר. צריך להסיר אותו לפני שהעותק הזה ייכנס.</string>
     <string name="launcher_install_remove">הסרה</string>
-    <string name="launcher_install_diverged">העותק המותקן הוא בנייה אחרת של Vector — לא זו שרצה כאן. התקנה מחדש מחליפה אותו.</string>
+    <string name="launcher_install_diverged">העותק המותקן הוא בנייה אחרת של Vekta — לא זו שרצה כאן. התקנה מחדש מחליפה אותו.</string>
     <string name="launcher_route_available">זמין</string>
-    <string name="launcher_note">אפשר גם לחייג %1$s, או לפתוח את Vector מכפתור הפעולה ב-%2$s.</string>
+    <string name="launcher_note">אפשר גם לחייג %1$s, או לפתוח את Vekta מכפתור הפעולה ב-%2$s.</string>
     <string name="launcher_root_generic">מנהל ההרשאות שלכם</string>
-    <string name="launcher_prompt_title">ל-Vector עדיין אין סמל</string>
-    <string name="launcher_prompt_body">Vector פועל בתוך תהליך אחר במקום להיות מותקן, ולכן שום דבר לא מופיע במסך הבית ואין דרך ברורה לחזור אליו. תנו לו קיצור דרך במסך הבית, או התקינו אותו כאפליקציה רגילה.</string>
+    <string name="launcher_prompt_title">ל-Vekta עדיין אין סמל</string>
+    <string name="launcher_prompt_body">Vekta פועל בתוך תהליך אחר במקום להיות מותקן, ולכן שום דבר לא מופיע במסך הבית ואין דרך ברורה לחזור אליו. תנו לו קיצור דרך במסך הבית, או התקינו אותו כאפליקציה רגילה.</string>
     <string name="launcher_prompt_never">לא לשאול שוב</string>
 </resources>

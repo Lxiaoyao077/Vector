@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Modul oppdatert, system-omstart kreves</string>
     <string name="xposed_module_updated_notification_content_system">%s er blitt oppdatert, siden omfanget inneholder systemramme, nødvendig for omstart av endringene</string>
     <string name="module_updated_channel_name">Moduloppdatering fullført</string>
-    <string name="status_channel_name">Vector-status</string>
-    <string name="vector_running_notification_title">Vector lastet</string>
+    <string name="status_channel_name">Vekta-status</string>
+    <string name="vector_running_notification_title">Vekta lastet</string>
     <string name="vector_running_notification_content">Trykk på varselet for å åpne administrator</string>
     <string name="xposed_module_request_scope_title">Forespørsel om omfang</string>
     <string name="xposed_module_request_scope_content">%1$s på bruker %2$s ber om å legge til %3$s i omfanget.</string>

@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Modul uppdaterad, systemomstart krävs</string>
     <string name="xposed_module_updated_notification_content_system">%s har uppdaterats, eftersom omfattningen innehåller Systemramverk, krävs omstart för att tillämpa ändringar</string>
     <string name="module_updated_channel_name">Uppdatering av modulen slutförd</string>
-    <string name="status_channel_name">Vector status</string>
-    <string name="vector_running_notification_title">Vector laddad</string>
+    <string name="status_channel_name">Vekta status</string>
+    <string name="vector_running_notification_title">Vekta laddad</string>
     <string name="vector_running_notification_content">Tryck på meddelandet för att öppna administratören</string>
     <string name="xposed_module_request_scope_title">Begäran om tillämpningsområde</string>
     <string name="xposed_module_request_scope_content">%1$s för användaren %2$s begär att %3$s ska läggas till i dess räckvidd.</string>

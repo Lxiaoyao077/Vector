@@ -188,10 +188,10 @@ object OutputFormatter {
 
 // --- CLI Commands (picocli) ---
 @Command(
-    name = "vector-cli",
+    name = "vekta-cli",
     mixinStandardHelpOptions = true,
-    version = ["Vector CLI ${BuildConfig.VERSION_NAME}"],
-    description = ["A fast, scriptable CLI for configuring the Vector Framework daemon."],
+    version = ["Vekta CLI ${BuildConfig.VERSION_NAME}"],
+    description = ["A fast, scriptable CLI for configuring the Vekta Framework daemon."],
     subcommands =
         [
             StatusCommand::class,

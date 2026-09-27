@@ -74,7 +74,7 @@
     <string name="store_confirm_title">تثبيت %1$s؟</string>
     <string name="store_confirm_body">سيُنزَّل %1$s ‏(%2$s) من فهرس الوحدات ويُثبَّت باسم %3$s.</string>
     <string name="store_confirm_trust">تعمل الوحدة بصلاحيات الإطار داخل التطبيقات التي تربطها. لا تثبّت وحدة إلا إن كنت تثق بمؤلّفها.</string>
-    <string name="store_confirm_silent">يثبّتها Vector بنفسه ولن يسألك النظام مجددًا.</string>
+    <string name="store_confirm_silent">يثبّتها Vekta بنفسه ولن يسألك النظام مجددًا.</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">جارٍ تنزيل %1$s من %2$s</string>
     <string name="store_installing">جارٍ التثبيت…</string>

@@ -21,7 +21,7 @@
     <string name="status_open_details">システムの状態を表示</string>
 
     <string name="issue_sepolicy_title">SELinux ポリシーが読み込まれていません</string>
-    <string name="issue_sepolicy_summary">一部の機能が動作しません。通常は、root 実装によって Vector のポリシールールが適用されなかったことが原因です。</string>
+    <string name="issue_sepolicy_summary">一部の機能が動作しません。通常は、root 実装によって Vekta のポリシールールが適用されなかったことが原因です。</string>
     <string name="issue_system_server_title">システムフレームワークへの注入に失敗しました</string>
     <string name="issue_system_server_summary">モジュールがシステムサービスをフックできません。これはまれな問題で、通常は別の root モジュールによる干渉が原因です。</string>
     <string name="issue_dex2oat_title">DEX 最適化ラッパーは利用できません</string>
@@ -44,7 +44,7 @@
     <string name="info_injected">注入されています</string>
     <string name="info_not_injected">注入されていません</string>
     <string name="status_notification">ステータス通知</string>
-    <string name="status_notification_summary">Vector が実行中であることを示す常時表示の通知です。</string>
+    <string name="status_notification_summary">Vekta が実行中であることを示す常時表示の通知です。</string>
     <string name="home_quarter_title">最近のアクティビティ</string>
     <plurals name="home_commit_count">
         <item quantity="other">コミット数: %1$d</item>
@@ -115,7 +115,7 @@
     <string name="modules_incompatible">libxposed API %1$d が必要ですが、このフレームワークはそれを提供していません。</string>
     <string name="modules_incompatible_legacy">Xposed API %1$d が必要ですが、このフレームワークでは提供されていません。</string>
     <string name="modules_api_behind">libxposed API %1$d 向けにビルドされています。API %2$d でインターフェースが変更されたため、このモジュールは正常に動作しない可能性があります。</string>
-    <string name="modules_no_daemon">Vector が動作していないため、モジュール一覧を取得できません。理由を確認するには、ホームからシステムステータスを開いてください。</string>
+    <string name="modules_no_daemon">Vekta が動作していないため、モジュール一覧を取得できません。理由を確認するには、ホームからシステムステータスを開いてください。</string>
 
     <string name="web_open_external">ブラウザで表示</string>
 
@@ -135,7 +135,7 @@
         <item quantity="other">直近 %1$d か月</item>
     </plurals>
     <string name="settings_open_externally">リンクをブラウザで開く</string>
-    <string name="settings_open_externally_summary">オフのとき、GitHub のページは Vector 内で開きます。</string>
+    <string name="settings_open_externally_summary">オフのとき、GitHub のページは Vekta 内で開きます。</string>
 
     <string name="scope_use_recommended">モジュールの要求どおりにする</string>
     <string name="scope_select_visible">表示中のすべてを選択</string>
@@ -244,14 +244,14 @@
     <string name="report_save_with_root">ログフォルダを保存 (root 権限が必要です)</string>
     <string name="report_saved_to">%1$s に保存しました</string>
     <string name="report_see_guide">詳しい手引きは課題に</string>
-    <string name="report_root_refused">root 権限の付与が拒否されました。root 権限マネージャーで Vector を許可してから、もう一度試してください%1$s</string>
+    <string name="report_root_refused">root 権限の付与が拒否されました。root 権限マネージャーで Vekta を許可してから、もう一度試してください%1$s</string>
     <string name="home_custom_build">独自ビルド — master より先行</string>
     <string name="language_title">言語</string>
     <string name="language_system">システムの設定に従う</string>
     <string name="language_system_summary">デバイスで設定されている言語に従います</string>
 
     <string name="language_help_short">翻訳</string>
-    <string name="language_help">Vector の翻訳に参加</string>
+    <string name="language_help">Vekta の翻訳に参加</string>
 
     <string name="update_title">フレームワークの更新</string>
     <string name="update_channel_canary">Canary ビルド</string>
@@ -266,7 +266,7 @@
     <string name="update_none">利用可能なアップデートはありません。</string>
     <string name="update_no_notes">このリリースには、リリースノートは公開されていません。</string>
     <string name="update_no_root">root 実装が見つからなかったため、何もフラッシュできません。</string>
-    <string name="update_root_multiple">2 つの root 実装が見つかりました。Vector は、どちらがそのモジュールを管理しているかを推測しません。</string>
+    <string name="update_root_multiple">2 つの root 実装が見つかりました。Vekta は、どちらがそのモジュールを管理しているかを推測しません。</string>
     <string name="update_failed_start">インストーラーを起動できませんでした。</string>
     <string name="update_failed_download">更新をダウンロードできませんでした。</string>
     <string name="update_failed_exit">インストーラーが失敗しました (終了コード: %1$d)。</string>
@@ -355,7 +355,7 @@
     <string name="crash_message">メッセージ</string>
     <string name="crash_where">場所</string>
     <string name="crash_when">発生時刻</string>
-    <string name="crash_where_unknown">Vector 自身のコード内にはありません</string>
+    <string name="crash_where_unknown">Vekta 自身のコード内にはありません</string>
     <string name="crash_when_value">%1$s (スレッド: %2$s)</string>
     <string name="crash_open_trace">スタックトレースを確認</string>
     <string name="crash_trace">クラッシュ</string>
@@ -378,8 +378,8 @@
     <string name="scope_framework_restart_title">フレームワークはまだ反映していません</string>
     <string name="scope_framework_restart_body">システムフレームワークは、Android による起動時に一度だけ読み込まれます。この変更が反映されるのはフレームワークが再起動したときのみであり、その際、実行中のすべてのアプリは終了しますが、デバイスの電源は入ったままとなります。</string>
     <string name="scope_framework_restart_later">後で</string>
-    <string name="launcher_title">Vector を開く方法</string>
-    <string name="launcher_body">Vector はアプリとしてインストールされていないため、ランチャーには何も表示されません。以下は、Vector に戻ってくるための手段です。</string>
+    <string name="launcher_title">Vekta を開く方法</string>
+    <string name="launcher_body">Vekta はアプリとしてインストールされていないため、ランチャーには何も表示されません。以下は、Vekta に戻ってくるための手段です。</string>
     <string name="launcher_shortcut">ホーム画面のショートカット</string>
     <string name="launcher_shortcut_create">作成</string>
     <string name="launcher_shortcut_unsupported">お使いのランチャーは、固定されたショートカットに対応していません。</string>
@@ -388,15 +388,15 @@
     <string name="launcher_install">アプリとしてインストール</string>
     <string name="launcher_install_action">インストール</string>
     <string name="launcher_install_reinstall">再インストール</string>
-    <string name="launcher_install_done">Vector がインストールされました。ランチャーから起動してください。</string>
-    <string name="launcher_install_failed">Vector をインストールできませんでした。</string>
-    <string name="launcher_install_conflict">別のキーで署名された Vector のコピーが既にインストールされています。このバージョンをインストールするには、まずそれを削除する必要があります。</string>
+    <string name="launcher_install_done">Vekta がインストールされました。ランチャーから起動してください。</string>
+    <string name="launcher_install_failed">Vekta をインストールできませんでした。</string>
+    <string name="launcher_install_conflict">別のキーで署名された Vekta のコピーが既にインストールされています。このバージョンをインストールするには、まずそれを削除する必要があります。</string>
     <string name="launcher_install_remove">削除</string>
-    <string name="launcher_install_diverged">インストールされている Vector は、ここで実行されているものとは別のビルドです。再インストールすると置き換わります。</string>
+    <string name="launcher_install_diverged">インストールされている Vekta は、ここで実行されているものとは別のビルドです。再インストールすると置き換わります。</string>
     <string name="launcher_route_available">利用可能</string>
-    <string name="launcher_note">%1$s をダイヤルするか、%2$s のアクションボタンから Vector を開くこともできます。</string>
+    <string name="launcher_note">%1$s をダイヤルするか、%2$s のアクションボタンから Vekta を開くこともできます。</string>
     <string name="launcher_root_generic">root マネージャー</string>
-    <string name="launcher_prompt_title">Vector のアイコンはまだありません</string>
-    <string name="launcher_prompt_body">Vector はインストールされるのではなく、別のプロセス内で実行されるため、ランチャーには何も表示されず、Vector に戻ってくる手段もありません。ホーム画面にショートカットを作成するか、通常のアプリとしてインストールしてください。</string>
+    <string name="launcher_prompt_title">Vekta のアイコンはまだありません</string>
+    <string name="launcher_prompt_body">Vekta はインストールされるのではなく、別のプロセス内で実行されるため、ランチャーには何も表示されず、Vekta に戻ってくる手段もありません。ホーム画面にショートカットを作成するか、通常のアプリとしてインストールしてください。</string>
     <string name="launcher_prompt_never">今後表示しない</string>
 </resources>

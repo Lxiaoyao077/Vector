@@ -36,7 +36,7 @@
     </plurals>
     <!-- The four distinct nothing-to-show states -->
     <string name="logs_state_daemon_title">デーモンに接続できません</string>
-    <string name="logs_state_daemon_body">Vector が起動するまで、ログの状態は確認できません。[ホーム] のステータスリボンが緑色でないのも同じ理由です。</string>
+    <string name="logs_state_daemon_body">Vekta が起動するまで、ログの状態は確認できません。[ホーム] のステータスリボンが緑色でないのも同じ理由です。</string>
     <string name="logs_state_nofile_title">ログファイルはまだありません</string>
     <string name="logs_state_nofile_body">デーモンは実行されていますが、このログはまだ開かれていません。詳細ログの場合は通常、詳細ログの記録が無効になっています。</string>
     <string name="logs_state_empty_title">このログは空です</string>
@@ -71,7 +71,7 @@
     <string name="logs_settings">ログの設定</string>
     <string name="logs_source_more">フレームワークのログも含める</string>
     <string name="logs_source_less">モジュールのログのみ表示</string>
-    <string name="logs_verbose_summary">バグを報告する前に、これを有効にしてください。アプリは自身のログを読み取ることができるため、これを有効にしておくと、アプリが Vector を検出する手段の一つとなります。</string>
+    <string name="logs_verbose_summary">バグを報告する前に、これを有効にしてください。アプリは自身のログを読み取ることができるため、これを有効にしておくと、アプリが Vekta を検出する手段の一つとなります。</string>
     <string name="logs_trace_title">スタックトレース</string>
     <string name="logs_traces_inline">トレースをその場で開く</string>
     <string name="logs_traces_inline_summary">その行の下にスタックトレースが展開されます。これを無効にすると、代わりに別の画面で開くようになります。</string>

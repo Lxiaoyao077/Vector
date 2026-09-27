@@ -1,7 +1,7 @@
 id=zygisk_vector
-name=Vector
+name=Vekta
 version=${versionName} (${versionCode}-${versionHash})
 versionCode=${versionCode}
-author=JingMatrix
+author=JingMatrix, Lxyao
 description=A modern, Xposed-compatible framework for Android application hooking. (Android 8.1 ~ 17)
 updateJson=https://raw.githubusercontent.com/JingMatrix/Vector/master/zygisk/update.json

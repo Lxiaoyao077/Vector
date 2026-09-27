@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Moodul uuendatud, süsteemi taaskäivitamine vajalik</string>
     <string name="xposed_module_updated_notification_content_system">%s on uuendatud, kuna reguleerimisala sisaldab System Framework, vajalik taaskäivitamine, et rakendada muudatusi</string>
     <string name="module_updated_channel_name">Mooduli uuendamine lõpetatud</string>
-    <string name="status_channel_name">Vectori staatus</string>
-    <string name="vector_running_notification_title">Vector laaditud</string>
+    <string name="status_channel_name">Vektai staatus</string>
+    <string name="vector_running_notification_title">Vekta laaditud</string>
     <string name="vector_running_notification_content">Halduri avamiseks puudutage märguannet</string>
     <string name="xposed_module_request_scope_title">Ulatuse Taotlus</string>
     <string name="xposed_module_request_scope_content">%1$s kasutajal %2$s taotleb %3$s lisamist oma ulatusse.</string>

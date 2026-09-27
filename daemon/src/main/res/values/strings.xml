@@ -8,8 +8,8 @@
     <string name="xposed_module_updated_notification_title_system">Module updated, system reboot required</string>
     <string name="xposed_module_updated_notification_content_system">%s has been updated, since the scope contains System Framework, required reboot to apply changes</string>
     <string name="module_updated_channel_name">Module update complete</string>
-    <string name="status_channel_name">Vector status</string>
-    <string name="vector_running_notification_title">Vector loaded</string>
+    <string name="status_channel_name">Vekta status</string>
+    <string name="vector_running_notification_title">Vekta loaded</string>
     <string name="vector_running_notification_content">Tap the notification to open manager</string>
     <string name="xposed_module_request_scope_title">Scope Request</string>
     <string name="xposed_module_request_scope_content">%1$s on user %2$s requests to add %3$s to its scope.</string>

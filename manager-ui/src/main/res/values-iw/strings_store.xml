@@ -58,7 +58,7 @@
     <string name="store_confirm_title">להתקין את %1$s?</string>
     <string name="store_confirm_body">‏%1$s ‏(%2$s) יורד מקטלוג המודולים ויותקן בתור %3$s.</string>
     <string name="store_confirm_trust">מודול רץ עם ההרשאות של המסגרת בתוך האפליקציות שהוא מתחבר אליהן. התקינו רק אם אתם סומכים על מי שכתב אותו.</string>
-    <string name="store_confirm_silent">‏Vector מתקין את זה בעצמו והמערכת לא תשאל שוב.</string>
+    <string name="store_confirm_silent">‏Vekta מתקין את זה בעצמו והמערכת לא תשאל שוב.</string>
 
     <string name="store_downloading">מוריד %1$s מתוך %2$s</string>
     <string name="store_installing">מתקין…</string>

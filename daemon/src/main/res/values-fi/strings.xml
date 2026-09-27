@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Moduuli päivitetty, järjestelmän uudelleenkäynnistys vaaditaan</string>
     <string name="xposed_module_updated_notification_content_system">%s on päivitetty, koska soveltamisala sisältää järjestelmän kehyksen, vaaditaan uudelleenkäynnistys muutosten käyttöön</string>
     <string name="module_updated_channel_name">Moduulin päivitys valmis</string>
-    <string name="status_channel_name">Vector status</string>
-    <string name="vector_running_notification_title">Vector ladattu</string>
+    <string name="status_channel_name">Vekta status</string>
+    <string name="vector_running_notification_title">Vekta ladattu</string>
     <string name="vector_running_notification_content">Avaa manager napauttamalla ilmoitusta</string>
     <string name="xposed_module_request_scope_title">Soveltamisalaa koskeva pyyntö</string>
     <string name="xposed_module_request_scope_content">%1$s käyttäjän %2$s pyynnöistä lisätä %3$s sen toimialueeseen.</string>

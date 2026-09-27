@@ -59,7 +59,7 @@
     <string name="store_confirm_title">安装 %1$s？</string>
     <string name="store_confirm_body">将从模块仓库下载 %1$s（%2$s），并以 %3$s 的身份安装。</string>
     <string name="store_confirm_trust">模块会在它所挂钩的应用中以框架的权限运行。请只安装你信任其作者的模块。</string>
-    <string name="store_confirm_silent">Vector 会自行完成安装，系统不会再询问。</string>
+    <string name="store_confirm_silent">Vekta 会自行完成安装，系统不会再询问。</string>
     <!-- Progress. Example: "Downloading 1.2 MB of 3.4 MB" -->
     <string name="store_downloading">正在下载 %1$s / %2$s</string>
     <string name="store_installing">正在安装…</string>

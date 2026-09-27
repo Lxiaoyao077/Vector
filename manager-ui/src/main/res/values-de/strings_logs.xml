@@ -31,7 +31,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">Der Daemon ist nicht erreichbar</string>
-    <string name="logs_state_daemon_body">Über das Protokoll ist nichts bekannt, solange Vector nicht läuft. Aus demselben Grund ist das Statusband auf der Startseite nicht grün.</string>
+    <string name="logs_state_daemon_body">Über das Protokoll ist nichts bekannt, solange Vekta nicht läuft. Aus demselben Grund ist das Statusband auf der Startseite nicht grün.</string>
     <string name="logs_state_nofile_title">Noch keine Protokolldatei</string>
     <string name="logs_state_nofile_body">Der Daemon läuft, hat dieses Protokoll aber nicht geöffnet. Beim ausführlichen Protokoll heißt das meist, dass die ausführliche Protokollierung aus ist.</string>
     <string name="logs_state_empty_title">Dieses Protokoll ist leer</string>
@@ -67,7 +67,7 @@
     <string name="logs_settings">Protokolleinstellungen</string>
     <string name="logs_source_more">Auch die Zeilen des Frameworks zeigen</string>
     <string name="logs_source_less">Nur Modulzeilen zeigen</string>
-    <string name="logs_verbose_summary">Schalte dies ein, bevor du einen Fehler meldest. Apps können ihre eigenen Protokolle lesen; dauerhaft eingeschaltet ist dies also ein Weg, auf dem eine App Vector entdecken kann.</string>
+    <string name="logs_verbose_summary">Schalte dies ein, bevor du einen Fehler meldest. Apps können ihre eigenen Protokolle lesen; dauerhaft eingeschaltet ist dies also ein Weg, auf dem eine App Vekta entdecken kann.</string>
     <string name="logs_trace_title">Stacktrace</string>
     <string name="logs_traces_inline">Stacktraces an Ort und Stelle öffnen</string>
     <string name="logs_traces_inline_summary">Ein Stacktrace klappt unter seiner Zeile auf. Schalte dies aus, um ihn stattdessen auf einem eigenen Bildschirm zu öffnen.</string>

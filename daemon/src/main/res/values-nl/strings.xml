@@ -9,8 +9,8 @@
     <string name="xposed_module_updated_notification_title_system">Module bijgewerkt, systeem opnieuw opstarten vereist</string>
     <string name="xposed_module_updated_notification_content_system">%s is bijgewerkt, omdat het bereik een systeemkader bevat, moet je opnieuw opstarten om wijzigingen toe te passen</string>
     <string name="module_updated_channel_name">Module update voltooid</string>
-    <string name="status_channel_name">Vector status</string>
-    <string name="vector_running_notification_title">Vector geladen</string>
+    <string name="status_channel_name">Vekta status</string>
+    <string name="vector_running_notification_title">Vekta geladen</string>
     <string name="vector_running_notification_content">Tik op de melding om manager te openen</string>
     <string name="xposed_module_request_scope_title">Scope verzoek</string>
     <string name="xposed_module_request_scope_content">%1$s op gebruiker %2$s verzoeken om %3$s toe te voegen aan het toepassingsgebied.</string>

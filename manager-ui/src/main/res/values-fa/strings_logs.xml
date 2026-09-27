@@ -31,7 +31,7 @@
     </plurals>
 
     <string name="logs_state_daemon_title">سرویس در دسترس نیست</string>
-    <string name="logs_state_daemon_body">تا وقتی Vector اجرا نشود چیزی دربارهٔ گزارش دانسته نیست. نوار وضعیت در خانه هم به همین دلیل سبز نیست.</string>
+    <string name="logs_state_daemon_body">تا وقتی Vekta اجرا نشود چیزی دربارهٔ گزارش دانسته نیست. نوار وضعیت در خانه هم به همین دلیل سبز نیست.</string>
     <string name="logs_state_nofile_title">هنوز پروندهٔ گزارشی نیست</string>
     <string name="logs_state_nofile_body">سرویس در حال اجراست اما این گزارش را باز نکرده است. برای گزارش پرگو معمولاً یعنی ثبت پرگو خاموش است.</string>
     <string name="logs_state_empty_title">این گزارش خالی است</string>
@@ -67,7 +67,7 @@
     <string name="logs_settings">تنظیمات گزارش‌ها</string>
     <string name="logs_source_more">سطرهای خودِ چارچوب هم نشان داده شود</string>
     <string name="logs_source_less">تنها سطرهای ماژول‌ها</string>
-    <string name="logs_verbose_summary">پیش از گزارش اشکال این را روشن کنید. برنامه‌ها می‌توانند گزارش خودشان را بخوانند، پس روشن ماندنش یکی از راه‌هایی است که یک برنامه می‌تواند Vector را تشخیص دهد.</string>
+    <string name="logs_verbose_summary">پیش از گزارش اشکال این را روشن کنید. برنامه‌ها می‌توانند گزارش خودشان را بخوانند، پس روشن ماندنش یکی از راه‌هایی است که یک برنامه می‌تواند Vekta را تشخیص دهد.</string>
     <string name="logs_trace_title">رد پشته</string>
     <string name="logs_traces_inline">باز کردن رد خطا در همان‌جا</string>
     <string name="logs_traces_inline_summary">رد خطا زیر سطر خودش باز می‌شود. این را خاموش کنید تا در صفحه‌ای جداگانه باز شود.</string>

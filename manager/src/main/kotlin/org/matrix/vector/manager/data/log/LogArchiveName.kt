@@ -21,7 +21,7 @@ import org.matrix.vector.manager.BuildConfig
  * export shells out to `tar`, which is what Android actually ships. Only the extension differs.
  */
 fun logArchiveName(extension: String): String =
-    "Vector-logs-${BuildConfig.BUILD_TYPE}-${LocalDateTime.now().format(ARCHIVE_STAMP)}.$extension"
+    "Vekta-logs-${BuildConfig.BUILD_TYPE}-${LocalDateTime.now().format(ARCHIVE_STAMP)}.$extension"
 
 /**
  * Which build wrote an archive, for the archive itself to carry.
@@ -35,7 +35,7 @@ fun logArchiveName(extension: String): String =
  * so the root export can only say what its name says.
  */
 fun archiveBuildStamp(): String =
-    "Vector ${BuildConfig.BUILD_TYPE} ${BuildConfig.VERSION_NAME} " +
+    "Vekta ${BuildConfig.BUILD_TYPE} ${BuildConfig.VERSION_NAME} " +
         "(${BuildConfig.VERSION_CODE}) ${BuildConfig.VERSION_HASH}"
 
 /** Sortable, no separators a file manager or a shell would have to be told about. */
