@@ -70,6 +70,9 @@ object ManagerService : IManagerService.Stub() {
    */
   private const val CLONE_USER_ID = 999
 
+  /** How long [removeClone] waits for `pm` before destroying it. Generous; pm is normally fast. */
+  private const val REMOVE_CLONE_TIMEOUT_SECONDS = 30L
+
 
   private var managerPid = -1
   private var pendingManager = false
@@ -446,7 +449,9 @@ object ManagerService : IManagerService.Stub() {
    * whatever this throws; it is never a state to paper over.
    */
   override fun createClone(packageName: String) {
-    val users = userManager?.getRealUsers().orEmpty()
+    val users =
+        userManager?.getRealUsers()
+            ?: throw IllegalStateException("userManager is not up yet - the daemon is not ready")
     if (users.none { it.id == CLONE_USER_ID }) {
       throw IllegalStateException("No clone space: user $CLONE_USER_ID does not exist")
     }
@@ -462,15 +467,32 @@ object ManagerService : IManagerService.Stub() {
   /**
    * Removes the clone-space copy of [packageName] again.
    *
-   * Through `pm` rather than the package installer: the installer route reports through a status
-   * broadcast that [uninstallPackage] already waits on at length, and a clone removal is
-   * housekeeping nobody is watching. A package that was never cloned is not an error - `pm
-   * uninstall --user` is silent about a user it holds no copy for, and so is this.
+   * Through `pm` as a direct argument array rather than the package installer: the installer
+   * route reports through a status broadcast that [uninstallPackage] already waits on at length,
+   * and a clone removal is housekeeping nobody is watching. The package name travels as its own
+   * argv slot rather than inside a shell string, so nothing about it is ever re-read by a shell.
+   * The wait is bounded like every other wait on a binder thread - `pm` answers in well under a
+   * second normally, and a wedged one is destroyed instead of holding the thread forever.
+   *
+   * A package that was never cloned is not an error - `pm uninstall --user` is silent about a
+   * user it holds no copy for, and so is this. A real failure is logged rather than thrown:
+   * there is nothing the manager could do with it.
    */
   override fun removeClone(packageName: String) {
-    Runtime.getRuntime()
-        .exec(arrayOf("sh", "-c", "pm uninstall --user $CLONE_USER_ID $packageName"))
-        .waitFor()
+    val process =
+        ProcessBuilder("pm", "uninstall", "--user", CLONE_USER_ID.toString(), packageName)
+            .redirectErrorStream(true)
+            .start()
+    if (!process.waitFor(REMOVE_CLONE_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
+      process.destroyForcibly()
+      Log.w(TAG, "pm uninstall for $packageName did not finish in $REMOVE_CLONE_TIMEOUT_SECONDS s")
+      return
+    }
+    val exit = process.exitValue()
+    if (exit != 0) {
+      val output = process.inputStream.bufferedReader().use { it.readText() }.trim()
+      Log.w(TAG, "pm uninstall for $packageName failed ($exit): $output")
+    }
   }
 
   override fun isSepolicyLoaded() =

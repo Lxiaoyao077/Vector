@@ -182,6 +182,9 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
     /** Whether the host offers a persistent verbose-logging preference to toggle. */
     val canConfigureVerbose: Boolean = source.canConfigureVerbose
 
+    /** Whether the host offers a persistent modules-log preference to toggle. */
+    val canConfigureModulesLog: Boolean = source.canConfigureModulesLog
+
     /** Whether the host can export the log, and how the save document should be created. */
     val canSaveArchive: Boolean = source.canSaveArchive
     val archiveMimeType: String = source.archiveMimeType
@@ -646,23 +649,24 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
     /**
      * Turns the capture of module output on or off.
      *
-     * No "enforced" branch here, unlike [setVerbose]: nothing overrides this preference, so the
-     * value the host reports back is the whole story. What does change with it is the modules
-     * stream itself - a capture that has just been switched on has lines the pane has not seen -
+     * No "enforced" branch here, unlike [setVerbose]: nothing overrides this preference. What
+     * the host reports back after the write is the whole story - and when the write never lands
+     * (the daemon unreachable), the switch stays where it was rather than showing a state
+     * nothing backed. What does change with a successful switch-on is the modules stream itself,
      * so the tab is reloaded once the host confirms the write.
      */
     fun setModulesLog(enabled: Boolean) {
         viewModelScope.launch {
-            val actual =
-                runCatching {
-                        source.setModulesLogEnabled(enabled)
-                    }
-                    .getOrElse {
+            val applied =
+                runCatching { source.setModulesLogEnabled(enabled) }
+                    .onFailure {
                         Log.e(TAG, "logs: setting modules logging to $enabled failed", it)
-                        enabled
                     }
-            _modulesLogEnabled.value = actual
-            if (actual) refresh(LogTab.MODULES)
+                    .getOrNull()
+            if (applied != null) {
+                _modulesLogEnabled.value = applied
+                if (applied) refresh(LogTab.MODULES)
+            }
         }
     }
 
