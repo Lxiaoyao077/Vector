@@ -111,9 +111,7 @@ suspend fun Context.commitForResult(
     }
     continuation.invokeOnCancellation { runCatching { unregisterReceiver(receiver) } }
 
-    val flags =
-        PendingIntent.FLAG_UPDATE_CURRENT or
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_MUTABLE else 0
+    val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
     // The package restriction names the host parasitically, and has to: the receiver belongs to
     // this process, so a broadcast confined to the manager's own package would reach nobody.
     val pending =

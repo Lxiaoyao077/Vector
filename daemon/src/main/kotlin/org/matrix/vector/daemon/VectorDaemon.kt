@@ -84,7 +84,7 @@ object VectorDaemon {
 
     // Start Environmental Daemons
     LogcatMonitor.start()
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) Dex2OatServer.start()
+    Dex2OatServer.start()
     CliSocketServer.start()
 
     // Preload Framework DEX in the background

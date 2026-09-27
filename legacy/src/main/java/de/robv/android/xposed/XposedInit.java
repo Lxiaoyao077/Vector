@@ -88,14 +88,8 @@ public final class XposedInit {
 
         classGTLR = android.app.ResourcesManager.class;
         classResKey = android.content.res.ResourcesKey.class;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            createResourceMethods.add("createResources");
-            createResourceMethods.add("createResourcesForActivity");
-        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
-            createResourceMethods.add("createResources");
-        } else {
-            createResourceMethods.add("getOrCreateResources");
-        }
+        createResourceMethods.add("createResources");
+        createResourceMethods.add("createResourcesForActivity");
 
         final Class<?> classActivityRes = XposedHelpers.findClassIfExists("android.app.ResourcesManager$ActivityResource", classGTLR.getClassLoader());
         var hooker = new XC_MethodHook() {

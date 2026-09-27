@@ -1,6 +1,5 @@
 package org.matrix.vector.manager.ui.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import org.matrix.vector.ui.theme.SeedScheme
 import org.matrix.vector.ui.theme.ThemeMode
@@ -32,9 +31,9 @@ fun VectorTheme(content: @Composable () -> Unit) {
         }
 
     val context = LocalContext.current
-    // Dynamic colour is this app's default; the seed below applies before Android 12, or whenever
-    // the user would rather choose the colour themselves than inherit their wallpaper's.
-    val dynamic = dynamicRequested && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    // Dynamic colour is this app's default; the seed below applies whenever the user would rather
+    // choose the colour themselves than inherit their wallpaper's.
+    val dynamic = dynamicRequested
 
     var scheme =
         when {

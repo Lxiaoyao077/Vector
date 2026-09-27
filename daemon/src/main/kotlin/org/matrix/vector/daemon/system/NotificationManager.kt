@@ -65,8 +65,7 @@ object NotificationManager {
   private val nm: android.app.INotificationManager? by
       SystemService(
           Context.NOTIFICATION_SERVICE, android.app.INotificationManager.Stub::asInterface)
-  private val opPkg =
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) "android" else "com.android.settings"
+  private val opPkg = "android"
 
   private fun createChannels() {
     val context = FakeContext()
@@ -141,13 +140,7 @@ object NotificationManager {
   }
 
   fun cancelStatusNotification() {
-    runCatching {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        nm?.cancelNotificationWithTag("android", "android", null, STATUS_NOTIF_ID, 0)
-      } else {
-        nm?.cancelNotificationWithTag("android", null, STATUS_NOTIF_ID, 0)
-      }
-    }
+    runCatching { nm?.cancelNotificationWithTag("android", "android", null, STATUS_NOTIF_ID, 0) }
   }
 
   /**
@@ -172,11 +165,7 @@ object NotificationManager {
   private fun cancelByTag(tag: String) {
     runCatching {
           val notifId = tag.hashCode()
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            nm?.cancelNotificationWithTag("android", "android", tag, notifId, 0)
-          } else {
-            nm?.cancelNotificationWithTag("android", tag, notifId, 0)
-          }
+          nm?.cancelNotificationWithTag("android", "android", tag, notifId, 0)
         }
         .onFailure { Log.e(TAG, "Failed to cancel notification $tag", it) }
   }

@@ -190,13 +190,11 @@ object LaunchShortcut {
                 .setShortLabel(context.getString(R.string.app_name))
                 .setIntent(intent)
         icon(context)?.let { builder.setIcon(it) }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            // Q and later want the publishing activity named, and the host has no launcher entry to
-            // name. AppDetailsActivity is the one the platform synthesises for precisely that case
-            // — every package has it, and it is what the system itself uses to stand for a package
-            // with nothing to launch.
-            builder.setActivity(ComponentName(context.packageName, APP_DETAILS_ACTIVITY))
-        }
+        // The platform wants the publishing activity named, and the host has no launcher entry to
+        // name. AppDetailsActivity is the one the platform synthesises for precisely that case
+        // — every package has it, and it is what the system itself uses to stand for a package
+        // with nothing to launch.
+        builder.setActivity(ComponentName(context.packageName, APP_DETAILS_ACTIVITY))
         return builder.build()
     }
 

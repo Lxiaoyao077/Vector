@@ -200,23 +200,13 @@ class VectorModuleClassLoader : ByteBufferDexClassLoader {
                     .toTypedArray()
 
             val cl =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    VectorModuleClassLoader(
-                        dexBuffers,
-                        librarySearchPath,
-                        parent,
-                        apk,
-                        blockLegacyApi,
-                    )
-                } else {
-                    VectorModuleClassLoader(
-                        dexBuffers,
-                        parent,
-                        apk,
-                        librarySearchPath,
-                        blockLegacyApi,
-                    )
-                }
+                VectorModuleClassLoader(
+                    dexBuffers,
+                    librarySearchPath,
+                    parent,
+                    apk,
+                    blockLegacyApi,
+                )
 
             dexBuffers.toList().parallelStream().forEach { SharedMemory.unmap(it) }
             dexes.parallelStream().forEach { it.close() }

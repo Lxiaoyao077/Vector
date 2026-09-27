@@ -65,11 +65,9 @@ object SystemServerService : Binder(), IBinder.DeathRecipient {
     // Register as the service name early to setup an IPC for `system_server`.
     Log.d(TAG, "Registering bridge service for `system_server` with name `$serviceName`.")
 
-    // `IServiceManager.registerForNotifications` is only available since Android R.
-    // On older platforms we simply let the real service replace our proxy in servicemanager.
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-      ServiceRegistrationWatcher.watch(serviceName)
-    }
+    // `IServiceManager.registerForNotifications` watches for the real service replacing our
+    // proxy in servicemanager.
+    ServiceRegistrationWatcher.watch(serviceName)
 
     // The Zygisk module polls this name during `system_server` specialization,
     // so it must be claimed on every supported platform.

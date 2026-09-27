@@ -73,11 +73,9 @@ object VectorStartup {
             VectorHookBuilder(it).intercept(LoadedApkCtorHooker)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            loadedApkClass.declaredMethods
-                .filter { it.name == "createAppFactory" }
-                .forEach { VectorHookBuilder(it).intercept(LoadedApkCreateAppFactoryHooker) }
-        }
+        loadedApkClass.declaredMethods
+            .filter { it.name == "createAppFactory" }
+            .forEach { VectorHookBuilder(it).intercept(LoadedApkCreateAppFactoryHooker) }
 
         loadedApkClass.declaredMethods
             .filter { it.name == "createOrUpdateClassLoaderLocked" }

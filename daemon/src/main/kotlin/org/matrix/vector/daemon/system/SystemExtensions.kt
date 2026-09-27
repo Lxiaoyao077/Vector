@@ -263,24 +263,16 @@ fun IActivityManager.registerReceiverCompat(
 ): Intent? {
   val appThread = SystemContext.appThread ?: return null
   return runCatching {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-          registerReceiverWithFeature(
-              appThread,
-              "android",
-              null,
-              "null",
-              receiver,
-              filter,
-              requiredPermission,
-              userId,
-              flags)
-        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
-          registerReceiverWithFeature(
-              appThread, "android", null, receiver, filter, requiredPermission, userId, flags)
-        } else {
-          registerReceiver(
-              appThread, "android", receiver, filter, requiredPermission, userId, flags)
-        }
+        registerReceiverWithFeature(
+            appThread,
+            "android",
+            null,
+            "null",
+            receiver,
+            filter,
+            requiredPermission,
+            userId,
+            flags)
       }
       .onFailure { Log.e(TAG, "registerReceiver failed", it) }
       .getOrNull()
@@ -289,58 +281,44 @@ fun IActivityManager.registerReceiverCompat(
 fun IActivityManager.broadcastIntentCompat(intent: Intent) {
   val appThread = SystemContext.appThread
   runCatching {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-          broadcastIntentWithFeature(
-              appThread,
-              null,
-              intent,
-              null,
-              null,
-              0,
-              null,
-              null,
-              null,
-              null,
-              null,
-              -1,
-              null,
-              true,
-              false,
-              0)
-        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
-          broadcastIntentWithFeature(
-              appThread, null, intent, null, null, 0, null, null, null, -1, null, true, false, 0)
-        } else {
-          broadcastIntent(
-              appThread, intent, null, null, 0, null, null, null, -1, null, true, false, 0)
-        }
+        broadcastIntentWithFeature(
+            appThread,
+            null,
+            intent,
+            null,
+            null,
+            0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            -1,
+            null,
+            true,
+            false,
+            0)
       }
       .onFailure { Log.e(TAG, "broadcastIntent failed", it) }
 }
 
-// `startActivityAsUserWithFeature` only arrived in Android R: on older platforms the same call
-// exists without the calling feature id, and using the newer one throws `NoSuchMethodError`.
 fun IActivityManager.startActivityAsUserCompat(intent: Intent, userId: Int): Int {
   val appThread = SystemContext.appThread
   return runCatching {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          startActivityAsUserWithFeature(
-              appThread,
-              "android",
-              null,
-              intent,
-              intent.type,
-              null,
-              null,
-              0,
-              0,
-              null,
-              null,
-              userId)
-        } else {
-          startActivityAsUser(
-              appThread, "android", intent, intent.type, null, null, 0, 0, null, null, userId)
-        }
+        startActivityAsUserWithFeature(
+            appThread,
+            "android",
+            null,
+            intent,
+            intent.type,
+            null,
+            null,
+            0,
+            0,
+            null,
+            null,
+            userId,
+        )
       }
       .onFailure { Log.e(TAG, "startActivityAsUser failed", it) }
       .getOrDefault(-1)

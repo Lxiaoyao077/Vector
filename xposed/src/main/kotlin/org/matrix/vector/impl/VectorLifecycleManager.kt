@@ -69,7 +69,7 @@ object VectorLifecycleManager {
         appComponentFactory: Any?, // Abstracted for API compatibility
     ) {
         val param =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && appComponentFactory != null) {
+            if (appComponentFactory != null) {
                 PackageReadyParamImplP(
                     packageName,
                     appInfo,
@@ -79,7 +79,7 @@ object VectorLifecycleManager {
                     appComponentFactory,
                 )
             } else {
-                // Fallback for API < 28 (or if factory is null).
+                // Fallback for a module that ships no AppComponentFactory.
                 object : PackageReadyParam {
                     override fun getPackageName() = packageName
 
@@ -93,7 +93,7 @@ object VectorLifecycleManager {
 
                     override fun getAppComponentFactory(): android.app.AppComponentFactory {
                         throw UnsupportedOperationException(
-                            "AppComponentFactory is not available on this API level"
+                            "The module declares no AppComponentFactory"
                         )
                     }
                 }

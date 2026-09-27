@@ -1,6 +1,5 @@
 package org.matrix.vector.impl.hookers
 
-import android.os.Build
 import io.github.libxposed.api.XposedInterface
 import org.matrix.vector.nativebridge.HookBridge
 
@@ -13,9 +12,6 @@ object DexTrustHooker : XposedInterface.Hooker {
         val result = chain.proceed()
 
         var classLoader = chain.args.filterIsInstance<ClassLoader>().firstOrNull()
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P && classLoader == null) {
-            classLoader = DexTrustHooker::class.java.classLoader
-        }
 
         while (classLoader != null) {
             if (classLoader === DexTrustHooker::class.java.classLoader) {

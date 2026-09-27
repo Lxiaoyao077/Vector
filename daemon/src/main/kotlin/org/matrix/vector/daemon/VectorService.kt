@@ -37,14 +37,10 @@ object VectorService : IVectorDaemon.Stub() {
    * What the dialer broadcasts when a secret code is entered, which changed name in Q.
    *
    * The pre-Q action is spelled out rather than taken from `Telephony.Sms.Intents`, whose constant
-   * only became public API in 28 while this daemon runs from 27. It is the same string either way:
-   * on 8.1 the platform broadcast it from the hidden `TelephonyIntents.SECRET_CODE_ACTION`, which
-   * carries exactly this value, and the public constant that followed was deprecated in 29 when
-   * `TelephonyManager.ACTION_SECRET_CODE` replaced it.
+   * only became public API in 28, and the daemon runs on Android 12 and newer: the platform
+   * broadcasts the public `TelephonyManager.ACTION_SECRET_CODE`, which carries the same value.
    */
-  private val ACTION_SECRET_CODE =
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) TelephonyManager.ACTION_SECRET_CODE
-      else "android.provider.Telephony.SECRET_CODE"
+  private val ACTION_SECRET_CODE = TelephonyManager.ACTION_SECRET_CODE
 
   /** Dial *#*#832867#*#* ("VECTOR" on the keypad) to open the manager. */
   private const val SECRET_CODE = "832867"

@@ -18,9 +18,6 @@ import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 import hidden.HiddenApiBridge
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.lang.reflect.Method
 import java.util.concurrent.ConcurrentHashMap
 import org.matrix.vector.ipc.IManagerService
@@ -60,30 +57,7 @@ object ParasiticManagerHooker {
         if (managerPkgInfo == null && appInfo != null) {
             runCatching {
                     val ctx: Context = ActivityThread.currentActivityThread().systemContext
-                    var sourcePath = "/proc/self/fd/$managerFd"
-
-                    // SDK <= 28 (Android 9) cannot reliably parse APKs via FD paths in all
-                    // contexts.
-                    // We copy the APK to the host's cache as a workaround.
-                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                        // The pre-rename name, removed so an upgraded host is not left carrying a
-                        // stale copy of the manager in its cache forever.
-                        runCatching { File("${appInfo.dataDir}/cache/lsposed.apk").delete() }
-                        val dstPath = "${appInfo.dataDir}/cache/vector-manager.apk"
-                        runCatching {
-                                FileInputStream(sourcePath).use { input ->
-                                    FileOutputStream(dstPath).use { output ->
-                                        input.channel.transferTo(
-                                            0,
-                                            input.channel.size(),
-                                            output.channel,
-                                        )
-                                    }
-                                }
-                                sourcePath = dstPath
-                            }
-                            .onFailure { logE("Failed to copy parasitic APK", it) }
-                    }
+                    val sourcePath = "/proc/self/fd/$managerFd"
 
                     val pkgInfo =
                         ctx.packageManager.getPackageArchiveInfo(
@@ -109,12 +83,10 @@ object ParasiticManagerHooker {
                             this,
                             HiddenApiBridge.ApplicationInfo_credentialProtectedDataDir(appInfo),
                         )
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            HiddenApiBridge.ApplicationInfo_overlayPaths(
-                                this,
-                                HiddenApiBridge.ApplicationInfo_overlayPaths(appInfo),
-                            )
-                        }
+                        HiddenApiBridge.ApplicationInfo_overlayPaths(
+                            this,
+                            HiddenApiBridge.ApplicationInfo_overlayPaths(appInfo),
+                        )
                         HiddenApiBridge.ApplicationInfo_resourceDirs(
                             this,
                             HiddenApiBridge.ApplicationInfo_resourceDirs(appInfo),
@@ -299,14 +271,6 @@ object ParasiticManagerHooker {
             }
 
         XposedBridge.hookAllConstructors(activityClientRecordClass, activityHooker)
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
-            val appThreadClass =
-                XposedHelpers.findClass(
-                    "android.app.ActivityThread\$ApplicationThread",
-                    ActivityThread::class.java.classLoader,
-                )
-            XposedBridge.hookAllMethods(appThreadClass, "scheduleLaunchActivity", activityHooker)
-        }
 
         // Hook 4: Ignore Receivers (Manager doesn't need to handle host receivers)
         XposedBridge.hookAllMethods(
@@ -437,10 +401,7 @@ object ParasiticManagerHooker {
                                 record = activities[record] ?: return
                             }
 
-                            val saveMethod =
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                                    "callActivityOnSaveInstanceState"
-                                else "callCallActivityOnSaveInstanceState"
+                            val saveMethod = "callActivityOnSaveInstanceState"
                             XposedHelpers.callMethod(param.thisObject, saveMethod, record)
 
                             val state = XposedHelpers.getObjectField(record, "state") as? Bundle
@@ -462,17 +423,6 @@ object ParasiticManagerHooker {
             "performStopActivityInner",
             stateCaptureHooker,
         )
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
-            XposedHelpers.findAndHookMethod(
-                ActivityThread::class.java,
-                "performDestroyActivity",
-                IBinder::class.java,
-                Boolean::class.javaPrimitiveType,
-                Int::class.javaPrimitiveType,
-                Boolean::class.javaPrimitiveType,
-                stateCaptureHooker,
-            )
-        }
     }
 
     /** Entry point. Checks if the current process should host the parasitic manager. */

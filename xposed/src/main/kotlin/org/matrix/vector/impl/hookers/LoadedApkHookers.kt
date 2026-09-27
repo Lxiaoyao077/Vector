@@ -129,19 +129,16 @@ object LoadedApkCreateAppFactoryHooker : XposedInterface.Hooker {
             chain.args[1] as? ClassLoader
                 ?: return chain.proceed() // Skip dispatch if there's no ClassLoader
 
-        // Only dispatch if on API 29+ per libxposed API specification
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val apkPackageName =
-                loadedApk.getFieldValue<String>("mPackageName") ?: appInfo.packageName
-            val ctx = PackageContextHelper.resolve(loadedApk, apkPackageName)
+        val apkPackageName =
+            loadedApk.getFieldValue<String>("mPackageName") ?: appInfo.packageName
+        val ctx = PackageContextHelper.resolve(loadedApk, apkPackageName)
 
-            VectorLifecycleManager.dispatchPackageLoaded(
-                ctx.packageName,
-                appInfo,
-                ctx.isFirstPackage,
-                defaultClassLoader,
-            )
-        }
+        VectorLifecycleManager.dispatchPackageLoaded(
+            ctx.packageName,
+            appInfo,
+            ctx.isFirstPackage,
+            defaultClassLoader,
+        )
 
         return chain.proceed()
     }
@@ -169,17 +166,15 @@ object LoadedApkCreateCLHooker : XposedInterface.Hooker {
             val ctx = PackageContextHelper.resolve(loadedApk, apkPackageName)
 
             // Dispatch Modern Lifecycle: onPackageReady
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                val appComponentFactory = loadedApk.getFieldValue<Any>("mAppComponentFactory")
-                VectorLifecycleManager.dispatchPackageReady(
-                    ctx.packageName,
-                    appInfo,
-                    ctx.isFirstPackage,
-                    defaultClassLoader,
-                    classLoader,
-                    appComponentFactory,
-                )
-            }
+            val appComponentFactory = loadedApk.getFieldValue<Any>("mAppComponentFactory")
+            VectorLifecycleManager.dispatchPackageReady(
+                ctx.packageName,
+                appInfo,
+                ctx.isFirstPackage,
+                defaultClassLoader,
+                classLoader,
+                appComponentFactory,
+            )
 
             // Legacy API: Only dispatch once during initial load
             if (isInitialLoad) {

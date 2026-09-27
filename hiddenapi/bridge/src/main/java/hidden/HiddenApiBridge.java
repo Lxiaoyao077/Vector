@@ -72,13 +72,7 @@ public class HiddenApiBridge {
     }
 
     public static int Os_ioctlInt(FileDescriptor fd, int cmd, int arg) throws ErrnoException {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
-            return Os.ioctlInt(fd, cmd, new MutableInt(arg));
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            return Os.ioctlInt(fd, cmd, new Int32Ref(arg));
-        } else {
-            return Os.ioctlInt(fd, cmd);
-        }
+        return Os.ioctlInt(fd, cmd);
     }
 
     public static int ActivityManager_UID_OBSERVER_GONE() {

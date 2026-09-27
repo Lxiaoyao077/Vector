@@ -180,7 +180,6 @@ private fun ColorSection(
     onDynamic: (Boolean) -> Unit,
     onSeed: (Int) -> Unit,
 ) {
-    val supportsDynamic = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     var wheelOpen by remember { mutableStateOf(false) }
     val custom = !dynamicColor && seed !in SeedScheme.PRESETS
 
@@ -192,21 +191,19 @@ private fun ColorSection(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (supportsDynamic) {
-            SourceSwatch(
-                selected = dynamicColor,
-                onClick = {
-                    onDynamic(true)
-                    wheelOpen = false
-                },
-            ) {
-                Icon(
-                    Icons.Rounded.AutoAwesome,
-                    contentDescription = stringResource(R.string.appearance_dynamic_color),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.size(20.dp),
-                )
-            }
+        SourceSwatch(
+            selected = dynamicColor,
+            onClick = {
+                onDynamic(true)
+                wheelOpen = false
+            },
+        ) {
+            Icon(
+                Icons.Rounded.AutoAwesome,
+                contentDescription = stringResource(R.string.appearance_dynamic_color),
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.size(20.dp),
+            )
         }
 
         SeedScheme.PRESETS.forEach { preset ->

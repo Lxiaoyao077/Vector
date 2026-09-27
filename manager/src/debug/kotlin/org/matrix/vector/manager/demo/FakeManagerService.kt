@@ -314,8 +314,6 @@ class FakeManagerService(
  * field is the field. Nothing in the real manager ever writes a version code -- only this fake,
  * which rewrites the daemon's answers to script the demo.
  */
-@Suppress("DEPRECATION")
 private fun PackageInfo.setVersionCodeCompat(value: Long) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) longVersionCode = value
-    else versionCode = value.toInt()
+    longVersionCode = value
 }
