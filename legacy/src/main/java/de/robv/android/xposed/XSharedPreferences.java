@@ -7,8 +7,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 
 import org.matrix.vector.util.Log;
-import org.matrix.vector.impl.core.VectorServiceClient;
-import org.matrix.vector.impl.utils.VectorMetaDataReader;
 import org.matrix.vector.legacy.BuildConfig;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -20,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.ClosedWatchServiceException;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
@@ -29,7 +28,6 @@ import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import de.robv.android.xposed.services.FileResult;
@@ -153,34 +151,10 @@ public final class XSharedPreferences implements SharedPreferences {
      * @param prefFileName The file name without ".xml".
      */
     public XSharedPreferences(String packageName, String prefFileName) {
-        boolean newModule = false;
-        var m = XposedInit.getLoadedModules().getOrDefault(packageName, Optional.empty());
-        if (m.isPresent()) {
-            boolean isModule = false;
-            int xposedminversion = -1;
-            boolean xposedsharedprefs = false;
-            try {
-                Map<String, Object> metaData = VectorMetaDataReader.getMetaData(new File(m.get()));
-                isModule = metaData.containsKey("xposedminversion");
-                if (isModule) {
-                    Object minVersionRaw = metaData.get("xposedminversion");
-                    if (minVersionRaw instanceof Integer) {
-                        xposedminversion = (Integer) minVersionRaw;
-                    } else if (minVersionRaw instanceof String) {
-                        xposedminversion = VectorMetaDataReader.extractIntPart((String) minVersionRaw);
-                    }
-                    xposedsharedprefs = metaData.containsKey("xposedsharedprefs");
-                }
-            } catch (NumberFormatException | IOException e) {
-                Log.w(TAG, "Apk parser fails: " + e);
-            }
-            newModule = isModule && (xposedminversion > 92 || xposedsharedprefs);
-        }
-        if (newModule) {
-            mFile = new File(VectorServiceClient.INSTANCE.getPrefsPath(packageName), prefFileName + ".xml");
-        } else {
-            mFile = new File(Environment.getDataDirectory(), "data/" + packageName + "/shared_prefs/" + prefFileName + ".xml");
-        }
+        // New XSharedPreferences was removed ahead of the upstream 2.3.0 removal: the classic
+        // world-readable path is the only one served now. Modules still on the bridge must move
+        // to the libxposed service's remote preferences.
+        mFile = new File(Environment.getDataDirectory(), "data/" + packageName + "/shared_prefs/" + prefFileName + ".xml");
         mFilename = mFile.getAbsolutePath();
         init();
     }
@@ -194,7 +168,7 @@ public final class XSharedPreferences implements SharedPreferences {
             Path path = mFile.toPath();
             try {
                 if (sWatcher == null) {
-                    sWatcher = new File(VectorServiceClient.INSTANCE.getPrefsPath("")).toPath().getFileSystem().newWatchService();
+                    sWatcher = FileSystems.getDefault().newWatchService();
                     if (BuildConfig.DEBUG) Log.d(TAG, "Created WatchService instance");
                 }
                 mWatchKey = path.getParent().register(sWatcher, StandardWatchEventKinds.ENTRY_CREATE,

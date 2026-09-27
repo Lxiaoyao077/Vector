@@ -2,23 +2,14 @@ package org.matrix.vector.legacy;
 
 import android.content.res.XResources;
 
-import org.matrix.vector.util.Utils;
-import org.matrix.vector.impl.core.VectorServiceClient;
 import org.matrix.vector.impl.di.LegacyFrameworkDelegate;
 import org.matrix.vector.impl.di.LegacyPackageInfo;
 import org.matrix.vector.impl.di.OriginalInvoker;
 import org.matrix.vector.impl.hooks.VectorLegacyCallback;
-import org.matrix.vector.impl.utils.VectorMetaDataReader;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Executable;
-import java.util.Map;
 
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedInit;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -41,10 +32,6 @@ public class LegacyDelegateImpl implements LegacyFrameworkDelegate {
         lpparam.classLoader = info.getClassLoader();
         lpparam.appInfo = info.getAppInfo();
         lpparam.isFirstApplication = info.isFirstApplication();
-
-        if (info.isFirstApplication() && hasLegacyModule(info.getPackageName())) {
-            hookNewXSP(lpparam);
-        }
 
         XC_LoadPackage.callAll(lpparam);
     }
@@ -107,39 +94,6 @@ public class LegacyDelegateImpl implements LegacyFrameworkDelegate {
     private static class ResourceProxy {
         static void set(String p, String r) {
             XResources.setPackageNameForResDir(p, r);
-        }
-    }
-
-    private void hookNewXSP(XC_LoadPackage.LoadPackageParam lpparam) {
-        int xposedminversion = -1;
-        boolean xposedsharedprefs = false;
-        try {
-            Map<String, Object> metaData = VectorMetaDataReader.getMetaData(new File(lpparam.appInfo.sourceDir));
-            Object minVersionRaw = metaData.get("xposedminversion");
-            if (minVersionRaw instanceof Integer) {
-                xposedminversion = (Integer) minVersionRaw;
-            } else if (minVersionRaw instanceof String) {
-                xposedminversion = VectorMetaDataReader.extractIntPart((String) minVersionRaw);
-            }
-            xposedsharedprefs = metaData.containsKey("xposedsharedprefs");
-        } catch (NumberFormatException | IOException ignored) {
-        }
-
-        if (xposedminversion > 92 || xposedsharedprefs) {
-            XposedHelpers.findAndHookMethod("android.app.ContextImpl", lpparam.classLoader, "checkMode", int.class, new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param) {
-                    if (((int) param.args[0] & 1) != 0) {
-                        param.setThrowable(null);
-                    }
-                }
-            });
-            XposedHelpers.findAndHookMethod("android.app.ContextImpl", lpparam.classLoader, "getPreferencesDir", new XC_MethodReplacement() {
-                @Override
-                protected Object replaceHookedMethod(MethodHookParam param) {
-                    return new File(VectorServiceClient.INSTANCE.getPrefsPath(lpparam.packageName));
-                }
-            });
         }
     }
 

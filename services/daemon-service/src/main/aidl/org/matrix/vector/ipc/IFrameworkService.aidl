@@ -6,8 +6,8 @@ import org.matrix.vector.ipc.IProcessChannel;
 /**
  * What an injected process asks the framework for, once the zygisk handshake has given it one.
  *
- * <p>Every call that answers with something about the caller - its modules, its preference path, the
- * manager - is authenticated by {@code Binder.getCallingUid()/getCallingPid()} against the process
+ * <p>Every call that answers with something about the caller - its modules, the manager - is
+ * authenticated by {@code Binder.getCallingUid()/getCallingPid()} against the process
  * registry the handshake built, so a caller can only ever act as itself. {@link #isLogMuted} is the
  * exception and is deliberately unauthenticated: it discloses one global boolean about log
  * verbosity, and it is asked before a process has anything to be authenticated as.</p>
@@ -36,9 +36,6 @@ interface IFrameworkService {
      * registration that had to look a module up there failed and was swallowed.</p>
      */
     List<LoadedModule> getModules();
-
-    /** Where this process should look for a module's XSharedPreferences files. */
-    String getPrefsPath(String packageName);
 
     /**
      * The manager APK, opened read-only once its signature has been verified against the one this

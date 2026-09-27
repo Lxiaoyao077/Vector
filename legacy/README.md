@@ -106,30 +106,12 @@ When an application inflates a layout via `LayoutInflater`, the Android OS parse
 
 The classic Xposed API relied on the `Context.MODE_WORLD_READABLE` flag, allowing target applications to read configuration files directly from the module's `/data/data/<package>/shared_prefs/` directory. Starting with Android 7.0, the operating system throws a `SecurityException` when this flag is used. Furthermore, modern SELinux policies enforce strict application data isolation, preventing cross-process directory traversal regardless of Unix file permissions.
 
-To restore `XSharedPreferences` functionality without compromising system stability, the framework implements a coordinated bypass utilizing the out-of-process daemon and runtime path redirection.
+The framework used to bridge this gap with the daemon-provisioned safe-zone and the runtime hooks known as **New XSharedPreferences**. That mechanism has been removed ahead of the upstream 2.3.0 removal: `XSharedPreferences` reads the classic world-readable `/data/data` path again, and nothing provisions a permissive bridge directory anymore. Modules still relying on the bridge must move to the libxposed service's remote preferences, or - if their preference files are already world-readable the old way - set `xposedminversion` to 82 and drop the `xposedsharedprefs` flag.
 
-The `daemon` module operates with elevated privileges and provisions a specialized safe-zone directory for module configuration sharing. When resolving the module directory, the daemon executes `setSelinuxContextRecursive` to apply the [u:object_r:xposed_data:s0](../zygisk/module/sepolicy.rule) SELinux context. This specific context is universally readable across standard application domains. The daemon subsequently invokes `Os.chmod` to enforce `755` Unix permissions and adjusts directory ownership. This creates a filesystem bridge that both the module and target applications can legally access without violating SELinux isolation.
-
-### Interception and Redirection
-
-To utilize the safe-zone transparently, the `legacy` module intercepts the configuration saving mechanics within the module's own user interface process. During application load, `LegacyDelegateImpl` parses the module's APK metadata using `VectorMetaDataReader`. If the module declares an `xposedminversion` greater than 92 or contains the `xposedsharedprefs` flag, the framework triggers `hookNewXSP`. This routine applies two critical hooks to `android.app.ContextImpl`:
-
-1.  Flag Stripping: It hooks `checkMode` to intercept the mode integer. If the `MODE_WORLD_READABLE` bit is present, it suppresses the resulting `SecurityException` by setting the hook throwable to null.
-2.  Path Redirection: It hooks `getPreferencesDir` using an `XC_MethodReplacement`. Instead of returning the standard isolated data directory, it returns the daemon-provisioned safe-zone path obtained via `VectorServiceClient.INSTANCE.getPrefsPath`.
-
-When the module attempts to save its standard `SharedPreferences`, the Android framework transparently writes the XML file into the SELinux-permissive bridge.
-
-### File I/O and IPC Bypass
-
-When a target application is hooked and instantiates `XSharedPreferences`, the framework determines the path based on the target API level. For modern modules, it bypasses the legacy `/data/data` path entirely and maps directly to the safe-zone.
-
-In the original [Xposed framework](https://github.com/rovo89/XposedBridge), circumventing SELinux at read-time required synchronous IPC via BinderService or native root access via ZygoteService. In the Vector framework, these IPC mechanisms have been removed. Because the daemon pre-emptively assigns a permissive SELinux context to the safe-zone, the target application process possesses the necessary permissions to read the file directly. The SELinuxHelper component unconditionally returns DirectAccessService, an implementation of BaseService. This service acts purely as a structural API shim to maintain compatibility with the internal caching logic of XSharedPreferences, performing raw reads utilizing standard `FileInputStream` and `BufferedInputStream` operations without IPC overhead.
-
-Since standard Android inter-process communication mechanisms (such as broadcast intents or content providers) are overly visible for cross-process preference tracking, `XSharedPreferences` implements an in-process filesystem watcher to handle live updates. When an `OnSharedPreferenceChangeListener` is registered, the framework spawns an internal daemon thread (`sWatcherDaemon`). This thread utilizes `java.nio.file.WatchService` (an abstraction over the Linux `inotify` subsystem) to monitor the safe-zone directory. The thread blocks on `sWatcher.take()`, and upon receiving an `ENTRY_MODIFY` or `ENTRY_DELETE` event for the target XML file, it validates the file hash and natively dispatches the legacy preference change callbacks to the registered listeners.
+`XSharedPreferences` itself survives, and so does its in-process filesystem watcher (`sWatcherDaemon` over `java.nio.file.WatchService`): registered listeners are still dispatched on changes to preference files that remain readable.
 
 ## Developer References
 
 For module developers building against or debugging the legacy Xposed API, the following external documentation provides historical context and usage guidelines:
 
 - [Xposed Development Tutorial (rovo89)](https://github.com/rovo89/XposedBridge/wiki/Development-tutorial)
-- [LSPosed New XSharedPreferences Mechanism](https://github.com/LSPosed/LSPosed/wiki/New-XSharedPreferences)
