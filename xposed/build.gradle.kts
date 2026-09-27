@@ -34,7 +34,7 @@ android {
 
     sourceSets {
         named("main") {
-            java.directories.addAll(listOf("src/main/kotlin", "libxposed/api/src/main/java"))
+            java.directories.addAll(listOf("src/main/kotlin", "src/main/java"))
         }
     }
 }
@@ -46,4 +46,7 @@ dependencies {
     compileOnly(libs.androidx.annotation)
     compileOnly(libs.libxposed.annotation)
     compileOnly(projects.hiddenapi.stubs)
+    api(libs.libxposed.api)
+    api(libs.libxposed.service)
+    api(libs.libxposed.interfaces)
 }

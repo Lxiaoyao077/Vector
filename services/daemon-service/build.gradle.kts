@@ -7,8 +7,8 @@ android {
 
     sourceSets {
         named("main") {
-            java.directories.addAll(listOf("src/main/java", "../libxposed/service/src/main"))
-            aidl.directories.addAll(listOf("src/main/aidl", "../libxposed/interface/src/main/aidl"))
+            java.srcDir("src/main/java")
+            aidl.srcDir("src/main/aidl")
         }
     }
 
@@ -20,4 +20,6 @@ dependencies {
     compileOnly(libs.androidx.annotation)
     compileOnly(libs.libxposed.annotation)
     compileOnly(projects.hiddenapi.stubs)
+    api(libs.libxposed.service)
+    api(libs.libxposed.interfaces)
 }

@@ -14,6 +14,7 @@ nav3 = "1.1.6"
 navigationevent = "1.1.2"
 # Governs every androidx.compose.* artifact below; none of them pin a version.
 compose-bom = "2026.08.00"
+libxposed = "102.0.0"
 
 [plugins]
 agp-lib = { id = "com.android.library", version.ref = "agp" }
@@ -68,10 +69,12 @@ okhttp-dnsoverhttps = { group = "com.squareup.okhttp3", name = "okhttp-dnsoverht
 
 agp-apksig = { group = "com.android.tools.build", name = "apksig", version.ref = "agp" }
 gson = { module = "com.google.code.gson:gson", version = "2.14.0" }
-# The libxposed API sources vendored under xposed/libxposed and services/libxposed carry
-# @SinceApi and @InternalApi from API 102 onwards. Both are CLASS-retained metadata with no
-# runtime behaviour, so this is compileOnly everywhere and never reaches a device.
+
+libxposed-api = { module = "io.github.libxposed:api", version.ref = "libxposed" }
+libxposed-service = { module = "io.github.libxposed:service", version.ref = "libxposed" }
+libxposed-interfaces = { module = "io.github.libxposed:interface", version.ref = "libxposed" }
 libxposed-annotation = { module = "io.github.libxposed:annotation", version = "1.0.0" }
+
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 picocli = { module = "info.picocli:picocli", version = "4.7.7" }
