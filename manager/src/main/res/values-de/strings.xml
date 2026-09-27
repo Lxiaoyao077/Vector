@@ -190,6 +190,9 @@
     <string name="action_optimize_failed">%1$s konnte nicht neu optimiert werden.</string>
     <string name="action_uninstalled">%1$s deinstalliert.</string>
     <string name="action_uninstall_failed">%1$s konnte nicht deinstalliert werden.</string>
+    <string name="action_create_clone">Klon erstellen</string>
+    <string name="action_clone_created">Klon erstellt</string>
+    <string name="action_clone_failed">Konnte keinen Klon von %1$s erstellen.</string>
 
     <string name="back">Zurück</string>
     <string name="retry">Erneut versuchen</string>

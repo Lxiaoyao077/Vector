@@ -53,6 +53,7 @@ import androidx.compose.material.icons.rounded.ArrowCircleUp
 import androidx.compose.material.icons.rounded.CloudDownload
 import androidx.compose.material.icons.rounded.CloudOff
 import androidx.compose.material.icons.rounded.NotificationsOff
+import androidx.compose.material.icons.rounded.PersonAddAlt
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -356,6 +357,26 @@ LocalizedOverlay {
                             .getOrDefault(false)
                     PackageActionResult(
                         if (ok) R.string.action_optimized else R.string.action_optimize_failed,
+                        appName,
+                        tone = if (ok) SnackbarTone.Success else SnackbarTone.Failure,
+                    )
+                }
+            }
+        }
+
+        // Only from the primary user: the copy is made *from* user 0's install, and a sheet opened
+        // over the clone-space copy is already looking at the thing this creates. The daemon
+        // throws when the device has no clone space, so the sheet reports what came back rather
+        // than assuming a copy exists now.
+        if (isModule && userId == 0) {
+            ActionDrawerItem(
+                icon = Icons.Rounded.PersonAddAlt,
+                title = stringResource(R.string.action_create_clone),
+            ) {
+                finish {
+                    val ok = daemon.createClone(packageName).isSuccess
+                    PackageActionResult(
+                        if (ok) R.string.action_clone_created else R.string.action_clone_failed,
                         appName,
                         tone = if (ok) SnackbarTone.Success else SnackbarTone.Failure,
                     )

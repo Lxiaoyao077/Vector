@@ -188,6 +188,9 @@
     <string name="action_optimize_failed">%1$s tidak bisa dioptimalkan ulang.</string>
     <string name="action_uninstalled">%1$s dicopot.</string>
     <string name="action_uninstall_failed">%1$s tidak bisa dicopot.</string>
+    <string name="action_create_clone">Buat klon</string>
+    <string name="action_clone_created">Klon dibuat</string>
+    <string name="action_clone_failed">Tidak dapat membuat klon %1$s.</string>
 
     <string name="back">Kembali</string>
     <string name="retry">Coba lagi</string>

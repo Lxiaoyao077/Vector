@@ -190,6 +190,9 @@
     <string name="action_optimize_failed">بهینه‌سازی دوبارهٔ %1$s ممکن نشد.</string>
     <string name="action_uninstalled">‏%1$s حذف شد.</string>
     <string name="action_uninstall_failed">حذف %1$s ممکن نشد.</string>
+    <string name="action_create_clone">ایجاد نسخه دوقلو</string>
+    <string name="action_clone_created">نسخه دوقلو ایجاد شد</string>
+    <string name="action_clone_failed">ایجاد نسخه دوقلو از %1$s ممکن نشد.</string>
 
     <string name="back">بازگشت</string>
     <string name="retry">تلاش دوباره</string>

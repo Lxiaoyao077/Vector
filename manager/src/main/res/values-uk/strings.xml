@@ -202,6 +202,9 @@
     <string name="action_optimize_failed">Не вдалося переоптимізувати %1$s.</string>
     <string name="action_uninstalled">%1$s видалено.</string>
     <string name="action_uninstall_failed">Не вдалося видалити %1$s.</string>
+    <string name="action_create_clone">Створити клон</string>
+    <string name="action_clone_created">Клон створено</string>
+    <string name="action_clone_failed">Не вдалося створити клон застосунку %1$s.</string>
 
     <string name="back">Назад</string>
     <string name="retry">Повторити</string>

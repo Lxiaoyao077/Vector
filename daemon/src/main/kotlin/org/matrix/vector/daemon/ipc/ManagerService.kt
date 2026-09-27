@@ -61,6 +61,15 @@ object ManagerService : IManagerService.Stub() {
    */
   private const val UNINSTALL_TIMEOUT_SECONDS = 60L
 
+  /**
+   * The user id that holds the device's clone space, where a second copy of an app runs.
+   *
+   * Not every device has one - an OEM without a dual-app feature has no user 999 - so
+   * [createClone] asks for it before calling into the package manager, and the manager's action
+   * sheet reports the refusal instead of a clone it did not make.
+   */
+  private const val CLONE_USER_ID = 999
+
 
   private var managerPid = -1
   private var pendingManager = false
@@ -284,6 +293,7 @@ object ManagerService : IManagerService.Stub() {
     if (isVerboseLogEnabled()) LogcatMonitor.startVerbose() else LogcatMonitor.stopVerbose()
   }
 
+
   override fun isApiProtectionEnabled() = ConfigCache.state.isApiProtectionEnabled
 
   override fun setApiProtectionEnabled(enabled: Boolean) {
@@ -413,6 +423,48 @@ object ManagerService : IManagerService.Stub() {
       return false
     }
     return result
+  }
+
+  /**
+   * Installs the package as it exists for the primary user into [CLONE_USER_ID], the clone space.
+   *
+   * A module hooks the copies of an app it is scoped to, and the clone space runs its own copy of
+   * every app under its own uid - so without a module installed there, a dual-space app is one the
+   * module never sees. Installing the module into the space is the whole of what "hooking the
+   * clone" takes; scope rows already written for the package carry over, because they are keyed by
+   * package name and the space's copy answers to the same name.
+   *
+   * Throws rather than answering a boolean, because there is no useful `false` to hand back: a
+   * device whose OEM ships no dual-app feature has no user 999 to install into, and a package
+   * manager refusal names a cause the manager's action sheet can only echo. The manager renders
+   * whatever this throws; it is never a state to paper over.
+   */
+  override fun createClone(packageName: String) {
+    val users = userManager?.getRealUsers().orEmpty()
+    if (users.none { it.id == CLONE_USER_ID }) {
+      throw IllegalStateException("No clone space: user $CLONE_USER_ID does not exist")
+    }
+    // INSTALL_REPLACE_EXISTING, so cloning over a copy that is already there refreshes it instead
+    // of failing; INSTALL_REASON_UNKNOWN, because nothing here knows why the user pressed it.
+    val result =
+        packageManager?.installExistingPackageAsUser(packageName, CLONE_USER_ID, 0x00000002, 0)
+    if (result == null || result < 0) {
+      throw IllegalStateException("installExistingPackageAsUser returned $result")
+    }
+  }
+
+  /**
+   * Removes the clone-space copy of [packageName] again.
+   *
+   * Through `pm` rather than the package installer: the installer route reports through a status
+   * broadcast that [uninstallPackage] already waits on at length, and a clone removal is
+   * housekeeping nobody is watching. A package that was never cloned is not an error - `pm
+   * uninstall --user` is silent about a user it holds no copy for, and so is this.
+   */
+  override fun removeClone(packageName: String) {
+    Runtime.getRuntime()
+        .exec(arrayOf("sh", "-c", "pm uninstall --user $CLONE_USER_ID $packageName"))
+        .waitFor()
   }
 
   override fun isSepolicyLoaded() =

@@ -188,6 +188,9 @@
     <string name="action_optimize_failed">Не удалось переоптимизировать %1$s.</string>
     <string name="action_uninstalled">%1$s удалено.</string>
     <string name="action_uninstall_failed">Не удалось удалить %1$s.</string>
+    <string name="action_create_clone">Создать клон</string>
+    <string name="action_clone_created">Клон создан</string>
+    <string name="action_clone_failed">Не удалось создать клон приложения %1$s.</string>
     <string name="back">Назад</string>
     <string name="retry">Повторить</string>
     <string name="appearance_color">Цвет</string>

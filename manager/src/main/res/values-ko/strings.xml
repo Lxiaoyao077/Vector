@@ -184,6 +184,9 @@
     <string name="action_optimize_failed">%1$s을(를) 다시 최적화하지 못했습니다.</string>
     <string name="action_uninstalled">%1$s을(를) 제거했습니다.</string>
     <string name="action_uninstall_failed">%1$s을(를) 제거하지 못했습니다.</string>
+    <string name="action_create_clone">클론 만들기</string>
+    <string name="action_clone_created">클론이 생성되었습니다</string>
+    <string name="action_clone_failed">%1$s의 클론을 만들지 못했습니다.</string>
 
     <string name="back">뒤로</string>
     <string name="retry">다시 시도</string>

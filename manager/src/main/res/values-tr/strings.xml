@@ -190,6 +190,9 @@
     <string name="action_optimize_failed">%1$s yeniden iyileştirilemedi.</string>
     <string name="action_uninstalled">%1$s kaldırıldı.</string>
     <string name="action_uninstall_failed">%1$s kaldırılamadı.</string>
+    <string name="action_create_clone">Klon oluştur</string>
+    <string name="action_clone_created">Klon oluşturuldu</string>
+    <string name="action_clone_failed">%1$s için klon oluşturulamadı.</string>
 
     <string name="back">Geri</string>
     <string name="retry">Yeniden dene</string>

@@ -224,6 +224,21 @@ class DaemonClient(private val serviceState: StateFlow<IManagerService?>) {
         runIpc { it.setApiProtectionEnabled(enabled) }
 
     /**
+     * Installs the package as it exists for the primary user into the clone space, user 999.
+     *
+     * A refused clone is a throw on the daemon's side rather than a flat `false` - a device with no
+     * dual-app feature has no user 999 to install into, and the daemon has more to say about a
+     * refused install than a bit - so the failure arrives as the failed [Result] this wraps it
+     * into, and the action sheet renders what the daemon said.
+     */
+    suspend fun createClone(packageName: String): Result<Unit> =
+        runIpc { it.createClone(packageName) }
+
+    /** Removes the clone-space copy again. Silent when there was no copy to remove. */
+    suspend fun removeClone(packageName: String): Result<Unit> =
+        runIpc { it.removeClone(packageName) }
+
+    /**
      * The rotated parts the daemon still holds for one of the two logs, oldest first.
      *
      * Empty against a daemon too old to answer the call, in which case the manager shows the live

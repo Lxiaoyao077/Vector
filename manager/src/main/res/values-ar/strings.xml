@@ -214,6 +214,9 @@
     <string name="action_optimize_failed">تعذّرت إعادة تحسين %1$s.</string>
     <string name="action_uninstalled">أُلغي تثبيت %1$s.</string>
     <string name="action_uninstall_failed">تعذّر إلغاء تثبيت %1$s.</string>
+    <string name="action_create_clone">إنشاء نسخة مزدوجة</string>
+    <string name="action_clone_created">تم إنشاء النسخة المزدوجة</string>
+    <string name="action_clone_failed">تعذّر إنشاء نسخة مزدوجة من %1$s.</string>
 
     <string name="back">رجوع</string>
     <string name="retry">إعادة المحاولة</string>
