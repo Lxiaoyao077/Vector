@@ -62,7 +62,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 rikkax-parcelablelist = { module = "dev.rikka.rikkax.parcelablelist:parcelablelist", version = "2.0.1" }
 
-androidx-annotation = { module = "androidx.annotation:annotation", version = "1.10.0" }
+androidx-annotation = { module = "androidx.annotation:annotation", version = "1.11.0" }
 
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-dnsoverhttps = { group = "com.squareup.okhttp3", name = "okhttp-dnsoverhttps", version.ref = "okhttp" }
