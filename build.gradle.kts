@@ -287,6 +287,11 @@ subprojects {
                     listOf(
                         "-DVERSION_CODE=${versionCodeProvider.get()}",
                         "-DVERSION_NAME='\"${versionNameProvider.get()}\"'",
+                        // phmap's layout depends on these defines: hook_bridge.cpp instantiates
+                        // the same templates as the dex builder, and two group sizes in one
+                        // binary would be an ODR violation the linker cannot see.
+                        "-DPHMAP_HAVE_SSE2=0",
+                        "-DPHMAP_HAVE_SSSE3=0",
                     )
 
                 val args =
