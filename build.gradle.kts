@@ -298,6 +298,20 @@ subprojects {
                     listOf(
                         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
                         "-DVECTOR_ROOT=${rootDir.absolutePath}",
+                        // The native target keeps the API level it was written against; minSdk must
+                        // not move it. Raising minSdk to 31 moved ANDROID_PLATFORM with it, and the
+                        // NDK derives three ABI-level defaults from that level: thread-locals switch
+                        // from emutls to real ELF TLS (a PT_TLS segment appears), relative
+                        // relocations are packed into an Android RELR table, and the segment layout
+                        // gains a separate read-only PT_LOAD. All three are invisible to the linker
+                        // and land on the one artifact that cannot afford them - the library injected
+                        // into zygote and system_server, whose own ELF readers (dobby's GOT walking,
+                        // lsplt's per-segment scan, ElfImage's base discovery) assume the old
+                        // encoding, and ElfImage says outright that a wrong base shifts every hook
+                        // target and the write lands in whatever else is mapped there. Android 12 is
+                        // the floor the installer enforces and the manifests declare; the injected
+                        // binaries stay on 27 so they keep the ABI they were validated on.
+                        "-DANDROID_PLATFORM=android-27",
                         // Enforce 16 KB page size alignment for Android 15+ compatibility
                         "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384",
                         "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-z,max-page-size=16384",
