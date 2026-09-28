@@ -48,6 +48,10 @@
     <string name="logs_state_failed_body">השירות מסר קובץ שלא ניתן היה לקרוא: %1$s</string>
     <string name="logs_loading">מאנדקס…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">רישום מודולים</string>
+    <string name="logs_modules_summary">כבו את זה והדימון יפסיק לאסוף פלט מודולים אל modules.log. הרישום המפורט אינו מושפע.</string>
+
     <string name="logs_verbose_switch">תיעוד מפורט</string>
     <string name="logs_verbose_enforced">השירות הפועל מאלץ את זה בכל מקרה.</string>
 

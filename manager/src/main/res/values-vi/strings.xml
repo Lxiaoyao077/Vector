@@ -184,6 +184,9 @@
     <string name="action_optimize_failed">Không tối ưu lại được %1$s.</string>
     <string name="action_uninstalled">Đã gỡ %1$s.</string>
     <string name="action_uninstall_failed">Không gỡ được %1$s.</string>
+    <string name="action_create_clone">Tạo bản sao</string>
+    <string name="action_clone_created">Đã tạo bản sao</string>
+    <string name="action_clone_failed">Không thể tạo bản sao của %1$s.</string>
 
     <string name="back">Quay lại</string>
     <string name="retry">Thử lại</string>

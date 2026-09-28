@@ -230,6 +230,29 @@ class FakeManagerService(
         real?.setApiProtectionEnabled(enabled)
     }
 
+    /**
+     * Delegated, and refused when no daemon is behind the demo. A clone the fake did not make would
+     * be announced by the action sheet as a copy it did make, and the one thing a fake must not do
+     * is teach the pipeline that a refusal looks like a result.
+     */
+    override fun createClone(packageName: String?) {
+        real?.createClone(packageName)
+            ?: throw IllegalStateException("createClone: no daemon behind the demo")
+    }
+
+    override fun removeClone(packageName: String?) {
+        real?.removeClone(packageName)
+            ?: throw IllegalStateException("removeClone: no daemon behind the demo")
+    }
+
+    // `?: true` to match the daemon, whose preference reads this one `?: true` when nobody has set
+    // it - the same reasoning as isStatusNotificationEnabled above.
+    override fun isModulesLogEnabled(): Boolean = real?.isModulesLogEnabled ?: true
+
+    override fun setModulesLogEnabled(enabled: Boolean) {
+        real?.setModulesLogEnabled(enabled)
+    }
+
     override fun getLiveLogPart(verbose: Boolean): ParcelFileDescriptor? =
         real?.getLiveLogPart(verbose)
 

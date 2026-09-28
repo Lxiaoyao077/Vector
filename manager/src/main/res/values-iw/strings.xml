@@ -206,6 +206,9 @@
     <string name="action_optimize_failed">לא ניתן היה לבצע אופטימיזציה מחדש ל-%1$s.</string>
     <string name="action_uninstalled">‏%1$s הוסרה.</string>
     <string name="action_uninstall_failed">לא ניתן היה להסיר את %1$s.</string>
+    <string name="action_create_clone">צור שכפול</string>
+    <string name="action_clone_created">השכפול נוצר</string>
+    <string name="action_clone_failed">לא ניתן היה ליצור שכפול של %1$s.</string>
 
     <string name="back">חזרה</string>
     <string name="retry">ניסיון נוסף</string>

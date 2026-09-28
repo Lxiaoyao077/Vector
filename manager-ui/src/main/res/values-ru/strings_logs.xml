@@ -42,6 +42,10 @@
     <string name="logs_state_failed_title">Не удалось прочитать журнал</string>
     <string name="logs_state_failed_body">Служба передала файл, который не удалось прочитать: %1$s</string>
     <string name="logs_loading">Индексирование…</string>
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Журнал модулей</string>
+    <string name="logs_modules_summary">Выключите это, и демон перестанет собирать вывод модулей в modules.log. Подробное логирование не затрагивается.</string>
+
     <string name="logs_verbose_switch">Подробное логирование</string>
     <string name="logs_verbose_enforced">Запущенная служба включает это принудительно.</string>
     <string name="logs_jump_oldest">К самой старой строке</string>

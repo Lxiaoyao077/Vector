@@ -73,7 +73,7 @@ interface IManagerService {
      * transaction ids follow declaration order, this number is the only thing standing between a
      * mismatched pair and a call that lands on the wrong method.</p>
      */
-    const int PROTOCOL_VERSION = 1;
+    const int PROTOCOL_VERSION = 3;
 
     /**
      * Which generation of this interface the daemon implements, never below 1.
@@ -775,4 +775,57 @@ interface IManagerService {
 
     /** APatch. */
     const int ROOT_APATCH = 5;
+
+    // ---- clones -------------------------------------------------------------------------------------
+
+    /**
+     * Installs the package as it exists for the primary user into the clone space, user 999, as a
+     * second copy that the user 0 install does not touch.
+     *
+     * <p>The point is reach, not convenience. A module hooks the copies of an app it is scoped to,
+     * and the clone space runs its own copy of every app under its own uid - so an app that has
+     * been cloned is one the module cannot see until the module itself is installed there too.
+     * This is how that happens; the scope rows already written for the package carry over, because
+     * the space's copy answers to the same package name.</p>
+     *
+     * <p>Only meaningful for a package the primary user holds - the copy is made <i>from</i> user
+     * 0's install - which is why the manager offers it only from there.</p>
+     *
+     * <p>Throws instead of answering a boolean, because there is no useful {@code false}: a device
+     * whose maker ships no dual-app feature has no user 999 to install into, and a package-manager
+     * refusal names a cause the reader should see rather than a state to render. The manager
+     * surfaces what this throws.</p>
+     */
+    void createClone(String packageName);
+
+    /**
+     * Removes the clone-space copy of a package again, and nothing else: the primary user's
+     * install is not this call's to touch.
+     *
+     * <p>Answers nothing, and a package that was never cloned is not an error - the removal is
+     * asked of {@code pm}, which is silent about a user it holds no copy for, and so is this.</p>
+     */
+    void removeClone(String packageName);
+
+    // ---- the modules log ---------------------------------------------------------------------------
+
+    /**
+     * Whether the daemon is capturing the modules log. True on a device where nobody has said
+     * otherwise.
+     *
+     * <p>The stored value, not the value or'd with the build type, for the same reason
+     * {@link #isVerboseLogEnabled} says so: a value the manager could never read as false would
+     * make its switch unwritable.</p>
+     */
+    boolean isModulesLogEnabled();
+
+    /**
+     * Sets that, and asks the daemon's log reader to start or stop capturing to match.
+     *
+     * <p>The reader acts on a sentinel written into the log rather than on this call returning, so
+     * capture is not yet in step when this comes back. What is already written stays written; only
+     * what is captured from here on changes. The verbose stream is not touched: the two are
+     * captured independently, and this is about the modules one alone.</p>
+     */
+    void setModulesLogEnabled(boolean enabled);
 }

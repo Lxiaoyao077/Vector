@@ -42,6 +42,10 @@
     <string name="logs_state_failed_body">Art alan süreci okunamayan bir dosya verdi: %1$s</string>
     <string name="logs_loading">Dizinleniyor…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Modül günlüğü</string>
+    <string name="logs_modules_summary">Bunu kapatın, daemon modül çıktılarını modules.log içine toplamayı bırakır. Ayrıntılı kayıt etkilenmez.</string>
+
     <string name="logs_verbose_switch">Ayrıntılı kayıt</string>
     <string name="logs_verbose_enforced">Çalışan art alan süreci bunu zaten açık tutuyor.</string>
 

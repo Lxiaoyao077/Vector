@@ -190,6 +190,9 @@
     <string name="action_optimize_failed">Não foi possível reotimizar %1$s.</string>
     <string name="action_uninstalled">%1$s desinstalado.</string>
     <string name="action_uninstall_failed">Não foi possível desinstalar %1$s.</string>
+    <string name="action_create_clone">Criar clone</string>
+    <string name="action_clone_created">Clone criado</string>
+    <string name="action_clone_failed">Não foi possível criar um clone de %1$s.</string>
 
     <string name="back">Voltar</string>
     <string name="retry">Tentar de novo</string>

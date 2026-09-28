@@ -184,6 +184,9 @@
     <string name="action_optimize_failed">%1$s を再最適化できませんでした。</string>
     <string name="action_uninstalled">%1$s をアンインストールしました。</string>
     <string name="action_uninstall_failed">%1$s をアンインストールできませんでした。</string>
+    <string name="action_create_clone">クローンを作成</string>
+    <string name="action_clone_created">クローンを作成しました</string>
+    <string name="action_clone_failed">%1$s のクローンを作成できませんでした。</string>
 
     <string name="back">戻る</string>
     <string name="retry">再試行</string>

@@ -90,6 +90,7 @@ private:
 
     pid_t my_pid_ = getpid();
     bool verbose_enabled_ = true;
+    bool modules_enabled_ = true;
 };
 
 // 'Scatter-Gather' I/O (writev)
@@ -122,7 +123,7 @@ size_t Logcat::FastWrite(const AndroidLogEntry& entry, int fd) {
 
 void Logcat::LogRaw(std::string_view str) {
     if (verbose_enabled_ && verbose_fd_ >= 0) write(verbose_fd_, str.data(), str.size());
-    if (modules_fd_ >= 0) write(modules_fd_, str.data(), str.size());
+    if (modules_enabled_ && modules_fd_ >= 0) write(modules_fd_, str.data(), str.size());
 }
 
 // RefreshFd: Handshakes with the Kotlin layer to swap file descriptors.
@@ -179,7 +180,7 @@ void Logcat::ProcessBuffer(struct log_msg* buf) {
 
     // Check if tag is in the Module list
     bool is_module = std::binary_search(kModuleTags.begin(), kModuleTags.end(), tag);
-    if (is_module) {
+    if (modules_enabled_ && is_module) {
         modules_written_ += FastWrite(entry, modules_fd_);
     }
 
@@ -200,6 +201,11 @@ void Logcat::ProcessBuffer(struct log_msg* buf) {
             verbose_written_ += FastWrite(entry, verbose_fd_);
         } else if (msg == "!!stop_verbose!!"sv) {
             verbose_enabled_ = false;
+        } else if (msg == "!!start_modules!!"sv) {
+            modules_enabled_ = true;
+            modules_written_ += FastWrite(entry, modules_fd_);
+        } else if (msg == "!!stop_modules!!"sv) {
+            modules_enabled_ = false;
         } else if (msg == "!!refresh_modules!!"sv) {
             RefreshFd(false);
         } else if (msg == "!!refresh_verbose!!"sv) {

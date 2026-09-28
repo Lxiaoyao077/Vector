@@ -161,6 +161,9 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
     private val _verboseEnabled = MutableStateFlow(false)
     val verboseEnabled: StateFlow<Boolean> = _verboseEnabled.asStateFlow()
 
+    private val _modulesLogEnabled = MutableStateFlow(false)
+    val modulesLogEnabled: StateFlow<Boolean> = _modulesLogEnabled.asStateFlow()
+
     /**
      * True when the user asked for verbose logging off and the host kept it on.
      *
@@ -179,6 +182,9 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
     /** Whether the host offers a persistent verbose-logging preference to toggle. */
     val canConfigureVerbose: Boolean = source.canConfigureVerbose
 
+    /** Whether the host offers a persistent modules-log preference to toggle. */
+    val canConfigureModulesLog: Boolean = source.canConfigureModulesLog
+
     /** Whether the host can export the log, and how the save document should be created. */
     val canSaveArchive: Boolean = source.canSaveArchive
     val archiveMimeType: String = source.archiveMimeType
@@ -191,6 +197,9 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
     init {
         if (source.canConfigureVerbose) {
             viewModelScope.launch { _verboseEnabled.value = source.isVerboseEnabled() }
+        }
+        if (source.canConfigureModulesLog) {
+            viewModelScope.launch { _modulesLogEnabled.value = source.isModulesLogEnabled() }
         }
     }
 
@@ -634,6 +643,30 @@ class LogsViewModel(private val source: LogSource) : ViewModel() {
             _verboseEnabled.value = actual
             _verboseEnforced.value = !enabled && actual
             if (actual) refresh(LogTab.VERBOSE)
+        }
+    }
+
+    /**
+     * Turns the capture of module output on or off.
+     *
+     * No "enforced" branch here, unlike [setVerbose]: nothing overrides this preference. What
+     * the host reports back after the write is the whole story - and when the write never lands
+     * (the daemon unreachable), the switch stays where it was rather than showing a state
+     * nothing backed. What does change with a successful switch-on is the modules stream itself,
+     * so the tab is reloaded once the host confirms the write.
+     */
+    fun setModulesLog(enabled: Boolean) {
+        viewModelScope.launch {
+            val applied =
+                runCatching { source.setModulesLogEnabled(enabled) }
+                    .onFailure {
+                        Log.e(TAG, "logs: setting modules logging to $enabled failed", it)
+                    }
+                    .getOrNull()
+            if (applied != null) {
+                _modulesLogEnabled.value = applied
+                if (applied) refresh(LogTab.MODULES)
+            }
         }
     }
 

@@ -42,6 +42,10 @@
     <string name="logs_state_failed_body">Il daemon ha consegnato un file illeggibile: %1$s</string>
     <string name="logs_loading">Indicizzazione…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Registrazione dei moduli</string>
+    <string name="logs_modules_summary">Disattiva questo e il daemon smette di raccogliere l\'output dei moduli in modules.log. La registrazione dettagliata non è influenzata.</string>
+
     <string name="logs_verbose_switch">Registrazione dettagliata</string>
     <string name="logs_verbose_enforced">Il daemon in esecuzione la tiene attiva comunque.</string>
 

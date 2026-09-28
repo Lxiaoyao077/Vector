@@ -48,6 +48,10 @@
     <string name="logs_state_failed_body">Служба передала файл, який не вдалося прочитати: %1$s</string>
     <string name="logs_loading">Індексування…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Журнал модулів</string>
+    <string name="logs_modules_summary">Вимкніть це, і демон перестане збирати вивід модулів у modules.log. Докладне журналювання не змінюється.</string>
+
     <string name="logs_verbose_switch">Докладне журналювання</string>
     <string name="logs_verbose_enforced">Запущена служба однаково тримає це ввімкненим.</string>
 

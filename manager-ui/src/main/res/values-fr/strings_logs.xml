@@ -42,6 +42,10 @@
     <string name="logs_state_failed_body">Le démon a fourni un fichier illisible : %1$s</string>
     <string name="logs_loading">Indexation…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">Journalisation des modules</string>
+    <string name="logs_modules_summary">Désactivez ceci et le démon cesse de collecter la sortie des modules dans modules.log. La journalisation verbeuse n\'est pas affectée.</string>
+
     <string name="logs_verbose_switch">Journalisation verbeuse</string>
     <string name="logs_verbose_enforced">Le démon en cours d\'exécution l\'impose de toute façon.</string>
 

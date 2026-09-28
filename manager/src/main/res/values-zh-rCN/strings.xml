@@ -184,6 +184,9 @@
     <string name="action_optimize_failed">无法重新优化 %1$s。</string>
     <string name="action_uninstalled">已卸载 %1$s。</string>
     <string name="action_uninstall_failed">无法卸载 %1$s。</string>
+    <string name="action_create_clone">创建分身</string>
+    <string name="action_clone_created">已创建分身</string>
+    <string name="action_clone_failed">无法创建 %1$s 的分身。</string>
 
     <string name="back">返回</string>
     <string name="retry">重试</string>

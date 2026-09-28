@@ -54,6 +54,10 @@
     <string name="logs_state_failed_body">سلّمت الخدمة ملفًا تعذّرت قراءته: %1$s</string>
     <string name="logs_loading">جارٍ الفهرسة…</string>
 
+    <!-- Module logging -->
+    <string name="logs_modules_switch">تسجيل الوحدات</string>
+    <string name="logs_modules_summary">أوقف هذا وسيتوقف البرنامج الخفي عن جمع مخرجات الوحدات في modules.log. السجل المفصل لا يتأثر.</string>
+
     <string name="logs_verbose_switch">التسجيل المفصّل</string>
     <string name="logs_verbose_enforced">الخدمة العاملة تفرض تشغيله على أي حال.</string>
 

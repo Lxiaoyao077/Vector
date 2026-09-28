@@ -140,6 +140,10 @@ object LogcatMonitor {
 
   fun stopVerbose() = Log.i(TAG, "!!stop_verbose!!")
 
+  fun startModules() = Log.i(TAG, "!!start_modules!!")
+
+  fun stopModules() = Log.i(TAG, "!!stop_modules!!")
+
   fun refresh(isVerboseLog: Boolean) {
     Log.i(TAG, if (isVerboseLog) "!!refresh_verbose!!" else "!!refresh_modules!!")
   }

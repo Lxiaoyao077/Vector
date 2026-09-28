@@ -303,6 +303,9 @@
     <string name="action_optimize_failed">Nie udało się ponownie zoptymalizować %1$s.</string>
     <string name="action_uninstalled">Odinstalowano %1$s.</string>
     <string name="action_uninstall_failed">Nie udało się odinstalować %1$s.</string>
+    <string name="action_create_clone">Utwórz klon</string>
+    <string name="action_clone_created">Klon utworzony</string>
+    <string name="action_clone_failed">Nie można utworzyć klona aplikacji %1$s.</string>
     <!-- Generic -->
     <string name="back">Wstecz</string>
     <string name="retry">Spróbuj ponownie</string>
