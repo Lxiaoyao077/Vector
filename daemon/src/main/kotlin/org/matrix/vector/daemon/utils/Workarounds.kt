@@ -1,12 +1,12 @@
 package org.matrix.vector.daemon.utils
 
-import android.app.IServiceConnection
 import android.app.Notification
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.UserInfo
 import android.os.Build
+import android.os.IBinder
 import android.os.IUserManager
 import android.util.Log
 import java.lang.ClassNotFoundException
@@ -77,7 +77,36 @@ fun applyNotificationWorkaround() {
       }
 }
 
-fun applyXspaceWorkaround(connection: IServiceConnection) {
+/**
+ * The daemon's own connection for the X-space bind. Its callbacks are empty on purpose - the
+ * point of the bind is its side effect, keeping MIUI's securitycore process and the X-space
+ * service inside it alive - and it is never unbound: the service is meant to live as long as
+ * the daemon does. Both callback shapes are declared because system_server dispatches the
+ * three-argument one up to Android 16 and the four-argument one from Android 17.
+ */
+private val xspaceConnection =
+    object : android.app.IServiceConnection.Stub() {
+      override fun connected(name: ComponentName?, service: IBinder?, dead: Boolean) {}
+
+      override fun connected(
+          name: ComponentName?,
+          service: IBinder?,
+          session: android.app.IBinderSession?,
+          dead: Boolean
+      ) {}
+    }
+
+/**
+ * Keeps MIUI's X-space service bound for the daemon's whole life.
+ *
+ * Binding [com.miui.securitycore]'s `XSpaceService` with BIND_AUTO_CREATE is what keeps the
+ * process that runs second-space applications alive and injectable. The bind used to hang off
+ * the manager's guard and was unbound the moment the manager's binder died - which for a
+ * standalone manager is routine - and MIUI answered losing the service by re-sealing the second
+ * space: the phone dropped back into its unlock, re-entered the space, and refused the password.
+ * The service therefore belongs to the daemon now, which outlives any manager session.
+ */
+fun applyXspaceWorkaround() {
   if (isXiaomi) {
     val intent =
         Intent().apply {
@@ -91,7 +120,7 @@ fun applyXspaceWorkaround(connection: IServiceConnection) {
           SystemContext.token,
           intent,
           intent.type,
-          connection,
+          xspaceConnection,
           Context.BIND_AUTO_CREATE.toLong(),
           "android",
           0)
@@ -101,7 +130,7 @@ fun applyXspaceWorkaround(connection: IServiceConnection) {
           SystemContext.token,
           intent,
           intent.type,
-          connection,
+          xspaceConnection,
           Context.BIND_AUTO_CREATE,
           "android",
           0)

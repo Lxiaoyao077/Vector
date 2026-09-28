@@ -30,6 +30,7 @@ import org.matrix.vector.daemon.ipc.BRIDGE_TRANSACTION_CODE
 import org.matrix.vector.daemon.ipc.ManagerService
 import org.matrix.vector.daemon.ipc.SystemServerService
 import org.matrix.vector.daemon.utils.applyNotificationWorkaround
+import org.matrix.vector.daemon.utils.applyXspaceWorkaround
 
 private const val TAG = "VectorDaemon"
 private const val ACTION_SEND_BINDER = 1
@@ -102,18 +103,27 @@ object VectorDaemon {
 
     applyNotificationWorkaround()
 
+    // MIUI only: keep the X-space service bound for the daemon's whole life. It used to be bound
+    // (and unbound) with the manager's guard, so every manager death yanked MIUI's second space
+    // back to its unlock; Workarounds.kt carries the full story.
+    applyXspaceWorkaround()
+
     // Read this before `sendToBridge`, which leaves the main thread at euid 1000: the config
     // database lives under a directory only root can enter, so the first process to open it has
     // to do so while we still have root. On a successful injection a binder thread opens it for
     // us during specialization, but when the injection fails nothing else has, and the daemon
     // used to die here on an unreadable preference.
     val isVerboseLog = ManagerService.isVerboseLogEnabled()
+    val isModulesLog = ManagerService.isModulesLogEnabled()
 
     // Setup IPC channel for applications by injecting DaemonService binder
     sendToBridge(VectorService.asBinder(), false, systemServerMaxRetry)
 
     if (!isVerboseLog) {
       LogcatMonitor.stopVerbose()
+    }
+    if (!isModulesLog) {
+      LogcatMonitor.stopModules()
     }
 
     Looper.loop()
